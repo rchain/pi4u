@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage{authblk}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{comment}
@@ -24,27 +25,85 @@
 \newcommand{\deref}[1]{\mathrm{eval}(#1)}
 \newcommand{\op}{\mathrm{op}}
 \newcommand{\NN}{\mathbb{N}}
+\newcommand{\pic}{$\pi$-calculus}
 
 \title{Logic as a distributive law}
-\author{
-Michael Stay\\
-  {Pyrofex Corp.}\\
-  {\fontsize{8}{8}\selectfont stay@pyrofex.net}\\
-\and
-L.G. Meredith\\
-{RChain Coop.}\\
-{\fontsize{8}{8}\selectfont president@rchain.coop}
-}
-
+\author[1]{Michael Stay \thanks{\fontsize{8}{8}\selectfont stay@pyrofex.net}}
+\author[2]{L.G. Meredith \thanks{\fontsize{8}{8}\selectfont president@rchain.coop}}
+\affil[1]{Pyrofex Corp.}
+\affil[2]{RChain Coop.}
 \begin{document}
 \maketitle
 
 \begin{abstract}
-\noindent
+  \noindent
+  We introduce an algorithm for generating a type system from three
+  data: a notion of computation, a notion of collection, and a
+  ``distributive law'' between them. In the simplest form of the
+  algorithm the notions of computation and collection are captured by
+  Lawvere theories, respectively, and the distributive law is between
+  the monads corresponding to each Lawvere theory. We look at various
+  enrichments of the notions of collection and computation to extend
+  the scope of the algorithm and also compare it to an alternative
+  approach to generating a logic, namely the internal logic of a
+  category. Among the many benefits of the algorithm we find a
+  unification of several core logical concepts, most strikingly we
+  find that the standard function type from the typed lambda calculus
+  can be unified with the modalities from Hennessy-Milner logic.
 \end{abstract}
 
 \section{Introduction and motivation}
-\subsection{What is the logic as a distributive law research programme? (LGM)}
+\subsection{What is the logic as a distributive law research
+  programme? (LGM)}
+By 2005 a number of research efforts made it clear that many different
+biological systems, from cell signaling regimes to large organism
+immune responses, could be effectively modeled in mobile process
+calculi such as the \pic and the ambient
+calculus. \cite{CardelliBio}\cite{Priami}\cite{Aviv} One of
+the present authors imagined a future in which there were several
+large scale databases capturing the dynamics of many different
+biological regimes as \pic terms and wondered what sort of
+query language might be used to search such a database. Following the
+insights of relational databases, which build on relational algebras,
+the question can be framed as
+
+\[\mathsf{SQL} : \mathsf{relational algebra} :: \mathsf{X} : \mathsf{a process calculus}\]
+
+Intriguingly, Caires' semantics for his spatial-behavioral
+logic for the \pic has exactly the shape required of a
+semantics of a query language. Putting formulae in the role of
+queries, the semantics supplies just those terms that satisfy the
+query.
+
+One fundamental challenge with this approach, however, at least as
+regards the biological domain, is that there is no-one-size-fits-all
+model, i.e. different biological subdomains are best served by
+different process calculi. \cite{CardelliSurvey}. Looking at the range
+of Hennessy-Milner style logics, from the original proposals to the
+spatial-behavioral systems one sees that these are largely constructed
+from the same basic elements. Taking a clue from Abramksy's Domain
+Theory in Logical Form, it seems reasonable to ask whether there is a
+functorial characterization of these different logics, so that given a
+model of computation, in this case the operational semantics of a
+process calculus, and some other ingredients one could generate a
+logic the semantics of which would match a suitable query model.
+
+Note that were such a characterization to be found the scope of
+applications is very broad. In particular, biology is far from the
+only source of repositories of behavioral models. Code is the dark
+matter of the Internet. Whether we are talking about large scale open
+source repositories, such as github, or code repositories behind the
+firewalls of the enterprise, code is one of the Internet's largest
+data assets. Yet, it is not treated as a data asset in the sense that
+it is not considered searchable in the same way data is
+searchable. This represents a significant opportunity.
+
+Note also that this view of the desiderata lines up with key
+developments in logic. Specifically, the query semantics suggested here picks out
+just those computations, such as \pic processes, from a given source
+of computations, such as a repository or database, that bear witness to a particular
+property. In other words, this approach to the design of a query model
+shares much with the realizability approach to semantics of logic. 
 \subsection{Propositions/filters as types, structural type systems, realizability (LGM)}
 \subsection{Generation of type systems for programming languages (Javascript, Python, et al) (LGM)}
   Sums of languages (MAS)
