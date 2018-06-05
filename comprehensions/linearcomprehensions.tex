@@ -1,0 +1,115 @@
+% \vdash ⊢
+% \vDash ⊨
+% \Vdash ⊩
+
+
+
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{wasysym}
+
+\newcommand{\maps}{\colon}
+\newcommand{\interp}[1]{\llbracket #1 \rrbracket}
+\newcommand{\FV}{\mbox{FV}}
+\newcommand{\iym}[1]{\interp{\vec{y}.#1}_M}
+\newcommand{\iymm}[2]{\interp{\vec{y_{#1}}.#2}_M}
+\renewcommand{\hom}{\multimap}
+
+\begin{document}
+
+\title{Comprehending types}
+\author{L.\ G.\ Meredith \\ M. Stay}
+
+\maketitle
+
+\begin{abstract}
+Abstract.
+\end{abstract}
+
+\section{Comprehension signatures}
+A {\bf comprehension signature} $\Sigma$ has a collection of sorts; the collection of types is generated inductively:
+\begin{itemize}
+  \item There is a {\bf unit type}, denoted by $I.$
+  \item Every sort is a type.
+  \item Given two types $A$ and $B,$ there is a type $A\otimes B.$
+  \item Given a type $A,$ there is a {\bf power type} $PA.$
+\end{itemize}
+
+The comprehension signature $\Sigma$ also has a collection of {\bf function symbols.}  To each function symbol is assigned a function signature $A\to B,$ where $A$ and $B$ are types.
+
+Terms are generated recursively:
+\begin{itemize}
+  \item Every variable $x$ of type $A$ is a term of type $A$ whose only free variable is $x.$
+  \item If $f$ is a function symbol of signature $A \to B$ and $t$ is a term of type $A,$ then $f(t)$ is a term of type $B$ with the same free variables as $t.$
+  \item If $s$ is a term of type $A$ and $t$ is a term of type $B,$ then $s \otimes t$ is a term of type $A\otimes B$ with free variables $\FV(s) \sqcup \FV(t).$
+  \item If $s$ is a term of type $A\otimes B$, $t$ is a variable of type $A$ not appearing in $s,$ $u$ is a variable of type $B$ not appearing in $s,$ and $v$ is a term of type $C$ in which $t$ and $u$ are free, then 
+    \[\mbox{let }t \otimes u = s \mbox{ in } v\]
+    is a term of type $C$ with free variables $\FV(s) \sqcup (\FV(v) - \{ t, u\}).$
+  \item If 
+    \begin{itemize}
+      \item for $1 \le i \le n,$ the variable $x_i$ is of type $A_i,$
+      \item for $1 \le i \le n,$ $t_i$ is a term of type $PA_i$ where the $x_j$ in $\FV(t_i)$ satisfy $j \le i$
+      \item $t_{n+1}$ is a term of type $B$
+      \item each variable among the $\FV(t_i)$ is used exactly once by only one of the $t_i$
+    \end{itemize}
+    then 
+      \[ [t_{n+1} \; |\; x_1 \leftarrow t_1 \;;\; \cdots \;;\; x_n \leftarrow t_n] \]
+    is a term of type $PB$ with free variables $\bigcup_{i=1}^{n+1} FV(t_i) - \bigcup_{i=1}^{n} \{ x_i \}.$
+\end{itemize}
+
+A {\bf suitable context} for a term is an ordering of the set of free variables of that term, {\em i.e.} a list containing each of the free variables with no repetitions.
+
+\section{Categorical semantics}
+An interpretation $M$ of a comprehension signature $\Sigma$ in a symmetric monoidal category $V$ equipped with a strong monad $(P\maps V \to V, \eta\maps 1 \Rightarrow P, \mu\maps P\circ P \Rightarrow P, \sigma\maps 1 \otimes P \Rightarrow P)$ consists of the following, subject to the conditions on interpretations below:
+\begin{itemize}
+  \item $MI$ is the monoidal unit object $I$ in $V.$
+  \item For each sort $A$ in $\Sigma,$ a chosen object $MA$ in $V.$
+  \item If $MA$ and $MB$ have been defined, then $M(A\otimes B)$ is $MA \otimes MB$ in $V.$
+  \item If $MA$ has been defined, then $M(PA)$ is defined to be $P(MA)$ in $V.$
+  \item For each function symbol $f$ with function signature $A \to B,$ a chosen morphism $Mf\maps MA \to MB$ in $V.$
+\end{itemize}
+Given an interpretation $M,$ the interpretation of a term $t$ of type $B$ in a suitable context $\vec{y}$ is a morphism ${\interp{\vec{y}.t}_M\maps MA_1 \otimes \cdots \otimes MA_n \to MB,}$ where $A_1, \ldots, A_n$ are the types of $y_1, \ldots, y_n,$ respectively.  We define these conditions on interpretations by recursion:
+\begin{itemize}
+  \item If $x$ is a variable of type $A$, then $\interp{x.x}_M$ is the identity morphism on $MA.$
+  \item Given a term $t$ of type $A$ and a function symbol $f$ with function signature $A\to B,$ if $\iym{t}$ has been defined, then $\iym{f(t)}$ is defined to be the composite $Mf \circ \iym{t}.$
+  \item If $\iymm{1}{s}$ and $\iymm{2}{t}$ have been defined and $\vec{y_1}$ and $\vec{y_2}$ are disjoint, then $\iym{s \otimes t}$ is defined to be $\iymm{1}{s} \otimes \iymm{2}{t},$ where $\vec{y} = \vec{y_1} + \vec{y_2}$ is the concatenation of $\vec{y_1}$ and $\vec{y_2}.$
+  \item If $s$ is a term of type $A \otimes B$, $\iymm{1}{s}$ and $\iymm{2}{v}$ have been defined, $t$ is a variable of type $A,$ $u$ is a variable of type $B,$ $\vec{y_2} = [t, u] + \vec{y_3}$ for some $\vec{y_3},$ and $\vec{y_1}$ and $\vec{y_2}$ are disjoint, then
+    \[ \interp{\vec{y_1}+\vec{y_3}.\mbox{let } t \otimes u = s \mbox{ in } v}_M \]
+    is defined to be the composite $\iymm{2}{v} \circ (\iymm{1}{s} \otimes M\vec{y_3}).$
+  \item If 
+    \begin{itemize}
+      \item for $1 \le i \le n,$ the variable $x_i$ is of type $A_i,$
+      \item for $1 \le i \le n,$ $t_i$ is a term of type $PA_i$ where the $x_j$ in $\FV(t_i)$ satisfy $j \le i$
+      \item $t_{n+1}$ is a term of type $B$
+      \item each variable among the $\FV(t_i)$ is used exactly once by only one of the $t_i$
+    \end{itemize}
+    then 
+      \[ [t_{n+1} \; |\; x_1 \leftarrow t_1 \;;\; \cdots \;;\; x_n \leftarrow t_n] \]
+    is a term of type $PB$ with free variables $\bigcup_{i=1}^{n+1} FV(t_i) - \bigcup_{i=1}^{n} \{ x_i \}.$
+\end{itemize}
+
+An interpretation $M$ {\bf satisfies} a formula $\theta$ with truth value $t\maps 1 \to P1$ if for some suitable context $\vec{y},$ the morphism $\iym{\theta}$ factors through $t.$  We write this symbolically as $M \models^t_{\vec{y}} \theta.$
+
+\section{Equality, inhabitation, and logical connectives}
+Notably absent from a comprehension signature is any notion of equality, inhabitation, or logical connectives.  These concepts all depend on the specifics of the monad, and give us an opportunity to consider broader notions of truth.  For instance, when $V=\mbox{Set}$ and $P$ is the list (or free monoid) monad, $P1$ is isomorphic to the natural numbers $\mathbb{N}.$  In this situation, there are infinitely many ways to be ``true'', each more true than the last, so there's no clear answer to the question ``How true is the statement $x=x$?''  Neither is there a unique way for an item $x$ to be an inhabitant of the list $[x, y, x];$ we could have $x \in [x, y, x]$ be 2, because it occurs twice; or 3 because it last appears at position 3 in the list; or 1, emulating those programming languages like C that use 1 to mean true and 0 to mean false.  Logical connectives have similar problems: $\land$ and $\lor$ could just as easily be min and max as bitwise operators.  When $V=\mbox{Set}$ and $P$ is the monad 
+
+In the case where $P$ is finitary, we can take the operations of the corresponding Lawvere theory as primitive.  For instance, the list monad has a distinguished element $[],$ so we have a distinguished term of type $PA$ for any type $A.$  We can ask whether an interpretation satisfies a formula with truth value $[].$  We can also concatenate lists: given any two terms $t, u$ of type $PA$ for any $A,$ we can form the term $t \otimes u$ of type $PA.$
+
+
+
+\section{Comprehensional Mitchell--B\'enabou Language}
+
+A cartesian category $V$ equipped with a strong monad $(P, \eta, \mu, \sigma)$ gives rise to a comprehension signature in a fairly straightforward way.  The basic sorts of the signature are the objects of $V,$ the function symbols are the morphisms of $V,$ the constant symbols are the morphisms out of $1,$ and the relation symbols are the morphisms into $P1.$  We call this the {\bf comprehensional Mitchell--B\'enabou Language} of $(V, P, \eta, \mu, \sigma),$ and it has a tautological interpretation in $(V, P, \eta, \mu, \sigma).$
+
+\section{Kripke--Joyal semantics}
+
+???
+
+
+
+
+
+
+\end{document}

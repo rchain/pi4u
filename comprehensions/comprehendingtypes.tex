@@ -1,0 +1,131 @@
+% \vdash ⊢
+% \vDash ⊨
+% \Vdash ⊩
+
+
+
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{wasysym}
+
+\newcommand{\maps}{\colon}
+\newcommand{\interp}[1]{\llbracket #1 \rrbracket}
+\newcommand{\iym}[1]{\interp{\vec{y}.#1}_M}
+
+\begin{document}
+
+\title{Comprehending types}
+\author{L.\ G.\ Meredith \\ M. Stay}
+
+\maketitle
+
+\begin{abstract}
+Abstract.
+\end{abstract}
+
+\section{Comprehension signatures}
+A {\bf comprehension signature} $\Sigma$ has a collection of sorts; the collection of types is generated inductively:
+\begin{itemize}
+  \item There is a {\bf unit type}, denoted by 1.
+  \item Every sort is a type.
+  \item Given two types $A$ and $B,$ there is a type $A\times B.$
+  \item Given a type $A,$ there is a {\bf power type} $PA.$
+\end{itemize}
+
+The signature $\Sigma$ also has a collection of {\bf constant symbols,} a collection of {\bf function symbols,} and a collection of {\bf relation symbols.}  To each constant symbol and to each relation symbol is assigned a type.  To each function symbol is assigned a type $A\to B,$ where $A$ and $B$ are types.
+
+Formulae are terms of type $P1;$ we can think of relation symbols as function symbols from $A$ to $P1.$  The well-formed formulae are defined recursively using the usual rules. 
+\begin{itemize}
+  \item If $t$ is a term of type $A$ and $R$ is a relation symbol of type $A,$ then $R(t)$ is an atomic formula with the same free variables as $t.$
+  \item If $z$ is a variable of type $A,$ $t$ is a term of type $PA,$ and $\phi$ is a formula, then $\exists z\leftarrow t.\phi$ is a formula with free variables $\mbox{FV}(\phi) \cup \mbox{FV}(t) - \{ z \}.$
+\end{itemize}
+
+Since well-formed formulae are well-typed, we can leave off the subscripts.  Terms are generated recursively:
+\begin{itemize}
+  \item The term $*$ is of type 1.
+  \item Every constant of type $A$ is a term of type $A$ with no free variables.
+  \item Every variable $x$ of type $A$ is a term of type $A$ whose only free variable is $x.$
+  \item If $f$ is a function symbol of type $A \to B$ and $t$ is a term of type $A,$ then $f(t)$ is a term of type $B$ with the same free variables as $t.$
+  \item If $s$ is a term of type $A$ and $t$ is a term of type $B,$ then $\langle s, t\rangle$ is a term of type $A\times B$ with free variables FV($s$) $\cup$ FV($t$).
+  \item If $u$ is a term of type $A\times B,$ then $\pi_1u$ is a term of type $A$ and $\pi_2u$ is a term of type $B,$ and both have the same free variables as $u.$
+  \item If
+    \begin{itemize}
+      \item $x_1, \ldots, x_n$ are variables of type $A_1 \times \cdots \times A_n$, respectively,
+      \item $t_1 \ldots, t_n$ are terms of type $PA_1, \ldots, PA_n,$ respectively, where FV($t_i$) may include any variable except those $x_j$ such that $j \ge i,$
+      \item $t$ is a term of type $B,$ and
+      \item $\phi$ is a formula,
+    \end{itemize} 
+    then $[t \; |\; x_1 \leftarrow t_1 \;;\; \cdots \;;\; x_n \leftarrow t_n \mbox{ if } \phi]$ is a term of type $PB$ with free variables $\bigcup_{i=1}^{n} FV(t_i) - \bigcup_{i=1}^{n} \{ x_i \}.$
+\end{itemize}
+Note that the last rule means that term and formula formation is mutually recursive.  A {\bf suitable context} for a term or formula is an ordered list $\vec{y} = [y_1, \ldots, y_m]$ of variables, without repetitions and annotated with types, such that every free variable of that term or formula appears in $\vec{y}.$
+
+\section{Categorical semantics}
+An interpretation $M$ of a comprehension signature $\Sigma$ in a cartesian category $V$ equipped with a strong monad $(P, \eta, \mu, \sigma)$ consists of the following, subject to the conditions on interpretations below:
+\begin{itemize}
+  \item For each sort $A$ in $\Sigma,$ a chosen object $MA$ in $V.$
+  \item $M1$ is the terminal object 1 in $V.$
+  \item If $MA$ and $MB$ have been defined, then $M(A\times B)$ is $MA \times MB$ in $V.$
+  \item If $MA$ has been defined, then $M(PA)$ is defined to be $P(MA)$ in $V.$
+  \item For each constant symbol of type $A,$ a chosen morphism $Ma\maps 1 \to MA$ in $V.$
+  \item For each function symbol $f$ of type $A \to B,$ a chosen morphism $Mf\maps MA \to MB$ in $V.$
+  \item For each relation symbol $R$ of type $A,$ a chosen morphism $MR\maps MA \to P1$ in $V.$
+\end{itemize}
+Given an interpretation $M,$ the interpretation of a term $t$ of type $B$ in a suitable context $\vec{y}$ is a morphism ${\interp{\vec{y}.t}_M\maps MA_1 \times \cdots \times MA_n \to MB,}$ where $A_1, \ldots, A_n$ are the types of $y_1, \ldots, y_n,$ respectively.  The interpretation of a formula $\phi$ in a suitable context $\vec{y}$ is a morphism $\interp{\vec{y}.\phi}_M\maps MA_1\times \cdots \times MA_n \to P1.$  We define these conditions on interpretations by recursion:
+\begin{itemize}
+  \item $\iym{*}$ is the unique morphism into 1.
+  \item If $a$ is a constant of type $A,$ then $\iym{a}$ is the composite $Ma \circ \iym{*}.$
+  \item $\iym{y_i}$ is defined to be the $i$th projection $MA_1 \times \cdots MA_n \to MA_i.$
+  \item Given a term $t$ of type $A$ and a function symbol $f$ of type $A\to B,$ if $\iym{t}$ has been defined, then $\iym{f(t)}$ is defined to be the composite $Mf \circ \iym{t}.$
+  \item If $\iym{s}$ and $\iym{t}$ have been defined, then $\iym{\langle s, t \rangle}$ is defined to be $\langle \iym{s}, \iym{t} \rangle.$
+  \item If $u$ is a term of type $A\times B$ and $\iym{u}$ has been defined, then $\iym{\pi_1u}$ is defined to be the composite $\pi_1 \circ \iym{u},$ and similarly for $\pi_2.$
+  \item If $t$ is a term of type $A$, then $\iym{[t]}$ is defined to be $\eta_A \circ \iym{t}.$
+  \item If 
+    \begin{itemize}
+      \item $\vec{y} = [y_1, \ldots, y_m]$ is a context and $A_1, \ldots, A_m$ are the types of $y_1, \ldots, y_n,$ respectively,
+      \item $\vec{x} = [x_1, \ldots, x_n]$ is a context and $B_1, \ldots, B_n$ are the types of $x_1, \ldots, x_n,$ respectively,
+      \item $t$ is a term of type $PC,$ and
+      \item $1 \le i \le n$ is such that $[y_1, \ldots, y_m, x_1, \ldots, x_i]$ is a suitable context for $t,$
+    \end{itemize}  
+    then let $g_{\vec{y}, \vec{x}, i, t}$ be the composite 
+    \[ \begin{array}{l} \displaystyle \mu_{A_1 \times \cdots \times A_n \times B_1 \times \cdots \times B_i} \circ P\left(\sigma_{A_1 \times \cdots \times A_n \times B_1\times \cdots \times B_i, C} \right. \\ \displaystyle \left. \quad \circ \left(A_1 \times \cdots \times A_n \times B_1\times \cdots \times B_i \times \iym{t}\right) \circ \Delta_{A_1 \times \cdots \times A_n \times B_1\times \cdots \times B_i}\right). \end{array}\]
+    If
+    \begin{itemize}
+      \item $\vec{y} = [y_1, \ldots, y_m]$ is a context and $A_1, \ldots, A_m$ are the types of $y_1, \ldots, y_n,$ respectively,
+      \item $\vec{x} = [x_1, \ldots, x_n]$ is a context and $B_1, \ldots, B_n$ are the types of $x_1, \ldots, x_n,$ respectively,
+      \item $t$ is a term of type $C,$ 
+      \item $\phi$ is a formula,
+      \item $\vec{y} + \vec{x}$ is a suitable context for $t,$ and
+      \item $t_1 \ldots, t_n$ are terms of type $PB_1, \ldots, PB_n,$ respectively, where FV($t_i$) may include any variable in $\vec{y}$ and any $x_j$ such that $j < i,$
+    \end{itemize} 
+    then $\iym{[t \; |\; x_1 \leftarrow t_1 \;;\; \cdots \;;\; x_n \leftarrow t_n \mbox{ if } \phi]}$ is defined to be the composite
+    \[ M\iym{t} \circ g_{\vec{y}, \vec{x}, n, \phi} \circ \left(\mathop{\fullmoon}_{i=1}^n g_{\vec{y}, \vec{x}, i-1, t_i}\right) \circ \eta_{\vec{y}}\maps MA_1 \times \cdots MA_m \to PC \]
+    in $V.$
+  \item If $R$ is a relation symbol of type $B$ and $t$ is a term of type $B,$ then $\iym{R(t)}$ is defined to be the composite $MR \circ \iym{t}$ in $V.$
+  \item If $z$ is a variable of type $A,$ $t$ is a term of type $PA,$ $\phi$ is a formula, and $\vec{y}, z$ is a suitable context for $\phi$ and $t,$ then $\iym{\exists z\leftarrow A.\phi}$ is defined to be the morphism $\iym{[* | z \leftarrow t \mbox{ if } \phi]}$ in $V.$
+\end{itemize}
+
+An interpretation $M$ {\bf satisfies} a formula $\theta$ with truth value $t\maps 1 \to P1$ if for some suitable context $\vec{y},$ the morphism $\iym{\theta}$ factors through $t.$  We write this symbolically as $M \models^t_{\vec{y}} \theta.$
+
+\section{Equality, inhabitation, and logical connectives}
+Notably absent from a comprehension signature is any notion of equality, inhabitation, or logical connectives.  These concepts all depend on the specifics of the monad, and give us an opportunity to consider broader notions of truth.  For instance, when $V=\mbox{Set}$ and $P$ is the list (or free monoid) monad, $P1$ is isomorphic to the natural numbers $\mathbb{N}.$  In this situation, there are infinitely many ways to be ``true'', each more true than the last, so there's no clear answer to the question ``How true is the statement $x=x$?''  Neither is there a unique way for an item $x$ to be an inhabitant of the list $[x, y, x];$ we could have $x \in [x, y, x]$ be 2, because it occurs twice; or 3 because it last appears at position 3 in the list; or 1, emulating those programming languages like C that use 1 to mean true and 0 to mean false.  Logical connectives have similar problems: $\land$ and $\lor$ could just as easily be min and max as bitwise operators.  When $V=\mbox{Set}$ and $P$ is the monad 
+
+In the case where $P$ is finitary, we can take the operations of the corresponding Lawvere theory as primitive.  For instance, the list monad has a distinguished element $[],$ so we have a distinguished term of type $PA$ for any type $A.$  We can ask whether an interpretation satisfies a formula with truth value $[].$  We can also concatenate lists: given any two terms $t, u$ of type $PA$ for any $A,$ we can form the term $t \otimes u$ of type $PA.$
+
+
+
+\section{Comprehensional Mitchell--B\'enabou Language}
+
+A cartesian category $V$ equipped with a strong monad $(P, \eta, \mu, \sigma)$ gives rise to a comprehension signature in a fairly straightforward way.  The basic sorts of the signature are the objects of $V,$ the function symbols are the morphisms of $V,$ the constant symbols are the morphisms out of $1,$ and the relation symbols are the morphisms into $P1.$  We call this the {\bf comprehensional Mitchell--B\'enabou Language} of $(V, P, \eta, \mu, \sigma),$ and it has a tautological interpretation in $(V, P, \eta, \mu, \sigma).$
+
+\section{Kripke--Joyal semantics}
+
+???
+
+
+
+
+
+
+\end{document}
