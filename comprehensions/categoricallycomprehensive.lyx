@@ -266,7 +266,7 @@ Given
 
 \begin_inset Formula 
 \[
-\left[b_{2}|b_{1}\times b_{2}\leftarrow u\right]\coloneqq P\left(\pi_{2}\right)\circ u:a\to P\left(b_{1}\right)
+\left[b_{2}|b_{1}\times b_{2}\leftarrow u\right]\coloneqq P\left(\pi_{2}\right)\circ u:a\to P\left(b_{2}\right)
 \]
 
 \end_inset
