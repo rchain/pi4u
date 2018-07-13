@@ -239,7 +239,7 @@ Given
 \begin_inset Formula $u:a\to P\left(b\right)$
 \end_inset
 
-
+,
 \begin_inset Formula 
 \[
 \left[b|b\leftarrow u\right]\coloneqq u:a\rightarrow P\left(b\right)
