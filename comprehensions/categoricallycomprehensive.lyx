@@ -156,18 +156,110 @@ id:a\rightarrow a
 \end_inset
 
 
+\begin_inset Formula 
+\[
+\lambda:1\times a\to a
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\rho:a\times1\to a
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-Define 
-\emph on
-comprehensions
-\emph default
-, morphisms 
-\begin_inset Formula $\left[\cdots\right]:a\to P\left(b\right)$
+By the universal property of 
+\begin_inset Formula $\pi_{1},\pi_{2}$
 \end_inset
 
-, as
+ we may define a unique morphism 
+\begin_inset Formula $\Delta:a\to a\times a$
+\end_inset
+
+ such that the following diagram commutes.
+\begin_inset Formula 
+\[
+\begin{array}{ccccc}
+ &  & a\\
+ & ^{id}\swarrow & \downarrow_{\Delta} & \searrow^{id}\\
+a & \xleftarrow[\pi_{1}]{} & a\times a & \xrightarrow[\pi_{2}]{} & a
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For a morphism 
+\begin_inset Formula $f:a\to P\left(b\right)$
+\end_inset
+
+ define,
+\begin_inset Formula 
+\[
+\bar{f}:a\to P\left(a\times b\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\bar{f}=\tau\circ\left(id\times f\right)\circ\Delta
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For a morphism 
+\begin_inset Formula $f:a\to P\left(1\right)$
+\end_inset
+
+ define,
+\begin_inset Formula 
+\[
+\tilde{f}:a\to P\left(a\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\tilde{f}=P\left(\rho\right)\circ\bar{f}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now we can define a 
+\begin_inset Quotes eld
+\end_inset
+
+calculus of comprehensions
+\begin_inset Quotes erd
+\end_inset
+
+ in the Kleisli category of 
+\begin_inset Formula $P$
+\end_inset
+
+ as follows:
 \end_layout
 
 \begin_layout Itemize
@@ -188,7 +280,7 @@ Given
 
 \begin_layout Itemize
 Given 
-\begin_inset Formula $t:b\rightarrow c$
+\begin_inset Formula $t:a\times b\rightarrow c$
 \end_inset
 
  and 
@@ -198,7 +290,7 @@ Given
 ,
 \begin_inset Formula 
 \[
-\left[t|b\leftarrow u\right]\coloneqq P\left(t\right)\circ u:a\rightarrow P\left(c\right)
+\left[t|b\leftarrow u\right]\coloneqq P\left(t\right)\circ\bar{u}:a\rightarrow P\left(c\right)
 \]
 
 \end_inset
@@ -208,11 +300,31 @@ Given
 
 \begin_layout Itemize
 Given 
-\begin_inset Formula $t:a_{n}\rightarrow b$
+\begin_inset Formula $t:a\to c$
 \end_inset
 
  and 
-\begin_inset Formula $u_{i}:a_{i-1}\rightarrow P\left(a_{i}\right)$
+\begin_inset Formula $u:a\to P\left(1\right)$
+\end_inset
+
+,
+\begin_inset Formula 
+\[
+\left[t|\text{ if }u\right]=P\left(t\right)\circ\tilde{u}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Given 
+\begin_inset Formula $t:a_{0}\times\cdots\times a_{n}\rightarrow b$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{i}:a_{0}\times\cdots\times a_{i-1}\rightarrow P\left(a_{i}\right)$
 \end_inset
 
  for 
@@ -225,7 +337,7 @@ Given
 \begin{array}{c}
 \left[t|a_{1}\leftarrow u_{1},\ldots,a_{n}\leftarrow u_{n}\right]\\
 \coloneqq\\
-\mu\circ\left[\left[t|a_{2}\leftarrow u_{2},\ldots,a_{n}\leftarrow u_{n}\right]|a_{1}\leftarrow u_{1}\right]:a_{0}\rightarrow P\left(b\right)
+\mu\circ\left[\left[t|a_{2}\leftarrow u_{2},\ldots,a_{n}\leftarrow u_{n}\right]|a_{1}\leftarrow u_{1}\right]:a_{0}\times\cdots\times a_{n}\rightarrow P\left(b\right)
 \end{array}
 \]
 
@@ -303,6 +415,26 @@ Given
 \begin_inset Formula 
 \[
 \left[b\times t|b\leftarrow u\right]\coloneqq P\left(\sigma\right)\circ\tau\circ\left(t\times u\right)\circ\sigma:a\times c\rightarrow P\left(b\times d\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Given 
+\begin_inset Formula $t:a\to b$
+\end_inset
+
+ and 
+\begin_inset Formula $\varphi:a\to P\left(1\right)$
+\end_inset
+
+,
+\begin_inset Formula 
+\[
+\left[t|\text{if }\varphi\right]\coloneqq P\left(\lambda\right)\circ\tau\circ\left(\varphi\times t\right)\circ\Delta:a\rightarrow P\left(b\right)
 \]
 
 \end_inset
