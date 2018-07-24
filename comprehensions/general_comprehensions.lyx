@@ -1,0 +1,830 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass amsart
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section*
+Preliminary Definitions
+\end_layout
+
+\begin_layout Definition
+A 
+\emph on
+monad 
+\emph default
+over a category 
+\begin_inset Formula $\mathcal{C}$
+\end_inset
+
+ is an endofunctor 
+\begin_inset Formula $P:\mathcal{C}\rightarrow\mathcal{C}$
+\end_inset
+
+ equipped with
+\end_layout
+
+\begin_layout Itemize
+a natural transformation 
+\begin_inset Formula $\eta_{A}:A\rightarrow PA$
+\end_inset
+
+ (
+\emph on
+unit
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+a natural transformation 
+\begin_inset Formula $\mu_{A}:PPA\rightarrow PA$
+\end_inset
+
+ (
+\emph on
+multiplication
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Diagram
+\end_layout
+
+\begin_layout Definition
+The 
+\emph on
+Kleisli category
+\emph default
+ of a monad 
+\begin_inset Formula $(P,\mu,\eta)$
+\end_inset
+
+ over a category 
+\begin_inset Formula $\mathcal{C}$
+\end_inset
+
+ is a category 
+\begin_inset Formula $\mathcal{C}_{P}$
+\end_inset
+
+ where
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $Obj(\mathcal{C})=Obj(\mathcal{C}_{\mathcal{P}})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $Hom_{\mathcal{C}_{P}}(A,B)=Hom_{\mathcal{C}}(A,PB)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $1_{A}=\eta_{A}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $g\circ f=\mu_{C}\circ Tg\circ f:A\rightarrow PC$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+A 
+\emph on
+monoidal category
+\emph default
+ (
+\series bold
+mc
+\series default
+) is a category 
+\begin_inset Formula $\mathcal{C}$
+\end_inset
+
+ equipped with
+\end_layout
+
+\begin_layout Itemize
+a bifunctor 
+\begin_inset Formula $\otimes:\mathcal{C}\times\mathcal{C}\rightarrow\mathcal{C}$
+\end_inset
+
+ (
+\emph on
+tensor product
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+an object 
+\begin_inset Formula $I$
+\end_inset
+
+ (
+\emph on
+unit object
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+a natural isomorphism 
+\begin_inset Formula $\alpha_{A,B,C}:(A\otimes B)\otimes C\cong A\otimes(B\otimes C)$
+\end_inset
+
+ (
+\emph on
+associator
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+a natural isomorphism 
+\begin_inset Formula $\lambda_{A}:I\otimes A\cong A$
+\end_inset
+
+ (
+\emph on
+left unitor
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+a natural isomorphism 
+\begin_inset Formula $\rho_{A}:A\otimes I\cong A$
+\end_inset
+
+ (
+\emph on
+right unitor
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Diagram
+\end_layout
+
+\begin_layout Definition
+A 
+\emph on
+symmetric monoidal category
+\emph default
+ (
+\series bold
+smc
+\series default
+) is a monoidal category 
+\begin_inset Formula $(\mathcal{C},\otimes,I)$
+\end_inset
+
+ equipped with
+\end_layout
+
+\begin_layout Itemize
+a natural isomorphism 
+\begin_inset Formula $\sigma_{A,B}:A\otimes B\rightarrow B\otimes A$
+\end_inset
+
+ (
+\emph on
+swap
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Diagram
+\end_layout
+
+\begin_layout Definition
+A 
+\emph on
+strong monad
+\emph default
+ over a monoidal category 
+\begin_inset Formula $(\mathcal{C},\otimes,I)$
+\end_inset
+
+ is a monad 
+\begin_inset Formula $(P,\mu,\eta)$
+\end_inset
+
+ equipped with
+\end_layout
+
+\begin_layout Itemize
+a natural transformation 
+\emph on
+
+\begin_inset Formula $\tau_{A,B}:A\otimes P(B)\rightarrow P(A\otimes B)$
+\end_inset
+
+ 
+\emph default
+(
+\emph on
+strength
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Diagram
+\end_layout
+
+\begin_layout Definition
+A 
+\emph on
+cartesian monoidal category 
+\emph default
+(
+\series bold
+cmc
+\series default
+) is a monoidal category 
+\begin_inset Formula $(\mathcal{C},\otimes,I)$
+\end_inset
+
+ in which
+\begin_inset Formula $\otimes$
+\end_inset
+
+ is the categorical product and 
+\begin_inset Formula $I$
+\end_inset
+
+ is the terminal object in 
+\begin_inset Formula $\mathcal{C}$
+\end_inset
+
+.
+ Every object 
+\begin_inset Formula $A$
+\end_inset
+
+ in 
+\begin_inset Formula $\mathcal{C}$
+\end_inset
+
+ is equipped with
+\end_layout
+
+\begin_layout Itemize
+a natural transformation 
+\begin_inset Formula $\Delta_{A}:A\rightarrow A\otimes A$
+\end_inset
+
+ (
+\emph on
+duplication
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+a natural transformation 
+\begin_inset Formula $\delta_{A}:A\rightarrow I$
+\end_inset
+
+ (
+\emph on
+deletion
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Diagram
+\end_layout
+
+\begin_layout Standard
+that determine a 
+\emph on
+unique
+\emph default
+ comonoid on 
+\begin_inset Formula $A$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section*
+General Comprehensions
+\end_layout
+
+\begin_layout Definition
+A 
+\emph on
+context
+\emph default
+ is a finite list 
+\begin_inset Formula $\overrightarrow{x}=x_{1}x_{2}...x_{n}$
+\end_inset
+
+ of distinct variables, where 
+\begin_inset Formula $n=0$
+\end_inset
+
+ is the empty context 
+\begin_inset Formula $[]$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ is a context and 
+\begin_inset Formula $y\neq x_{i}$
+\end_inset
+
+ for all 
+\begin_inset Formula $i\leq n$
+\end_inset
+
+, then 
+\begin_inset Formula $\overrightarrow{x}y$
+\end_inset
+
+ denotes the context obtained by appending 
+\begin_inset Formula $y$
+\end_inset
+
+ to 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+.
+ Similarly 
+\begin_inset Formula $\overrightarrow{x}\overrightarrow{y}$
+\end_inset
+
+ denotes the context obtained by concatenating 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\overrightarrow{y}$
+\end_inset
+
+ (
+\begin_inset Formula $x_{i}\neq y_{j}$
+\end_inset
+
+ for all 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ in 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $y_{j}$
+\end_inset
+
+ in 
+\begin_inset Formula $\overrightarrow{y}$
+\end_inset
+
+).
+ The 
+\emph on
+type 
+\emph default
+of a context 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ is the string of the types of the variables appearing in it.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\series medium
+In the following definitions, 
+\begin_inset Formula $\mathcal{C}$
+\end_inset
+
+ is assumed to be a
+\emph on
+ symmetric cartesian monoidal category
+\series default
+\emph default
+ (
+\series bold
+scmc
+\series default
+) 
+\begin_inset Formula $(\mathcal{C},\times,1,\sigma)$
+\end_inset
+
+ 
+\series medium
+with a 
+\emph on
+strong monad
+\series default
+\emph default
+ 
+\begin_inset Formula $(P,\mu,\eta,\tau)$
+\end_inset
+
+.
+ 
+\series medium
+We use the equivalence 
+\begin_inset Formula $MA=M(A_{1}\times A_{2}\times\ldots\times A_{n})$
+\end_inset
+
+ to denote contexts and 
+\begin_inset Formula $[t\mid x_{1}\leftarrow u_{1},x_{2}\leftarrow u_{2},\ldots,x_{n}\leftarrow u_{n}]=[t\mid u_{1},u_{2},...,u_{n}]$
+\end_inset
+
+ to denote comprehensions.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Let
+\begin_inset Formula $\llbracket\overrightarrow{x}.u\rrbracket_{M}:MA\rightarrow P(MB)$
+\end_inset
+
+ be a morphism in 
+\begin_inset Formula $\mathcal{C}$
+\end_inset
+
+.
+ The 
+\emph on
+context sensitive 
+\emph default
+morphism 
+\begin_inset Formula $\llbracket\overrightarrow{x}.\bar{u}\rrbracket_{M}$
+\end_inset
+
+ of 
+\begin_inset Formula $\llbracket\overrightarrow{x}.u\rrbracket_{M}$
+\end_inset
+
+ is the morphism
+\begin_inset Formula 
+\[
+MA\xrightarrow{\Delta_{MA}}MA\times MA\xrightarrow{1_{MA}\times\llbracket\overrightarrow{x}.u\rrbracket}MA\times P(MB)\xrightarrow{\tau_{MA,P(MB)}}P(MA\times MB)
+\]
+
+\end_inset
+
+We can think of a context sensitive morphism as information preserving;
+ the source of the morphism is present in the target.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Let 
+\begin_inset Formula $M$
+\end_inset
+
+ be a 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+-structure in 
+\begin_inset Formula $\mathcal{C}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\overrightarrow{x}.t$
+\end_inset
+
+ is a term-in-context over 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ and 
+\begin_inset Formula $t$
+\end_inset
+
+ is of type 
+\begin_inset Formula $PD$
+\end_inset
+
+, then the morphism
+\begin_inset Formula 
+\[
+\llbracket\overrightarrow{x}.t\rrbracket_{M}:MA\rightarrow P(MD)
+\]
+
+\end_inset
+
+is defined inductively by the following clauses:
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $t=[u]$
+\end_inset
+
+ is of type 
+\begin_inset Formula $PD$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+ is of type 
+\begin_inset Formula $D$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+MA\xrightarrow{\llbracket\overrightarrow{x}.u\rrbracket_{M}}MD\xrightarrow{\eta_{D}}P(MD)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $t=[u\mid v]$
+\end_inset
+
+ is of type 
+\begin_inset Formula $PD$
+\end_inset
+
+, 
+\begin_inset Formula $u$
+\end_inset
+
+ is of type 
+\begin_inset Formula $D$
+\end_inset
+
+, and 
+\begin_inset Formula $v$
+\end_inset
+
+ is of type 
+\begin_inset Formula $PC$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+MA\xrightarrow{\llbracket\overrightarrow{x}.\bar{v}\rrbracket_{M}}P(MA\times MC)\xrightarrow{P(\llbracket\overrightarrow{x}y.u\rrbracket_{M})}P(MD)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $t=[u\mid v,w]$
+\end_inset
+
+ is of type 
+\begin_inset Formula $PD$
+\end_inset
+
+, 
+\begin_inset Formula $u$
+\end_inset
+
+ is of type 
+\begin_inset Formula $D$
+\end_inset
+
+, 
+\begin_inset Formula $v$
+\end_inset
+
+ is of type 
+\begin_inset Formula $PB$
+\end_inset
+
+, and 
+\begin_inset Formula $w$
+\end_inset
+
+ is of type 
+\begin_inset Formula $PC$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+MA\xrightarrow{\llbracket\overrightarrow{x}.\bar{v}\rrbracket}P(MA\times MB)\xrightarrow{P(\llbracket\overrightarrow{x}y.\bar{w}\rrbracket_{M})}PP(MA\times MB\times MC)\xrightarrow{P(P(\llbracket\overrightarrow{x}yz.u\rrbracket_{M}))}PP(MA\times MB\times MC\times MD)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\xrightarrow{\mu_{MA\times MB\times MC\times MD}}P(MA\times MB\times MC\times MD
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that (2) and (3) together are sufficient to define comprehensions with
+ non-negative finite qualifiers.
+ The derivation of the composition in (3) is given below.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula 
+\[
+\begin{array}{ccl}
+\llbracket\overrightarrow{x}.t\rrbracket_{M} & = & \llbracket\overrightarrow{x}.[u\mid v,w]\rrbracket_{M}\\
+ & = & \mu_{D}\circ\llbracket[[u\mid w]\mid v]\rrbracket_{M}\\
+ & = & \mu_{D}\circ P(\llbracket\overrightarrow{x}y.[u\mid w]\rrbracket_{M})\circ\llbracket\overrightarrow{x}.\bar{v}\rrbracket\\
+ & = & \mu_{D}\circ P(P(\llbracket\overrightarrow{x}yz.u\rrbracket_{M})\circ\llbracket\overrightarrow{x}y.\bar{w}\rrbracket_{M})\circ\llbracket\overrightarrow{x}.\bar{v}\rrbracket\\
+ & = & \mu_{D}\circ P(P(\llbracket\overrightarrow{x}yz.u\rrbracket_{M}))\circ P(\llbracket\overrightarrow{x}y.\bar{w}\rrbracket_{M})\circ\llbracket\overrightarrow{x}.\bar{v}\rrbracket
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Let
+\begin_inset Formula $\llbracket\overrightarrow{x}.u\rrbracket_{M}:MA\rightarrow P(MB)$
+\end_inset
+
+ and 
+\begin_inset Formula $\llbracket\overrightarrow{y}.v\rrbracket_{M}:MB\rightarrow P(MC)$
+\end_inset
+
+ be morphisms in 
+\begin_inset Formula $\mathcal{C}$
+\end_inset
+
+.
+ The 
+\emph on
+Kleisli composition
+\emph default
+ 
+\begin_inset Formula $\llbracket\overrightarrow{x}.u\rrbracket_{M}\rightsquigarrow\llbracket\overrightarrow{y}.v\rrbracket_{M}$
+\end_inset
+
+ of 
+\begin_inset Formula $\llbracket\overrightarrow{x}.u\rrbracket_{M}$
+\end_inset
+
+ and 
+\begin_inset Formula $\llbracket\overrightarrow{y}.v\rrbracket_{M}$
+\end_inset
+
+ is the morphism
+\begin_inset Formula 
+\[
+MA\xrightarrow{\llbracket\overrightarrow{x}.u\rrbracket_{M}}P(MB)\xrightarrow{P(\llbracket\overrightarrow{y}.v\rrbracket_{M})}PP(MC)\xrightarrow{\mu_{MC}}P(MC)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
