@@ -176,7 +176,7 @@ id:a\rightarrow a
 
 \begin_layout Standard
 By the universal property of 
-\begin_inset Formula $\pi_{1},\pi_{2}$
+\begin_inset Formula $\times$
 \end_inset
 
  we may define a unique morphism 
