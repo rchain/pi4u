@@ -357,6 +357,323 @@ way, the term calculi are powerful enough to support the embedding of
 the new terms back into the original.
 
 It remains to show that the embedding is full and faithful.
+
+%% Intuitionistic Term assignment
+%% Terms, their types and cuts
+
+%% ———-- constants
+%% ⊢ C : C
+
+%% Γ ⊢ t : τ  Δ ⊢ u : τ’
+%% __________________ ρ tensor τ
+%% Γ, Δ ⊢ K(t, u) : ρ⊗(τ, τ’)
+
+%% Γ ⊢ t : τ, u : τ’
+%% __________________ ρ par
+%% Γ ⊢ ⅋ρ (t, u) : ρ⅋(τ, τ’)
+
+%% Γ ⊢ ⅋ρ (t’, u’) : ρ⅋(τ⊥, τ’⊥)  Δ ⊢ K(t, u) : ρ⊗(τ, τ’) 
+%% _____________________________________ ρ par-tensor-cut
+%% Γ, Δ ⊢ R(K(K(t’, t), K(u’, u))) : R(rK)
+%% τ ▷ τ' = { u | ∃t,χ. u = !K[]r(t, χ),∀u’:τ. (∃ ρ: u@u’ → v) ⇒ v:τ’ }
+%% τ⊥ = τ ▷ rK = { u | ∃t,χ. u = !K[]r(t, χ),∀u’:τ. (∃ ρ: u@u’ → v) ⇒ v:rK }
+
+%% Γ ⊢ t : τ, u : τ’
+%% _______________ ρ serialize
+%% Γ ⊢ K(t,u) : ρ⊓(τ,τ’)
+
+%% Γ ⊢ t : τ, u : τ’
+%% ______________ ρ deserialize
+%% Γ ⊢ ⊔(t,u) : ρ⊔(τ,τ’)
+
+%% Γ ⊢ ⊔ρ (t, u) : ρ⊔(τ’’ ▷ τ⊥, τ’’)  Δ ⊢ K(t', u') : ρ⊓(τ’ ▷ τ, τ’)
+%% -----------------------------------------------------------------------------------  ρ serialize-deserialize-cut
+%% Γ, Δ ⊢ R(K(K( t, u), K(t’, u’)) : R(rK)
+
+
+%% Γ ⊢ t’ : τ⊥, Δ ⊢ t : τ
+%% ---------------------------- ρ cut is the special case of ρ⊗ with ⅋ρ (rK, rK)
+%% Γ, Δ ⊢ R(K(t’,t)) : R(rK)
+%% Contexts, their types and cuts
+%% Below we identify the formation of each kind of context: tensor-parallel, tensor-serial, par-parallel, and par-serial.
+
+
+%% structure
+%% destructure
+%% parallel
+%% tensor (⊗)
+%% par (⅋)
+%% serial
+%% serialize (⊓)
+%% deserialize (⊔)
+
+%% Axiom
+
+%% —————— axiom
+%% [] : τ ⊢ [] : τ
+%% Left and right context formation and cut
+
+%% Γ, [] : τ  ⊢ χ : τ’
+%% --------------------
+%% Γ ⊢ χ! : τ’ ◁ τ
+
+%% Γ, [] : τ  ⊢ χ : τ’
+%% -------------------
+%% Γ ⊢ !χ : τ ▷ τ’
+
+%% Γ ⊢ K([],u)! : τ’ ◁ τ,  Δ ⊢ t : τ
+%% ------------------------------------- context-cut-left
+%% Γ, Δ ⊢ R(K(t,u)) : Rτ’
+
+
+
+
+%% Γ ⊢ !K(t,[]) : τ ▷ τ’,  Δ ⊢ u : τ
+%% -------------------------------------- context-cut-right
+%% Γ, Δ ⊢ R(K(t,u)) : Rτ’
+%% Classical Term assignment
+%% In the classical setting we transform double-sided sequents
+
+%% —————— axiom
+%% [] : τ ⊢ [] : τ
+
+%% to single sided sequents
+
+%% —————— axiom
+%% ⊢ [] : τ⊥, [] : τ
+
+%% And the interpretation of “,” is tensor, which is just the K constructor.
+
+%% K( [] : τ⊥, [] : τ )
+
+%% Expanding this out and instantiating K to application, we would get
+
+%% App( [] : τ ▷ lK, [] : τ )
+
+%% This yields exactly the property we are demanding.
+
+%% More formally, we adapt the Lawvere theory as follows.
+
+%% We add new sorts, 𝛘, and 𝛘, 𝛘𝛘, and the following maps
+
+%% C, lK, rK : 1 -> T
+%% K : T x T -> T
+%% KA : 1 -> 𝛘𝛘
+%% K[][] : 𝛘 x 𝛘 -> 𝛘𝛘
+%% K[]l : T x 𝛘𝛘 -> 𝛘𝛘
+%% K[]r :  𝛘𝛘 x T ->𝛘𝛘
+%% ?(-) : 𝛘𝛘  -> 𝛘
+%% (-)? : 𝛘𝛘  -> 𝛘
+%% !(-) : 𝛘  -> T
+%% (-)! : 𝛘  -> T
+%% @ : T x T -> T
+%% R : T -> T
+%% ⅋ρ : T x T -> T
+%% ⊔ρ : T x T -> T
+%% ρ : T x T -> T             //( \x -> M N) -> M{N/x}     for( y <- x )P | x!(Q) -> P{@Q/y}
+%% s(ρ(t,u)) = RK(t, u) 
+%% t(ρ(t,u)) = f(t,u) // f can mention R, e.g. if R is not a linear resource
+%% K(lK, u) = u
+%% K(t, rK) = t
+%% @([]!,t) = t
+%% @(![],t) = t
+%% @(K[]l (χ, t)!, u) = K(@(χ, u), t)
+%% @(!K[]r (t, χ), u) = K(t, @(χ, u))
+
+%% Terms, their types and cuts
+
+%% ———- constants
+%% ⊢ C : C
+
+%% ⊢ Γ, t : τ   ⊢ u : τ’, Δ
+%% __________________ ρ tensor
+%% ⊢ Γ, K(t, u) : ρ⊗(τ, τ’), Δ
+
+%% ⊢ Γ, t : τ, u : τ’
+%% __________________ ρ par
+%% ⊢ Γ, ⅋ρ (t, u) : ρ⅋(τ, τ’)
+
+%% ⊢ Γ, ⅋ρ (t’, u’) : ρ⅋(τ⊥, τ’⊥)  ⊢ K(t, u) : ρ⊗(τ, τ’), Δ
+%% _____________________________________ ρ par-tensor-cut
+%% ⊢ Γ, R(K(K(t’, t), K(u’, u))) : R(rK), Δ
+
+%% ⊢ Γ, t : τ, u : τ’
+%% _______________ ρ serialize
+%% ⊢ Γ, K(t,u) : ρ⊓(τ,τ’)
+
+%% ⊢ Γ, t : τ, u : τ’
+%% ______________ ρ deserialize
+%% ⊢ Γ, ⊔(t,u) : ρ⊔(τ,τ’)
+
+%% ⊢ Γ, ⊔ρ (t, u) : ρ⊔(D ▷ A⊥, u:D)  ⊢ K(t', u') : ρ⊓(C ▷ A, C), Δ 
+%% -----------------------------------------------------------------------------------  ρ serialize-deserialize-cut
+%% ⊢ Γ, R(K(K( t, u), K(t’, u’)) : R(rK), Δ 
+
+%% ⊢Γ,  t’ : τ⊥  ⊢ t : τ, Δ 
+%% ------------------------------ ρ cut is the special case of ρ⊗ with ⅋ρ (rK, rK)
+%% ⊢ Γ, R(K(t’,t)) : R(rK), Δ 
+%% Contexts, their types and cuts
+%% Below we identify the formation of each kind of context: tensor-parallel, tensor-serial, par-parallel, and par-serial.
+
+
+%% structure
+%% destructure
+%% parallel
+%% tensor (⊗)
+%% par (⅋)
+%% serial
+%% serialize (⊓)
+%% deserialize (⊔)
+
+
+%% Axiom
+
+%% —————— axiom
+%% ⊢ [] : τ⊥, [] : τ
+%% Tensor-parallel-context and cut
+
+%% ⊢ Γ, [] : τ , χ : τ’
+%% ---------------------
+%% ⊢ Γ, χ! : τ’ ◁ τ
+
+%% ⊢ Γ, [] : τ , χ : τ’
+%% --------------------
+%% ⊢ Γ, !χ : τ ▷ τ’
+
+%% ⊢ Γ, K([],u)! : τ’ ◁ τ,  ⊢ t : τ, Δ 
+%% --------------------------------- ρ⊗ context-cut-left
+%% ⊢ Γ, R(K(t,u)) : Rτ’, Δ 
+
+%% ⊢ Γ, !K(t,[]) : τ ▷ τ’,  Δ ⊢ u : τ
+%% -------------------------------- ρ⊗ context-cut-right
+%% ⊢ Γ, R(K(t,u)) : Rτ’, Δ 
+
+%% Examples
+%% Applying the algorithm
+%% Now that we’ve worked out the type system in general above, we need to redo this example using the refined notation.
+
+%% Below we give an example of the construction applied to the rho-combinators.
+%% Rho combinators
+%% Here is a relatively standard SoS presentation of the combinatorial system. 
+
+%% atom
+%% P ::= 0 | m(a,b) | d(a, b, c) | k(a) | fw(a, b) | br(a, b) | bl(a, b) | s(a, b, c)
+%% process
+%% | ∗ a | P|P
+
+%% nominal
+%% a ::= @P
+
+%% Rewrite rules
+%% d(a, b, c) | m(a,d) → m(b,d) | m(c,d)
+%% k(a)|m(a,b) → 0
+%% fw(a, b)|m(a,c) → m(b,c)
+%% br(a, b)|m(a,c) → fw(b,c)
+%% bl(a, b)|m(a,c) → fw(c, b)
+%% s(a, b, c)|m(a,d) → fw(b, c)
+%% ∗(a)|m(a,@P) → P
+
+%% P → P′   ⇒   P|Q → P′|Q
+
+%% P ≡ P′    ∧    P′ → Q′    ∧    Q′ ≡ Q    ⇒    P → Q
+
+%% To interpret this presentation as a multi-sorted Lawvere theory per the input format given above, we start with the Lawvere theory of reflexive directed multigraphs and add new sorts, function symbols, and equations.  The theory of reflexive directed multigraphs has
+
+%% one sort P
+%% function symbols src, trgt: P -> P
+%% equations src ○ src = trgt ○ src = src, trgt ○ trgt = src ○ trgt = trgt
+
+%% We adjoin a sort N for names. We express each of the syntactic generators as function symbols, thus 0 : 1 -> P, m : N x N -> P, @:P -> N, *:N -> P, |:P x P -> P, etc. The base case rewrite rules are given in terms of the src and trgt functions, thus 
+
+%% src( d(a, b, c) | m(a,d) → m(b,d) | m(c,d) ) = d(a, b, c) | m(a,d)
+%% trgt( d(a, b, c) | m(a,d) → m(b,d) | m(c,d) ) = m(b,d) | m(c,d)
+
+%% Note that rewrites do not occur within a name because there is no rule for making src and @ commute with each other.
+%% The inference rule P → P′ ⇒ P|Q → P′|Q is encoded as an equation involving src, trgt, and |:
+
+%% src( P | Q ) = src(P) | src(Q)
+%% trgt( P | Q ) = trgt(P) | trgt(Q)
+
+%% Structural congruence is encoded as equations:
+
+%% 0 | P = P
+%% P | Q = Q | P
+%% (P | (Q | R)) = ((P | Q) | R)
+%% *@P = P
+
+%% Given that congruence is equality, the final inference rule is an identity.
+%% SKI
+%% Below, we give an explicit example of the construction applied to the SKI calculus.
+
+%% Reduction contexts for tensor vs cut, with idempotent commutative monoids for collection
+%% T
+
+%% S, K, I, {}: 1 -> T
+%% R: T -> T
+%% (- -), ∪: T x T -> T
+%% // Pars & plusses come from LHS with ≥ 2 holes
+%% ⅋σ: T x T x T -> T 
+%% ⅋κ: T x T -> T
+%% ⊕σ: T x T x T -> T 
+%% ⊕κ: T x T -> T
+
+%% RR = R
+%% R(x y) = (Rx y)
+%% ∪, {} associative, commutative, unital, idempotent
+
+%% σ: (((RS x) y) z) ▷ ((Rx z) (y z))
+%% κ: ((rK x) y) ▷ Rx
+%% ι: (RI x) ▷ Rx
+
+%% [[-]]: Coll + (Term + Pars) ▷ Coll ○ (Term + Pars)
+
+%% Types
+%% τ ::=  T | τ ▷ τ | S | K | I | {} | Rτ | (τ τ) | τ ∪ τ | σ⅋(τ,τ,τ,τ,τ,τ) | σ⊕(τ,τ,τ) | (kappa versions of ⅋⊕)
+
+%% We use the abbreviations
+%% σ⊗(A,B,C) ≜ (((S A▷B▷C) A▷B) A) 
+%% σ&(A,B,C,C') ≜ (((S A▷B▷C'▷C) A▷B) A) 
+
+%% Inference rules
+
+%% Γ ⊢ x: A▷B▷C  Δ ⊢ y: A▷B,  Ξ ⊢ z: A
+%% ------------------------------------------------------------------------------- σ tensor
+%% Γ, Δ, Ξ ⊢ (((S x) y) z): σ⊗(A,B,C)
+
+%% Γ ⊢ x: A⇒D⇒E⇒F, y: B⇒D⇒E, z: C⇒D
+%% --------------------------------------------------------- σ par
+%% Γ ⊢ ⅋σ (x, y, z): σ⅋(A,B,C,D,E,F)
+
+%% Γ ⊢ ⅋σ (x, y, z): σ⅋(A,B,C,D,E,F)  Δ ⊢ (((S x') y') z'): σ⊗(A,B,C)
+%% ----------------------------------------------------------------------------------- σ par-tensor-cut
+%% Γ, Δ ⊢ R(((S (x x')) (y y')) (z z')): RF
+%% F is the property we'd like to hold at the end.
+
+
+
+%% Γ ⊢ x: A▷B▷C'▷C, y: A▷B, z: A
+%% ---------------------------------------------- σ with
+%% Γ, Δ, Ξ ⊢ (((S x) y) z): σ&(A,B,C',C)
+
+
+%% Γ ⊢ x: A▷B▷C, y: A▷B, z: A
+%% ------------------------------------------ σ plus
+%% Γ ⊢ ⊕(x, y, z): σ⊕(A,B,C)
+
+%% Γ ⊢ (((S x) y) z): σ&(A,B,C',C)   Δ ⊢ ⊕(x', y', z'): σ⊕(A',B',C')
+%% --------------------------------------------------------------------------------  σ with-plus-cut
+%% Γ, Δ ⊢ R((((S x) y) z) (((S x') y') z')): RC
+
+%% C is the property we'd like to hold at the end.
+
+
+%% Γ ⊢ x: A▷B▷C  Δ ⊢ y: A▷B,  Ξ ⊢ z: A
+%% ----------------------------------------------------- σ cut is the special case of σ⊗ with ⅋σ (I, I, I)
+%% Γ, Δ, Ξ ⊢ (((RS x) y) z): RC
+
+%% Some useful properties and their proofs
+%% TBD
+
   
 
 \section{Conclusion and future work}
