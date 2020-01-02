@@ -287,17 +287,19 @@ We proceed in stages, producing first a resourced version of the
 theory that requires an evaluation context to run the rewrite rule,
 then producing a contextualized version of the theory.
 
-%% \subsubsection{Resourced theory}
-%% C, lK, rK : 1 -> T
-%% K : T x T -> T
-%% R : T -> T
-%% ⅋ρ : T x T -> T
-%% ⊔ρ : T x T -> T
-%% ρ : T x T -> T             //( \x -> M N) → M{N/x}     for( y <- x )P | x!(Q) → P{@Q/y}
-%% K(lK, u) = u
-%% K(t, rK) = t
-%% s(ρ(t,u)) = RK(t, u) 
-%% t(ρ(t,u)) = f(t,u) // f can mention R, e.g. if R is not a linear resource
+\subsubsection{Resourced theory}
+\begin{itemize}
+  \item $C, l_{K}, r_{K} : 1 \rightarrow T$
+  \item $K : T^{2} \rightarrow T$
+  \item $R : T \rightarrow T$
+  \item $\bindnasrepma_{\rho} : T^{2} \rightarrow T$
+  \item $\sqcup_{\rho} : T^{2} \rightarrow T$
+  \item $\rho : T^{2} \rightarrow T$             %%//( \x \rightarrow M N) → M{N/x}     for( y <- x )P | x!(Q) → P{@Q/y}
+  \item $K(l_{K}, u) = u$
+  \item $K(t, r_{K}) = t$
+  \item $s(\rho(t,u)) = RK(t, u)$
+  \item $t(\rho(t,u)) = f(t,u)$                    %%// f can mention R, e.g. if R is not a linear resource
+\end{itemize}
 
 %% \subsubsection{Contextualized Resourced theory}
 %% We add a new sort, 𝛘T, and the following maps
