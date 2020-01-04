@@ -561,16 +561,16 @@ reflexive directed multigraphs and add new sorts, function symbols,
 and equations.  The theory of reflexive directed multigraphs has
 
 %% one sort P
-%% function symbols src, trgt: P -> P
-%% equations src ○ src = trgt ○ src = src, trgt ○ trgt = src ○ trgt = trgt
+%% function symbols src, trgt: P \rightarrow P
+%% equations src \circ src = trgt \circ src = src, trgt \circ trgt = src \circ trgt = trgt
 
-%% We adjoin a sort N for names. We express each of the syntactic generators as function symbols, thus 0 : 1 -> P, m : N x N -> P, @:P -> N, *:N -> P, |:P x P -> P, etc. The base case rewrite rules are given in terms of the src and trgt functions, thus 
+%% We adjoin a sort N for names. We express each of the syntactic generators as function symbols, thus 0 : 1 \rightarrow P, m : N x N \rightarrow P, @:P \rightarrow N, *:N \rightarrow P, |:P x P \rightarrow  P, etc. The base case rewrite rules are given in terms of the src and trgt functions, thus 
 
-%% src( d(a, b, c) | m(a,d) → m(b,d) | m(c,d) ) = d(a, b, c) | m(a,d)
-%% trgt( d(a, b, c) | m(a,d) → m(b,d) | m(c,d) ) = m(b,d) | m(c,d)
+%% src( d(a, b, c) | m(a,d) \red m(b,d) | m(c,d) ) = d(a, b, c) | m(a,d)
+%% trgt( d(a, b, c) | m(a,d) \red m(b,d) | m(c,d) ) = m(b,d) | m(c,d)
 
 %% Note that rewrites do not occur within a name because there is no rule for making src and @ commute with each other.
-%% The inference rule P → P′ ⇒ P|Q → P′|Q is encoded as an equation involving src, trgt, and |:
+%% The inference rule P \red P′ \Rightarrow P|Q \red P′|Q is encoded as an equation involving src, trgt, and |:
 
 %% src( P | Q ) = src(P) | src(Q)
 %% trgt( P | Q ) = trgt(P) | trgt(Q)
