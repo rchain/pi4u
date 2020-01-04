@@ -360,21 +360,6 @@ which allows the hole to be buried, rather than at the top level,
   ^{\circ}\tau & = & \{\} \lhd \tau
 \end{eqnarray*}
 
-\section{Main theorems}
-In this section, we prove a cut-elimination theorem.
-\subsection{Cut-elimination}
-Every proof that uses a cut can be transformed into a proof that does
-not use a cut.  Compilation from contextualized resource theory back
-to original theory. In $\lambda$-calculus and {\pic}, $\mathsf{K}$ is
-not directly interpreted as application or parallel,
-respectively. Instead, it turns into a data type so we can extract the
-info using a par term introduced in the contextualized resource
-theory.  In $\rho$, there's no need because it's reflective.  But either
-way, the term calculi are powerful enough to support the embedding of
-the new terms back into the original.
-
-It remains to show that the embedding is full and faithful.
-
 \section{Intuitionistic Term assignment}
 
 \begin{table}[htp]
@@ -490,37 +475,25 @@ We add new sorts, $\chi^{\circ}$, and $\chi^{\bullet}$, $\chi^{\circ\bullet}$, a
 
 \subsection{Terms, their types and cuts}
 
-%% ———- constants
-%% ⊢ C : C
+\begin{mathpar}
+  \inferrule* [lab=constant] {} {\vdash C : C}
 
-%% ⊢ Γ, t : τ   ⊢ u : τ’, Δ
-%% __________________ ρ tensor
-%% ⊢ Γ, K(t, u) : ρ⊗(τ, τ’), Δ
+  \inferrule* [lab=$\rho_{\otimes}$] {\vdash \Gamma, t : \tau   \vdash u : \tau’, \Delta} {\vdash \Gamma, K(t, u) : \rho_{\otimes}(\tau, \tau’), \Delta}
 
-%% ⊢ Γ, t : τ, u : τ’
-%% __________________ ρ par
-%% ⊢ Γ, ⅋ρ (t, u) : ρ⅋(τ, τ’)
+  \inferrule* [lab=$\rho_{\bindnasrepma}$] {\vdash \Gamma, t : \tau, u : \tau'} {\vdash \Gamma, \bindnasrepma_{\rho}(t, u) : \rho_{\bindnasrepma}(\tau, \tau’)}
 
-%% ⊢ Γ, ⅋ρ (t’, u’) : ρ⅋(τ⊥, τ’⊥)  ⊢ K(t, u) : ρ⊗(τ, τ’), Δ
-%% _____________________________________ ρ par-tensor-cut
-%% ⊢ Γ, R(K(K(t’, t), K(u’, u))) : R(rK), Δ
+  \inferrule* [lab=$\rho_{\bindnasrepma\perp\otimes}$] {\vdash \Gamma, \bindnasrepma_{\rho} (t', u') : \rho_{\bindnasrepma}(\tau^{\perp}, \tau’^{\perp})  \vdash K(t, u) : \rho_{\otimes}(\tau, \tau'), \Delta}{\vdash \Gamma, R(K(K(t’, t), K(u’, u))) : R(r_{K}), \Delta}
 
-%% ⊢ Γ, t : τ, u : τ’
-%% _______________ ρ serialize
-%% ⊢ Γ, K(t,u) : ρ⊓(τ,τ’)
+  \inferrule* [lab=$\rho_{\sqcap}$] {\vdash \Gamma, t : \tau, u : \tau'}{\vdash \Gamma, K(t,u) : \rho_{\sqcap}(\tau,\tau')}
 
-%% ⊢ Γ, t : τ, u : τ’
-%% ______________ ρ deserialize
-%% ⊢ Γ, ⊔(t,u) : ρ⊔(τ,τ’)
+  \inferrule* [lab=$\rho_{\sqcup}$] {\vdash \Gamma, t : \tau, u : \tau'} {\vdash \Gamma, \sqcup(t,u) : \rho_{\sqcup}(\tau,\tau’)}
 
-%% ⊢ Γ, ⊔ρ (t, u) : ρ⊔(D ▷ A⊥, u:D)  ⊢ K(t', u') : ρ⊓(C ▷ A, C), Δ 
-%% -----------------------------------------------------------------------------------  ρ serialize-deserialize-cut
-%% ⊢ Γ, R(K(K( t, u), K(t’, u’)) : R(rK), Δ 
+  \inferrule* [lab=$\rho_{\sqcap\perp\sqcup}$] {\vdash \Gamma, \sqcup\rho (t, u) : \rho\sqcup(D \rhd A^{\perp}, u:D)  \vdash K(t', u') : \rho\sqcap(C \rhd A, C), \Delta } {\vdash \Gamma, R(K(K( t, u), K(t', u')) : R(r_{K}), \Delta}
 
-%% ⊢Γ,  t’ : τ⊥  ⊢ t : τ, Δ 
-%% ------------------------------ ρ cut is the special case of ρ⊗ with ⅋ρ (rK, rK)
-%% ⊢ Γ, R(K(t’,t)) : R(rK), Δ 
-%% Contexts, their types and cuts
+  \inferrule* [lab=$\rho_{\perp}$] {\vdash\Gamma,  t’ : \tau^{\perp}  \vdash t : \tau, \Delta }{\vdash \Gamma, R(K(t’,t)) : R(r_{K}), \Delta}
+\end{mathpar}
+
+\subsection{Contexts, their types and cuts}
 
 %% Axiom
 
@@ -670,7 +643,20 @@ We add new sorts, $\chi^{\circ}$, and $\chi^{\bullet}$, $\chi^{\circ\bullet}$, a
 %% Some useful properties and their proofs
 %% TBD
 
-  
+\section{Main theorems}
+In this section, we prove a cut-elimination theorem.
+\subsection{Cut-elimination}
+Every proof that uses a cut can be transformed into a proof that does
+not use a cut.  Compilation from contextualized resource theory back
+to original theory. In $\lambda$-calculus and {\pic}, $\mathsf{K}$ is
+not directly interpreted as application or parallel,
+respectively. Instead, it turns into a data type so we can extract the
+info using a par term introduced in the contextualized resource
+theory.  In $\rho$, there's no need because it's reflective.  But either
+way, the term calculi are powerful enough to support the embedding of
+the new terms back into the original.
+
+It remains to show that the embedding is full and faithful.  
 
 \section{Conclusion and future work}
 
