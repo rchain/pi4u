@@ -380,7 +380,6 @@ It remains to show that the embedding is full and faithful.
 \begin{mathpar}
   \inferrule* [lab=constants] {} {\vdash C : C}
 
-
   \inferrule* [lab=$\rho_{\otimes}$]{\Gamma \vdash t : \tau  \Delta \vdash u : \tau’}{\Gamma, \Delta \vdash K(t, u) : \rho_{\otimes}(\tau, \tau’)}
 
   \inferrule* [lab=$\rho_{\bindnasrepma}$]{\Gamma \vdash t : \tau, u : \tau’}{\Gamma \vdash \bindnasrepma_{\rho} (t, u) : \rho_{\bindnasrepma}(\tau, \tau’)}
@@ -399,43 +398,42 @@ It remains to show that the embedding is full and faithful.
 \inferrule* [lab=$\rho_{\perp}$]{\Gamma \vdash t' : \tau^{\perp}, \Delta \vdash t : \tau }{\Gamma, \Delta \vdash R(K(t',t)) : R(r_{K})}
 
 \end{mathpar}
-%% Contexts, their types and cuts
-%% Below we identify the formation of each kind of context: tensor-parallel, tensor-serial, par-parallel, and par-serial.
+\subsection{Contexts, their types and cuts}
+Below we identify the formation of each kind of context: tensor-parallel, tensor-serial, par-parallel, and par-serial.
 
+\begin{table}[htp]
+  \center{
+    \fbox{
+      \begin{tabular}{c|c|c}
+        & structure & destructure \\
+        \hline
+        parallel & tensor ($\otimes$) & par ($\bindnasrepma$) \\
+        \hline
+        serial & serialize ($\sqcap$) & deserialize ($\sqcup$) \\
+      \end{tabular}
+    }
+  }
+  \caption{Wiring operations}
+\end{table}
 
-%% structure
-%% destructure
-%% parallel
-%% tensor (⊗)
-%% par (⅋)
-%% serial
-%% serialize (⊓)
-%% deserialize (⊔)
+\subsubsection{Axiom}
 
-%% Axiom
+\begin{mathpar}
+  \inferrule* [lab=axiom] {} {[] : \tau \vdash [] : \tau}
+\end{mathpar}
 
-%% —————— axiom
-%% [] : τ ⊢ [] : τ
-%% Left and right context formation and cut
+\subsubsection{Left and right context formation and cut}
 
-%% Γ, [] : τ  ⊢ χ : τ’
-%% --------------------
-%% Γ ⊢ χ! : τ’ ◁ τ
+\begin{mathpar}
+  \inferrule* [lab=left-arrow] {\Gamma, [] : \tau  \vdash \chi : \tau'} {\Gamma \vdash \chi ! : \tau' \lhd \tau}
 
-%% Γ, [] : τ  ⊢ χ : τ’
-%% -------------------
-%% Γ ⊢ !χ : τ ▷ τ’
+  \inferrule* [lab=right-arrow] {\Gamma, [] : \tau  \vdash \chi : \tau'} {\Gamma \vdash !\chi : \tau \rhd \tau'}
 
-%% Γ ⊢ K([],u)! : τ’ ◁ τ,  Δ ⊢ t : τ
-%% ------------------------------------- context-cut-left
-%% Γ, Δ ⊢ R(K(t,u)) : Rτ’
+  \inferrule* [lab=context-cut-left] {\Gamma \vdash K([],u)! : \tau' \lhd \tau,  \Delta \vdash t : \tau}{\Gamma, \Delta \vdash R(K(t,u)) : R\tau'}
 
-
-
-
-%% Γ ⊢ !K(t,[]) : τ ▷ τ’,  Δ ⊢ u : τ
-%% -------------------------------------- context-cut-right
-%% Γ, Δ ⊢ R(K(t,u)) : Rτ’
+  \inferrule* [lab=context-cut-right] {\Gamma \vdash !K(t,[]) : \tau \rhd \tau',  \Delta \vdash u : \tau} {\Gamma, \Delta \vdash R(K(t,u)) : R\tau'}
+\end{mathpar}
+  
 %% Classical Term assignment
 %% In the classical setting we transform double-sided sequents
 
