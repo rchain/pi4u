@@ -566,11 +566,11 @@ and equations.  The theory of reflexive directed multigraphs has
 
 %% We adjoin a sort N for names. We express each of the syntactic generators as function symbols, thus 0 : 1 \rightarrow P, m : N x N \rightarrow P, @:P \rightarrow N, *:N \rightarrow P, |:P x P \rightarrow  P, etc. The base case rewrite rules are given in terms of the src and trgt functions, thus 
 
-%% src( d(a, b, c) | m(a,d) → m(b,d) | m(c,d) ) = d(a, b, c) | m(a,d)
-%% trgt( d(a, b, c) | m(a,d) → m(b,d) | m(c,d) ) = m(b,d) | m(c,d)
+%% src( d(a, b, c) | m(a,d) \red m(b,d) | m(c,d) ) = d(a, b, c) | m(a,d)
+%% trgt( d(a, b, c) | m(a,d) \red m(b,d) | m(c,d) ) = m(b,d) | m(c,d)
 
 %% Note that rewrites do not occur within a name because there is no rule for making src and @ commute with each other.
-%% The inference rule P → P′ ⇒ P|Q → P′|Q is encoded as an equation involving src, trgt, and |:
+%% The inference rule P \red P′ ⇒ P|Q \red P′|Q is encoded as an equation involving src, trgt, and |:
 
 %% src( P | Q ) = src(P) | src(Q)
 %% trgt( P | Q ) = trgt(P) | trgt(Q)
@@ -609,11 +609,11 @@ Below, we give an explicit example of the construction applied to the $\mathsf{S
 %% [[-]]: Coll + (Term + Pars) \rhd Coll \circ (Term + Pars)
 
 %% Types
-%% \tau ::=  T | \tau \rhd \tau | S | K | I | {} | R\tau | (\tau \tau) | \tau \cup \tau | \sigma\bindnasrepma(\tau,\tau,\tau,\tau,\tau,\tau) | \sigma\oplus(\tau,\tau,\tau) | (kappa versions of \bindnasrepma\oplus)
+%% \tau ::=  T | \tau \rhd \tau | S | K | \mid | {} | R\tau | (\tau \tau) | \tau \cup \tau | \sigma\bindnasrepma(\tau,\tau,\tau,\tau,\tau,\tau) | \sigma\oplus(\tau,\tau,\tau) | (kappa versions of \bindnasrepma\oplus)
 
 %% We use the abbreviations
-%% \sigma\otimes(A,B,C) ≜ (((S A\rhd B\rhd C) A\rhd B) A) 
-%% \sigma&(A,B,C,C') ≜ (((S A\rhd B\rhd C' \rhd C) A\rhd B) A) 
+%% \sigma\otimes(A,B,C) \triangleq (((S A\rhd B\rhd C) A\rhd B) A) 
+%% \sigma&(A,B,C,C') \triangleq (((S A\rhd B\rhd C' \rhd C) A\rhd B) A) 
 
 %% Inference rules
 
@@ -634,7 +634,7 @@ Below, we give an explicit example of the construction applied to the $\mathsf{S
 
 %% \Gamma \vdash x: A\rhd B\rhd C'\rhd C, y: A\rhd B, z: A
 %% ---------------------------------------------- \sigma with
-%% \Gamma, \Delta, \Xi \vdash (((S x) y) z): \sigma&(A,B,C',C)
+%% \Gamma, \Delta, \Xi \vdash (((S x) y) z): \sigma_{&} (A,B,C',C)
 
 
 %% \Gamma \vdash x: A\rhd B\rhd C, y: A\rhdB, z: A
