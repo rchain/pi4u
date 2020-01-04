@@ -308,49 +308,61 @@ then producing a contextualized version of the theory.
   \item $t(\rho(t,u)) = f(t,u)$                    %%// f can mention R, e.g. if R is not a linear resource
 \end{itemize}
 
-%% \subsubsection{Contextualized Resourced theory}
-%% We add a new sort, ��T, and the following maps
+\subsubsection{Contextualized Resourced theory}
+We add a new sort, $\chi_{T}$, and the following maps
 
-%% C, lK, rK : 1 -> T
-%% K : T x T -> T
-%% [] : 1 -> ��T
-%% K[]l : ��T x T -> ��T
-%% K[]r : T x ��T -> ��T
-%% !(-) : ��T  -> T
-%% (-)! : ��T  -> T
-%% @ : T x T -> T
-%% @[] : ��T x T -> T
-%% R : T -> T
-%% ⅋ρ : T x T -> T
-%% ⊔ρ : T x T -> T
-%% ρ : T x T -> T             //( \x -> M N) -> M{N/x}     for( y <- x )P | x!(Q) -> P{@Q/y}
-%% s(ρ(t,u)) = RK(t, u) 
-%% t(ρ(t,u)) = f(t,u) // f can mention R, e.g. if R is not a linear resource
-%% K(lK, u) = u
-%% K(t, rK) = t
-%% @([]!,t) = t
-%% @(![],t) = t
-%% @(K[]l (χ, t)!, u) = K(@[(χ[, u), t)
-%% @(!K[]r (t, χ), u) = K(t, @[(χ[, u))
+\begin{itemize}
+  \item $C, l_{K}, r_{K} : 1 \rightarrow T$
+  \item $K : T^{2} \rightarrow T$
+  \item $[] : 1 \rightarrow \chi_{T}$
+  \item $K_{[]}^{l} : \chi_{T}^{2} \rightarrow \chi_{T}$
+  \item $K_{[]}^{r} : T x \chi_{T} \rightarrow \chi_{T}$
+  \item $!(-) : \chi_{T}  \rightarrow T$
+  \item $(-)! : \chi_{T}  \rightarrow T$
+  \item $@ : T^{2} \rightarrow T$
+  \item $@_{[]} : \chi_{T}^{2} \rightarrow T$
+  \item $R : T \rightarrow T$
+  \item $\bindnasrepma_{\rho} : T^{2} \rightarrow T$
+  \item $\sqcup_{\rho} : T^{2} \rightarrow T$
+  \item $\rho : T^{2} \rightarrow T$             %%//( \x -> M N) -> M{N/x}     for( y <- x )P | x!(Q) -> P{@Q/y}
+  \item $s(\rho(t,u)) = RK(t, u)$ 
+  \item $t(\rho(t,u)) = f(t,u)$          %%// f can mention R, e.g. if R is not a linear resource
+  \item $K(l_{K}, u) = u$
+  \item $K(t, r_{K}) = t$
+  \item $@([]!,t) = t$
+  \item $@(![],t) = t$
+  \item $@(K_{[]}^{l} (\chi, t)!, u) = K(@_{[]}(\chi, u), t)$
+  \item  $@(!K_{[]}^{r} (t, \chi), u) = K(t, @_{[]}(\chi, u))$
+\end{itemize}
 
-%% As mentioned before, the basic notion of arrow is given by
+As mentioned before, the basic notion of arrow is given by
 
-%% τ ▷K τ’ ≜ { u | ∃t. u = !K[]r(t, []),∀u’:τ. (∃ ρ: u@u’ → v) ⇒ v:τ’ }
-%% τ’ ◁K τ ≜ { t | ∃u. t = K[]l([], u)!,∀t’:τ. (∃ ρ: t@t’ → v) ⇒ v:τ’ } 
+\begin{eqnarray*}
+  \tau \rhd_{K} \tau’ & \triangleq  & \{ u | \exists t. u = !K_{[]}^{r}(t, []),\forall u’:\tau. (\exists \rho : u@u’\rightarrow v) \Rightarrow v:\tau’ \} \\
+  \tau’\lhd_{K} \tau & \triangleq  & \{ t | \exists u. t = K_{[]}^{l}([], u)!,\forall t’:\tau. (\exists \rho : t@t’\rightarrow v) \Rightarrow v:\tau’\}
+\end{eqnarray*}
 
-%% However, they can be generalized to
+However, they can be generalized to
 
-%% τ ▷K τ’ ≜ { u | ∃t,χ. u = !K[]r(t, χ),∀u’:τ. (∃ ρ: u@u’ → v) ⇒ v:τ’ }
-%% τ’ ◁K τ ≜ { t | ∃u,χ. t = K[]l(χ, u)!,∀t’:τ. (∃ ρ: t@t’ → v) ⇒ v:τ’ }
+\begin{eqnarray*}
+  \tau \rhd_{K} \tau’ & \triangleq  & \{ u | \exists t, \chi. u = !K_{[]}^{r}(t, \chi),\forall u’:\tau. (\exists \rho : u@u’\rightarrow v) \Rightarrow v:\tau’ \} \\
+  \tau’\lhd_{K} \tau & \triangleq  & \{ t | \exists u, \chi. t = K_{[]}^{l}(\chi, u)!,\forall t’:\tau. (\exists \rho : t@t’\rightarrow v) \Rightarrow v:\tau’\}
+\end{eqnarray*}
 
-%% which allows the hole to be buried, rather than at the top level,
+which allows the hole to be buried, rather than at the top level,
 
-%% Types
-%% τ ::=  ⊤ | τ ▷ τ | τ ◁ τ | C | {} | τ ∪ τ | Rτ | K(τ,τ) | ρ⊗(τ,τ) | ρ⅋(τ,τ) | ρ⊓(τ,τ) | ρ⊔(τ,τ) 
+\subsection{Types}
+\begin{mathpar}
+  \inferrule* [lab=type] {} { \tau \bc  \top  | \tau \rhd \tau | \tau \lhd \tau | C | \{\} | \tau \cup \tau | R\tau | K(\tau,\tau) | \rho_{\otimes}(\tau,\tau) | \rho_{\bindnasrepma}(\tau,\tau) | \rho_{\sqcap}(\tau,\tau) | \rho_{\sqcup}(\tau,\tau) }
+\end{mathpar}
 
-%% Abbreviations
-%% τ⊥ = τ ▷ rK, τ◦ = τ ▷ {}
-%% ⊥τ = lK ◁ τ, ◦τ = {} ◁ τ
+\subsubsection{Abbreviations}
+\begin{eqnarray*}
+  \tau^{\perp} & = & \tau \rhd r_{K} \\
+  \tau^{\circ} & = & \tau \rhd \{\} \\
+  ^{\perp}\tau & = & l_{K} \lhd \tau \\
+  ^{\circ}\tau & = & \{\} \lhd \tau
+\end{eqnarray*}
 
 \section{Main theorems}
 In this section, we prove a cut-elimination theorem.
