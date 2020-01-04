@@ -513,51 +513,52 @@ We add new sorts, $\chi^{\circ}$, and $\chi^{\bullet}$, $\chi^{\circ\bullet}$, a
   \inferrule* [lab=$\rho_{\otimes}\perp\rhd$] {\vdash \Gamma, !K(t,[]) : \tau \rhd \tau',  \Delta \vdash u : \tau}{\vdash \Gamma, R(K(t,u)) : R\tau', \Delta}
 \end{mathpar}
 
-\section{Main theorems}
-In this section, we prove a cut-elimination theorem.
-\subsection{Cut-elimination}
-Every proof that uses a cut can be transformed into a proof that does
-not use a cut.  Compilation from contextualized resource theory back
-to original theory. In $lambda$-calculus and {\pic}, $\mathsf{K}$ is
-not directly interpreted as application or parallel,
-respectively. Instead, it turns into a data type so we can extract the
-info using a par term introduced in the contextualized resource
-theory.  In $\rho$, there's no need because it's reflective.  But either
-way, the term calculi are powerful enough to support the embedding of
-the new terms back into the original.
+\section{Examples}
+\subsection{Applying the algorithm}
+Now that we’ve worked out the type system in general above, we need to redo this example using the refined notation.
 
-It remains to show that the embedding is full and faithful.
+Below we give an example of the construction applied to the rho-combinators.
+\subsubsection{Rho combinators}
+Here is a relatively standard SoS presentation of the combinatorial system. 
 
-%% Examples
-%% Applying the algorithm
-%% Now that we’ve worked out the type system in general above, we need to redo this example using the refined notation.
+\begin{mathpar}
+  \inferrule* [lab=atom] {} { P \bc 0 \;|\; \mathsf{m}(a,\quotep{P}) \;|\; \mathsf{d}(a,b,c) \;|\; \mathsf{k}(a) \;|\; \mathsf{fw}(a,b) \;|\; \mathsf{b}_{\mathsf{r}}(a,b) \;|\; \mathsf{b}_{\mathsf{l}}(a,b) \;|\; \mathsf{s}(a,b,c) }
+  \and
+  \inferrule* [lab=process] {} {\bm \; *a \;|\; P|P}
+  \and
+  \inferrule* [lab=nominal] {} {a \bc \quotep{P}}
+\end{mathpar}
 
-%% Below we give an example of the construction applied to the rho-combinators.
-%% Rho combinators
-%% Here is a relatively standard SoS presentation of the combinatorial system. 
+Rewrite rules
+\[\begin{array}{rl}
+\mathsf{d}(a,b,c) | \mathsf{m}(a,\quotep{P}) & \red \mathsf{m}(b,\quotep{P}) | \mathsf{m}(c,\quotep{P}) \\
+\mathsf{k}(a) | \mathsf{m}(a,\quotep{P}) & \red 0 \\
+\mathsf{fw}(a,b) | \mathsf{m}(a,\quotep{P}) & \red \mathsf{m}(b,\quotep{P}) \\
+\mathsf{b}_{\mathsf{r}}(a,b) | \mathsf{m}(a,\quotep{P}) & \red \mathsf{fw}(b,\quotep{P}) \\  
+\end{array} \quad \quad
+\begin{array}{rl}
+  \mathsf{b}_{\mathsf{l}}(a,b) | \mathsf{m}(a,\quotep{P}) & \red \mathsf{fw}(\quotep{P},b) \\
+  \mathsf{s}(a,b,c) | \mathsf{m}(a,\quotep{P}) & \red \mathsf{fw}(b,c) \\
+  *(a) | \mathsf{m}(a,\quotep{P}) & \red P
+\end{array}\]
+%% \begin{mathpar}
+%%   \inferrule* {{P} \red {P}'} {{{P} | {Q}} \red {{P}' | {Q}}}
+%%   \and
+%%   \inferrule* {{{P} \scong {P}'} \andalso {{P}' \red {Q}'} \andalso {{Q}' \scong {Q}}}{{P} \red {Q}}
+%% \end{mathpar}
 
-%% atom
-%% P ::= 0 | m(a,b) | d(a, b, c) | k(a) | fw(a, b) | br(a, b) | bl(a, b) | s(a, b, c)
-%% process
-%% | ∗ a | P|P
+\begin{definition}
+  The {\em structural congruence} $\equiv$
+  between processes \cite{SangiorgiWalker} is the least congruence
+  satisfying the commutative monoid laws
+  (associativity, commutativity and $\pzero$ as identity) for parallel
+  composition $|$ and $*(@(P)) \equiv P$.
+\end{definition}
 
-%% nominal
-%% a ::= @P
-
-%% Rewrite rules
-%% d(a, b, c) | m(a,d) → m(b,d) | m(c,d)
-%% k(a)|m(a,b) → 0
-%% fw(a, b)|m(a,c) → m(b,c)
-%% br(a, b)|m(a,c) → fw(b,c)
-%% bl(a, b)|m(a,c) → fw(c, b)
-%% s(a, b, c)|m(a,d) → fw(b, c)
-%% ∗(a)|m(a,@P) → P
-
-%% P → P′   ⇒   P|Q → P′|Q
-
-%% P ≡ P′    ∧    P′ → Q′    ∧    Q′ ≡ Q    ⇒    P → Q
-
-%% To interpret this presentation as a multi-sorted Lawvere theory per the input format given above, we start with the Lawvere theory of reflexive directed multigraphs and add new sorts, function symbols, and equations.  The theory of reflexive directed multigraphs has
+To interpret this presentation as a multi-sorted Lawvere theory per
+the input format given above, we start with the Lawvere theory of
+reflexive directed multigraphs and add new sorts, function symbols,
+and equations.  The theory of reflexive directed multigraphs has
 
 %% one sort P
 %% function symbols src, trgt: P -> P
@@ -582,8 +583,8 @@ It remains to show that the embedding is full and faithful.
 %% *@P = P
 
 %% Given that congruence is equality, the final inference rule is an identity.
-%% SKI
-%% Below, we give an explicit example of the construction applied to the SKI calculus.
+\subsubsection{SKI}
+Below, we give an explicit example of the construction applied to the $\mathsf{SKI}$ calculus.
 
 %% Reduction contexts for tensor vs cut, with idempotent commutative monoids for collection
 %% T
@@ -654,7 +655,20 @@ It remains to show that the embedding is full and faithful.
 %% Some useful properties and their proofs
 %% TBD
 
-  
+\section{Main theorems}
+In this section, we prove a cut-elimination theorem.
+\subsection{Cut-elimination}
+Every proof that uses a cut can be transformed into a proof that does
+not use a cut.  Compilation from contextualized resource theory back
+to original theory. In $lambda$-calculus and {\pic}, $\mathsf{K}$ is
+not directly interpreted as application or parallel,
+respectively. Instead, it turns into a data type so we can extract the
+info using a par term introduced in the contextualized resource
+theory.  In $\rho$, there's no need because it's reflective.  But either
+way, the term calculi are powerful enough to support the embedding of
+the new terms back into the original.
+
+It remains to show that the embedding is full and faithful.  
 
 \section{Conclusion and future work}
 
