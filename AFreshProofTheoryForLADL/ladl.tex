@@ -67,7 +67,7 @@ Michael Stay\inst{2}\\
   system and term assignment algorithm from a formal presentation of a
   interactive computational calculus. This turns out to identify a
   species of category which we offer an axiomatic characterization of
-  interaction categories.
+  interaction categories. 
 \end{abstract}
 
 \section{Introduction and motivation}
@@ -77,9 +77,10 @@ idea of interaction categories to give a categorical framework for
 interactive models of computing. Indeed, interactive models of
 computation are relatively new and offer distinct insights because
 they include the computational environment as part of the
-computation. Examples include the {\pic}, in fact, all the mobile
-process calculi, as well as the lambda calculus. However, interaction
-categories fail to say axiomatically what interaction is.
+computational model. Examples include the {\pic}, in fact, all the
+mobile process calculi, as well as the lambda calculus. However,
+interaction categories take inspiration from linear logic rather than
+to say axiomatically what interaction is.
 
 We put forward a simple, intuitive axiomatic characterization of
 interaction and use this to derive not only a logic but a proof theory
@@ -98,24 +99,38 @@ elimination property that corresponds exactly with the notion of
 computation embodied in the interactive rewrite system.
 
 The requirement that the rewrite system is interactive means the left
-hand side of every rewrite rule will necessarily be a term
-constructor, say $\mathsf{K}$, taking at least two terms. That is, when
-viewed as a piece of syntax it is at least a tuple of terms. Then, by
-controlling evaluation with an evaluation context we can force a
-distinction between a tensor and a cut, where the cut forms the redex
-with an evaluation context supplied, and the tensor is denied the
-evaluation context, effectively rendering it a data structure. Of
-course, the data is inaccessible until there is a means to unpack it,
-and a par term is constructed as the principal means to extract the
-data from the tensor.
+hand side of every rewrite rule will necessarily be a term built from
+a term constructor, say $\mathsf{K}$, taking at least two terms as
+arguments. That is, when viewed as a piece of syntax it is at least a
+tuple of terms. This bipartite split is what characterizes
+interaction. One of the arguments is the program and one is the
+environment. For example, in $\lambda-calculus$ application functions
+in the role of $\mathsf{K}$, and the term in function position is
+usually considered the program, while the term in argument position
+constitutes an environment. In the {\pic} parallel composition
+functions in the role of $\mathsf{K}$ while either parand can be
+considered program and the other environment.
+
+Given an interactive rewrite system, we can introduce an evaluation
+context to control evaluation and force a distinction between a frozen
+or reified computation (referred to as a tensor) and an active
+computation (referred to as a cut). Specifically, a cut forms the
+redex with an evaluation context supplied, and the tensor is denied
+the evaluation context, effectively rendering it a data structure. Of
+course, the data is inaccessible until there is a means to unpack
+it. We introduce a new term to the system (referred to as a par term)
+as the principal means to extract the data from a tensor. In fact, we
+introduce two different kinds of par terms, one for wiring evaluation
+in parallel and one in series. More on this in subsequent sections.
 
 The use of the term constructor that forms a redex as a data structure
 is the essential use of reflection. The lack of a reduction context
 gives us the ability to suspend computation. Having suspended it, we
 reify computation as data, and use par to unpack the data making up
-the computation. Completing the circle, the tensor-par cut rule
-constitutes the means to reflect computational data back into actual
-computations.
+the computation. Completing the circle, we introduce a means for
+having tensors and pars interact with each other (referred to as the tensor-par cut
+rule) which constitutes the means to reflect computational data back into
+actual computations.
 
 It turns out that denying the evaluation context is not the only way
 to suspend computation. We can also form contexts. In this case, we
