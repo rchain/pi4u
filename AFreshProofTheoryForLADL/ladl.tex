@@ -460,7 +460,7 @@ $\mathsf{K}( \boxempty : \tau^{\perp}, \boxempty : \tau )$
 
 Expanding this out and instantiating $\mathsf{K}$ to application, we would get
 
-$App( \boxempty : \tau \rhd l_{\mathsf{K}}, \boxempty : \tau )$
+$\mathsf{App}( \boxempty : \tau \rhd l_{\mathsf{K}}, \boxempty : \tau )$
 
 This yields exactly the property we are demanding.
 
@@ -472,7 +472,7 @@ We add new sorts, $\chi^{\circ}$, and $\chi^{\bullet}$, $\chi^{\circ\bullet}$, a
   \item $\mathsf{c}, l_{\mathsf{K}}, r_{\mathsf{K}} : 1 \rightarrow T$
   \item $\mathsf{K} : T^{2} \rightarrow T$
   \item $\mathsf{K}_{A} : 1 \rightarrow \chi^{\circ\bullet}$
-  \item $\mathsf{K}_{\boxempty\boxempty} : \chi^{\circ} \times \chi^{\bullet} \rightarrow \chi^{\circ\bullet}$
+  \item $\mathsf{K}_{\boxempty\blacksquare} : \chi^{\circ} \times \chi^{\bullet} \rightarrow \chi^{\circ\bullet}$
   \item $\mathsf{K}_{\boxempty}^{l} : T \times \chi^{\circ\bullet} \rightarrow \chi^{\circ\bullet}$
   \item $\mathsf{K}_{\boxempty}^{r} :  \chi^{\circ\bullet} \times T \rightarrow\chi^{\circ\bullet}$
   \item $?(-) : \chi^{\circ\bullet}  \rightarrow \chi^{\circ}$
@@ -490,6 +490,8 @@ We add new sorts, $\chi^{\circ}$, and $\chi^{\bullet}$, $\chi^{\circ\bullet}$, a
   \item $\mathsf{K}(t, r_{\mathsf{K}}) = t$
   \item $@(\boxempty!,t) = t$
   \item $@(!\boxempty,t) = t$
+  \item $@(\blacksquare ?,t) = t$
+  \item $@(?\blacksquare,t) = t$
   % need to add polarities to these equations
   \item $@(\mathsf{K}_{\boxempty}^{l} (\chi, t)!, u) = \mathsf{K}(@(\chi, u), t)$
   \item $@(!\mathsf{K}_{\boxempty}^{r} (t, \chi), u) = \mathsf{K}(t, @(\chi, u))$
@@ -561,11 +563,11 @@ Rewrite rules
   \mathsf{s}(a,b,c) | \mathsf{m}(a,\quotep{P}) & \red \mathsf{fw}(b,c) \\
   *(a) | \mathsf{m}(a,\quotep{P}) & \red P
 \end{array}\]
-%% \begin{mathpar}
-%%   \inferrule* {{P} \red {P}'} {{{P} | {Q}} \red {{P}' | {Q}}}
-%%   \and
-%%   \inferrule* {{{P} \scong {P}'} \andalso {{P}' \red {Q}'} \andalso {{Q}' \scong {Q}}}{{P} \red {Q}}
-%% \end{mathpar}
+\begin{mathpar}
+  \inferrule* {{P} \red {P}'} {{{P} | {Q}} \red {{P}' | {Q}}}
+  \and
+  \inferrule* {{{P} \scong {P}'}, {{P}' \red {Q}'}, {{Q}' \scong {Q}}}{{P} \red {Q}}
+\end{mathpar}
 
 \begin{definition}
   The {\em structural congruence} $\equiv$
