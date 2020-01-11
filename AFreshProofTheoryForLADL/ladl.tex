@@ -94,10 +94,11 @@ categories.
 \subsection{Intuitions}
 
 The key idea in this construction is to use both the evaluation
-context of Meredith and Stay, and computational reflection, similar to
-what is found in Meredith and Radestock, to build a proof theory for
-an interactive rewrite system. The proof theory enjoys a cut
-elimination property that corresponds exactly with the notion of
+context of Meredith and Stay \cite{DBLP:journals/corr/StayM15}, and
+computational reflection, similar to what is found in Meredith and
+Radestock \cite{DBLP:journals/entcs/MeredithR05}, to build a proof
+theory for an interactive rewrite system. The proof theory enjoys a
+cut elimination property that corresponds exactly with the notion of
 computation embodied in the interactive rewrite system.
 
 The requirement that the rewrite system is interactive means the left
@@ -759,13 +760,18 @@ graph-enriched Lawvere theory.
 We have not addressed nominal aspects of rewrite systems such as the
 $\lambda$-calculus or the {\pic}. We note that there are two very
 promising directions. One is captured in Clouston's work on nominal
-Lawvere theories. The other is expressed in Fiore's work on HOAS. It
+Lawvere theories. \cite{DBLP:journals/jcss/Clouston14} The other is
+expressed in Fiore's work on HOAS. \cite{DBLP:conf/csl/FioreH10} It
 also bears mentioning that we can generate the names used by such a
-nominal theory using reflection, ala Meredith and Radestock.
+nominal theory using reflection, ala Meredith and
+Radestock. \cite{DBLP:conf/tgc/MeredithR05}
 
 Also, in the spirit of Meredith and Radestock, we can seek to minimize
-risk taken on in the theory in the form of “outside influences.”
-
+risk taken on in the theory in the form of “outside
+influences.”Specifically, the evaluation context, $R$ does not have to
+come from some external theory. It is possible to have two different
+``copies'' of the same theory and have the $R$ of one come from terms
+of the other and vice versa, in a mutually recursive definition.
 
 \bibliographystyle{amsplain}
 \bibliography{ladl}
