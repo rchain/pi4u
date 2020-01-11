@@ -503,6 +503,14 @@ We add new sorts, $\chi^{\circ}$, and $\chi^{\bullet}$, $\chi^{\circ\bullet}$, a
   \tau'\LHD_{\mathsf{K}} \tau & \triangleq  & \{ t | \exists u, \chi. t = \mathsf{K}_{\boxempty}^{l}(\chi, u)?,\forall t':\tau. (\exists \rho : t@t'\rightarrow v) \Rightarrow v:\tau'\}
 \end{eqnarray*}
 
+In the sequel we will use the notation $\Gamma^{\circ}$ (respectively,
+$\Delta^{\circ}$) to mean that the type context $\Gamma$ contains
+exactly one term containing $\boxempty$ and no terms containing
+$\blacksquare$. Dually, we will use the notation $\Gamma^{\bullet}$
+(respectively, $\Delta^{\bullet}$) to mean that the type context
+$\Gamma$ contains exactly one term containing $\blacksquare$ and no
+terms containing $\boxempty$.
+
 \subsection{Terms, their types and cuts}
 
 \begin{mathpar}
@@ -534,11 +542,11 @@ We add new sorts, $\chi^{\circ}$, and $\chi^{\bullet}$, $\chi^{\circ\bullet}$, a
 
   \inferrule* [lab=whynotleft] {\vdash \Gamma^{\bullet}, \boxempty : \tau_{1}, \chi^{\bullet} : \tau_{2}, \Delta^{\circ}, } {\vdash \Gamma^{\bullet}, \chi^{\bullet}? : \tau_{1} \RHD \tau_{2}, \Delta^{\circ}}
 
-  \inferrule* [lab=whynotright] {\vdash \Gamma^{\circ}, \blacksquare : \tau_{1}, \chi^{\circ} : \tau_{2}, \Delta^{\bullet}} {\vdash \Gamma^{\bullet}, ?\chi^{\circ}? : \tau_{1} \LHD \tau_{2}, \Delta^{\bullet}} \\
+  \inferrule* [lab=whynotright] {\vdash \Gamma^{\circ}, \blacksquare : \tau_{1}, \chi^{\circ} : \tau_{2}, \Delta^{\bullet}} {\vdash \Gamma^{\circ}, ?\chi^{\circ}? : \tau_{1} \LHD \tau_{2}, \Delta^{\bullet}} \\
 
-  \inferrule* [lab=leftarrow] {\vdash \Gamma, \chi^{\circ} : \tau} {\vdash \Gamma, \chi! : \tau' \lhd \tau}
+  \inferrule* [lab=rightarrow] {\vdash \Gamma^{\circ}, \blacksquare : \tau_{1} , \chi^{\circ} : \tau_{2}, \Delta^{\bullet}}{\vdash \Gamma^{\circ}, !\chi : \tau_{1} \lhd \tau_{2}, \Delta^{\bullet}} \\
 
-  \inferrule* [lab=rightarrow] {\vdash \Gamma, \boxempty : \tau , \chi : \tau'}{\vdash \Gamma, !\chi : \tau \rhd \tau'} \\
+  \inferrule* [lab=rightarrow] {\vdash \Gamma^{\bullet}, \boxempty : \tau_{1} , \chi^{\bullet} : \tau_{2}, \Delta^{\circ}}{\vdash \Gamma^{\bullet}, !\chi : \tau_{1} \rhd \tau_{2}, \Delta^{\circ}} \\
 
   \inferrule* [lab=$\rho_{\otimes}\perp\lhd$] {\vdash \Gamma, \mathsf{K}(\boxempty,u)! : \tau' \lhd \tau,  \vdash t : \tau, \Delta } {\vdash \Gamma, \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau', \Delta}
 
