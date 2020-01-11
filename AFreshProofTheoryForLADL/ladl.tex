@@ -182,14 +182,15 @@ complex enough and we want to focus on the core ideas.
 
 \subsection{Related work}
 In many ways this work is inspired by and derives from domain theory
-in logical form (DTLF). In much the same way that DTLF takes as input
-a notion of computation encoded in a domain theory and produces a
-logical system encoding the same notion of computation, but from the
-logical view, this is an algorithm that takes as input a notion of
-computation encoded as a Lawvere theory and produces a new Lawvere
-theory that is resource constrained and enjoys a type system that
-guarantees a range of security and liveness properties, while at the
-same time having the tightest possible conformance to the original
+in logical form (DTLF).\cite{DBLP:journals/apal/Abramsky91} In much
+the same way that DTLF takes as input a notion of computation encoded
+in a domain theory and produces a logical system encoding the same
+notion of computation, but from the logical view, this is an algorithm
+that takes as input a notion of computation encoded as a Lawvere
+theory (\cite{DBLP:journals/entcs/HylandP07}) and produces a new
+Lawvere theory that is resource constrained and enjoys a type system
+that guarantees a range of security and liveness properties, while at
+the same time having the tightest possible conformance to the original
 notion of computation. In particular, the resulting type theory is
 also a logic enjoying a notion of cut-elimination and proof
 normalization that matches exactly with the operational semantics of
@@ -198,14 +199,15 @@ correspondence.
 
 Other inspiration and guidance come from the two major branches in the
 development of behavioral types. One branch derives from the spatial
-logics of Caires, et al, while the other derives from the session
-types of Wadler, et al. The former is predominantly model theory
-based, while the latter is predominantly proof theory based. In the
-spatial logics branch the negation is largely set-based, while in the
-session types work the negation is related to the reduction of
-terms. This construction brings both branches together and offers both
-model theory and proof theory that enjoys a full abstraction-like
-property.
+logics of Caires \cite{DBLP:conf/fossacs/Caires04}, et al, while the
+other derives from the session types of Wadler, et
+al. \cite{DBLP:journals/jfp/Wadler14} The former is predominantly
+model theory based, while the latter is predominantly proof theory
+based. In the spatial logics branch the negation is largely set-based,
+while in the session types work the negation is related to the
+reduction of terms. This construction brings both branches together
+and offers both model theory and proof theory that enjoys a full
+abstraction-like property.
 
 The discussion would not be complete without mentioning
 blockchain. While the idea of resource limiting computation certainly
@@ -510,6 +512,13 @@ $\blacksquare$. Dually, we will use the notation $\Gamma^{\bullet}$
 (respectively, $\Delta^{\bullet}$) to mean that the type context
 $\Gamma$ contains exactly one term containing $\blacksquare$ and no
 terms containing $\boxempty$.
+
+\subsection{Types}
+We introduce additional arrow types to mirror the introduction of $?$.
+
+\begin{mathpar}
+  \inferrule* [lab=type] {} { \tau \bc  \top  | \tau \rhd \tau | \tau \lhd \tau | \tau \RHD \tau | \tau \LHD \tau | \mathsf{C} | \{\} | \tau \cup \tau | \mathsf{R}\tau | \mathsf{K}(\tau,\tau) | \rho_{\otimes}(\tau,\tau) | \rho_{\bindnasrepma}(\tau,\tau) | \rho_{\sqcap}(\tau,\tau) | \rho_{\sqcup}(\tau,\tau) }
+\end{mathpar}
 
 \subsection{Terms, their types and cuts}
 
