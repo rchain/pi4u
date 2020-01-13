@@ -9,6 +9,7 @@
 \usepackage{listings}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{amsthm}
 \usepackage{comment}
 \usepackage{hyperref}
 \usepackage{longtable}
@@ -127,10 +128,13 @@
 
 \newcommand{\rhoc}{$\rho$-calculus}
 
+\theoremstyle{definition}
 \newtheorem{definition}{Definition}
 \newtheorem{theorem}{Theorem}
-\newtheorem{proof}{Proof}
+%% \newtheorem{proof}{Proof}
+\theoremstyle{remark}
 \newtheorem{remark}{Remark}
+\theoremstyle{remark}
 \newtheorem{example}{Example}
 
 \makeatletter
