@@ -1,3 +1,4 @@
-latex rhocomb
-dvips rhocomb.dvi
-ps2pdf rhocomb.ps
+pdflatex rhocomb
+bibtex rhocomb
+pdflatex rhocomb
+pdflatex rhocomb

@@ -555,7 +555,7 @@ We introduce additional arrow types to mirror the introduction of $?$.
 
   \inferrule* [lab=whynotright] {\vdash \Gamma^{\circ}, \blacksquare : \tau_{1}, \chi^{\circ} : \tau_{2}, \Delta^{\bullet}} {\vdash \Gamma^{\circ}, ?\chi^{\circ}? : \tau_{1} \LHD \tau_{2}, \Delta^{\bullet}} \\
 
-  \inferrule* [lab=rightarrow] {\vdash \Gamma^{\circ}, \blacksquare : \tau_{1} , \chi^{\circ} : \tau_{2}, \Delta^{\bullet}}{\vdash \Gamma^{\circ}, !\chi : \tau_{1} \lhd \tau_{2}, \Delta^{\bullet}} \\
+  \inferrule* [lab=leftarrow] {\vdash \Gamma^{\circ}, \blacksquare : \tau_{1} , \chi^{\circ} : \tau_{2}, \Delta^{\bullet}}{\vdash \Gamma^{\circ}, !\chi : \tau_{1} \lhd \tau_{2}, \Delta^{\bullet}} \\
 
   \inferrule* [lab=rightarrow] {\vdash \Gamma^{\bullet}, \boxempty : \tau_{1} , \chi^{\bullet} : \tau_{2}, \Delta^{\circ}}{\vdash \Gamma^{\bullet}, !\chi : \tau_{1} \rhd \tau_{2}, \Delta^{\circ}} \\
 

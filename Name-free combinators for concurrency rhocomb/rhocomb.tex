@@ -1,4 +1,5 @@
-\documentclass{llncs}
+%%\documentclass{llncs}
+\documentclass[submission,copyright,creativecommons]{eptcs}
 \usepackage{tikz}
 \usetikzlibrary{arrows,shapes}
 \usepackage{mathpartir}
@@ -126,6 +127,12 @@
 
 \newcommand{\rhoc}{$\rho$-calculus}
 
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proof}{Proof}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+
 \makeatletter
 \gdef\tshortstack{\@ifnextchar[\@tshortstack{\@tshortstack[c]}}
 \gdef\@tshortstack[#1]{%
@@ -139,18 +146,28 @@
 \makeatother
 
 \title{Name-free combinators for concurrency}
-\author{
-L.G. Meredith\inst{1}\\
+%% \author{
+%% L.G. Meredith\inst{1}\\
+%% \and
+%% Michael Stay\inst{2}\\
+%% }
+%% \institute{
+%%   {RChain Cooperative}\\
+%%   \email{\fontsize{8}{8}\selectfont greg@rchain.coop}
+%%   \and
+%%   {Pyrofex Corp.}\\
+%%   \email{\fontsize{8}{8}\selectfont stay@pyrofex.net}\\
+%% }
+\author{L.G. Meredith
+\institute{RChain Cooperative\\ Washington State}
+\email{lgreg.meredith@rchain.coop}
 \and
-Michael Stay\inst{2}\\
+Co Author \qquad\qquad Mike Stay
+\institute{Pyrofex Corp.\\Utah, USA}
+\email{\quad stay@pyrofex.net}
 }
-\institute{
-  {RChain Cooperative}\\
-  \email{\fontsize{8}{8}\selectfont greg@rchain.coop}
-  \and
-  {Pyrofex Corp.}\\
-  \email{\fontsize{8}{8}\selectfont stay@pyrofex.net}\\
-}
+\def\titlerunning{Name-free combinators for concurrency}
+\def\authorrunning{L.G. Meredith, M. Stay}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -713,9 +730,12 @@ specification.
 (I)&  \meaningof{\prefix{p}{x}{\binpar{P}{Q}}}_4(n, q) 
     & := & 
     (\mathsf{d}(p,v,w)|\binpar{\meaningof{\prefix{v}{x}{P}}_{4}(n_{1}, q_{1})}{\meaningof{\prefix{w}{x}{Q}}_{4}(n_{2}, q_{2}) } \\
-    & & & \mbox{where $v = \quotep{(\mathsf{m}(q,\quotep{\binpar{\mathsf{b}_{\mathsf{l}}(q,n)}{\binpar{P}{Q}}}))}$, $w = \quotep{(\mathsf{m}(q,\quotep{\binpar{\mathsf{b}_{\mathsf{r}}(q,n)}{\binpar{P}{Q}}}))}$,} \\
-    & & &\mbox{$n_{1} = \quotep{(\binpar{\mathsf{b}_{\mathsf{l}}(v,w)}{\mathsf{m}(q,\quotep{\mathsf{m}(v,*w)})})}$, $n_{2} = \quotep{(\binpar{\mathsf{b}_{\mathsf{r}}(v,w)}{\mathsf{m}(q,\quotep{\mathsf{m}(v,*w)})})}$} \\
-    & & &\mbox{$q_{1} = \quotep{(\binpar{\mathsf{b}_{\mathsf{l}}(n_{1},n_{2})}{\mathsf{m}(q,\quotep{\mathsf{m}(v,*w)})})}$, $q_{2} = \quotep{(\binpar{\mathsf{b}_{\mathsf{r}}(n_{1},n_{2})}{\mathsf{m}(q,\quotep{\mathsf{m}(v,*w)})})}$} \\
+& & & \mbox{where $v = \quotep{(\mathsf{m}(q,\quotep{\binpar{\mathsf{b}_{\mathsf{l}}(q,n)}{\binpar{P}{Q}}}))}$,} \\
+& & & \mbox{     $w = \quotep{(\mathsf{m}(q,\quotep{\binpar{\mathsf{b}_{\mathsf{r}}(q,n)}{\binpar{P}{Q}}}))}$,} \\
+& & &\mbox{     $n_{1} = \quotep{(\binpar{\mathsf{b}_{\mathsf{l}}(v,w)}{\mathsf{m}(q,\quotep{\mathsf{m}(v,*w)})})}$,} \\
+& & &\mbox{     $n_{2} = \quotep{(\binpar{\mathsf{b}_{\mathsf{r}}(v,w)}{\mathsf{m}(q,\quotep{\mathsf{m}(v,*w)})})}$,} \\
+& & &\mbox{     $q_{1} = \quotep{(\binpar{\mathsf{b}_{\mathsf{l}}(n_{1},n_{2})}{\mathsf{m}(q,\quotep{\mathsf{m}(v,*w)})})}$,} \\
+& & & \mbox{     $q_{2} = \quotep{(\binpar{\mathsf{b}_{\mathsf{r}}(n_{1},n_{2})}{\mathsf{m}(q,\quotep{\mathsf{m}(v,*w)})})}$ }\\
 (V)&  \meaningof{\prefix{p}{x}{\emph{c}(v^{+},w)}}_4(n, q) 
     & := & 
     \mathsf{s}(p,a,v)|\emph{c}(a^{+},\vect{w})
@@ -744,8 +764,10 @@ specification.
 (XII)&  \meaningof{\prefix{p}{x}{\mathsf{b}_{\mathsf{r}}(v,x^{-})}}_4(n, q) 
     & := & 
     \meaningof{\prefix{p}{x}{(\binpar{\mathsf{d}(v,w_{1},w_{2})}{\binpar{\mathsf{s}(w_{1},x,w_{3})}{\mathsf{b}_{\mathsf{r}}(w_{2},w_{3})}})}}_{4}(n', q) \\
-    & & & \mbox{where $w_{1} = \quotep{(\binpar{\mathsf{b}_{\mathsf{l}}(q,n)}{\mathsf{m}(q,\quotep{\mathsf{b}_{\mathsf{r}}(v,x^{-})})})}$, $w_{2} = \quotep{(\binpar{\mathsf{b}_{\mathsf{r}}(q,n)}{\mathsf{m}(q,\quotep{\mathsf{b}_{\mathsf{r}}(v,x^{-})})})}$,} \\
-    & & & \mbox{$w_{3} = \quotep{(\binpar{\mathsf{b}_{\mathsf{l}}(p,v)}{\mathsf{m}(w_{1},w_{2}})}$, and $n' = \quotep{(\mathsf{s}(w_{1},w_{2},w_{3}))}$} \\
+    & & & \mbox{where $w_{1} = \quotep{(\binpar{\mathsf{b}_{\mathsf{l}}(q,n)}{\mathsf{m}(q,\quotep{\mathsf{b}_{\mathsf{r}}(v,x^{-})})})}$,} \\
+    & & & \mbox{$w_{2} = \quotep{(\binpar{\mathsf{b}_{\mathsf{r}}(q,n)}{\mathsf{m}(q,\quotep{\mathsf{b}_{\mathsf{r}}(v,x^{-})})})}$,} \\
+    & & & \mbox{$w_{3} = \quotep{(\binpar{\mathsf{b}_{\mathsf{l}}(p,v)}{\mathsf{m}(w_{1},w_{2}})}$, and } \\
+    & & & \mbox{$n' = \quotep{(\mathsf{s}(w_{1},w_{2},w_{3}))}$} \\
 (XIII)&  \meaningof{\prefix{p}{x}{\mathsf{s}(v,x^{-},w)}}_4(n, q) 
     & := & 
     \meaningof{\prefix{p}{x}{(\binpar{\mathsf{s}(v,w_{1},w_{2})}{\binpar{\mathsf{m}(w_{1},x)}{\mathsf{b}_{\mathsf{l}}(w_{2},w)}})}}_{4}(n', q) \\
@@ -865,7 +887,7 @@ from a more traditional set theory with reflection and provides a
 bridge between Gabbay and Pitts' account of nominal phenomena and the
 reflection-based approach.
 
-\bibliographystyle{amsplain}
+\bibliographystyle{eptcs}
 \bibliography{rhocomb}
 
 \section{Appendix: Translating the {\pic} into the {\rhoc}}
