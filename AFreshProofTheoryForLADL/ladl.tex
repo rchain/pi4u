@@ -249,7 +249,7 @@ We add a resource, $\mathsf{R}$, which can be thought of as either an evaluation
 context, or as a constant. In the resourced theory, the rewrite rule
 only applies in an evaluation context.
 
-Then we add a notion of 1-holed context. We add a new sort, $\chi_{T}$, then a
+Then we add a notion of 1-holed context. We add a new sort, $X_{T}$, then a
 constant for the hole, together with left and right maps for placing
 the hole in either side of $\mathsf{K}$, along with left and right maps $!(-)$ and
 $(-)!$ essentially for treating contexts as abstractions. We add a map
@@ -331,18 +331,18 @@ then producing a contextualized version of the theory.
 \end{itemize}
 
 \subsubsection{Contextualized Resourced theory}
-We add a new sort, $\chi_{T}$, and the following maps
+We add a new sort, $X$, and the following maps
 
 \begin{itemize}
   \item $\mathsf{c}, l_{\mathsf{K}}, r_{\mathsf{K}} : 1 \rightarrow T$
   \item $\mathsf{K} : T^{2} \rightarrow T$
-  \item $\boxempty : 1 \rightarrow \chi_{T}$
-  \item $\mathsf{K}_{\boxempty}^{l} : \chi_{T}^{2} \rightarrow \chi_{T}$
-  \item $\mathsf{K}_{\boxempty}^{r} : T x \chi_{T} \rightarrow \chi_{T}$
-  \item $!(-) : \chi_{T}  \rightarrow T$
-  \item $(-)! : \chi_{T}  \rightarrow T$
+  \item $\boxempty : 1 \rightarrow X$
+  \item $\mathsf{K}_{\boxempty}^{l} : X \times T \rightarrow X$
+  \item $\mathsf{K}_{\boxempty}^{r} : T \times X \rightarrow X$
+  \item $!(-) : X  \rightarrow T$
+  \item $(-)! : X  \rightarrow T$
   \item $@ : T^{2} \rightarrow T$
-  \item $@_{\boxempty} : \chi_{T}^{2} \rightarrow T$
+  \item $@_{\boxempty} : X^{2} \rightarrow T$
   \item $\mathsf{R} : T \rightarrow T$
   \item $\bindnasrepma_{\rho} : T^{2} \rightarrow T$
   \item $\sqcup_{\rho} : T^{2} \rightarrow T$
@@ -471,19 +471,19 @@ This yields exactly the property we are demanding.
 
 More formally, we adapt the Lawvere theory as follows.
 
-We add new sorts, $\chi^{\circ}$, and $\chi^{\bullet}$, $\chi^{\circ\bullet}$, and the following maps
+We add new sorts, $X^{\circ}$, and $X^{\bullet}$, $X^{\circ\bullet}$, and the following maps
 
 \begin{itemize}
   \item $\mathsf{c}, l_{\mathsf{K}}, r_{\mathsf{K}} : 1 \rightarrow T$
   \item $\mathsf{K} : T^{2} \rightarrow T$
-  \item $\mathsf{K}_{A} : 1 \rightarrow \chi^{\circ\bullet}$
-  \item $\mathsf{K}_{\boxempty\blacksquare} : \chi^{\circ} \times \chi^{\bullet} \rightarrow \chi^{\circ\bullet}$
-  \item $\mathsf{K}_{\boxempty}^{l} : T \times \chi^{\circ\bullet} \rightarrow \chi^{\circ\bullet}$
-  \item $\mathsf{K}_{\boxempty}^{r} :  \chi^{\circ\bullet} \times T \rightarrow\chi^{\circ\bullet}$
-  \item $?(-) : \chi^{\circ\bullet}  \rightarrow \chi^{\circ}$
-  \item $(-)? : \chi^{\circ\bullet}  \rightarrow \chi^{\bullet}$
-  \item $!(-) : \chi^{\circ}  \rightarrow T$
-  \item $(-)! : \chi^{\bullet}  \rightarrow T$
+  \item $\mathsf{K}_{A} : 1 \rightarrow X^{\circ\bullet}$
+  \item $\mathsf{K}_{\boxempty\blacksquare} : X^{\circ} \times X^{\bullet} \rightarrow X^{\circ\bullet}$
+  \item $\mathsf{K}_{\boxempty}^{l} : T \times X^{\circ\bullet} \rightarrow X^{\circ\bullet}$
+  \item $\mathsf{K}_{\boxempty}^{r} :  X^{\circ\bullet} \times T \rightarrow X^{\circ\bullet}$
+  \item $?(-) : X^{\circ\bullet}  \rightarrow X^{\circ}$
+  \item $(-)? : X^{\circ\bullet}  \rightarrow X^{\bullet}$
+  \item $!(-) : X^{\circ}  \rightarrow T$
+  \item $(-)! : X^{\bullet}  \rightarrow T$
   \item $@ : T^{2} \rightarrow T$
   \item $\mathsf{R} : T \rightarrow T$
   \item $\bindnasrepma_{\rho} : T^{2} \rightarrow T$
@@ -553,11 +553,11 @@ We introduce additional arrow types to mirror the introduction of $?$.
 
   \inferrule* [lab=whynotleft] {\vdash \Gamma^{\bullet}, \boxempty : \tau_{1}, \chi^{\bullet} : \tau_{2}, \Delta^{\circ}, } {\vdash \Gamma^{\bullet}, \chi^{\bullet}? : \tau_{1} \RHD \tau_{2}, \Delta^{\circ}}
 
-  \inferrule* [lab=whynotright] {\vdash \Gamma^{\circ}, \blacksquare : \tau_{1}, \chi^{\circ} : \tau_{2}, \Delta^{\bullet}} {\vdash \Gamma^{\circ}, ?\chi^{\circ}? : \tau_{1} \LHD \tau_{2}, \Delta^{\bullet}} \\
+  \inferrule* [lab=whynotright] {\vdash \Gamma^{\circ}, \blacksquare : \tau_{1}, \chi^{\circ} : \tau_{2}, \Delta^{\bullet}} {\vdash \Gamma^{\circ}, ?\chi^{\circ} : \tau_{1} \LHD \tau_{2}, \Delta^{\bullet}} \\
 
-  \inferrule* [lab=leftarrow] {\vdash \Gamma^{\circ}, \blacksquare : \tau_{1} , \chi^{\circ} : \tau_{2}, \Delta^{\bullet}}{\vdash \Gamma^{\circ}, !\chi : \tau_{1} \lhd \tau_{2}, \Delta^{\bullet}} \\
+  \inferrule* [lab=ofcourseleft] {\vdash \Gamma^{\circ}, \blacksquare : \tau_{1} , \chi^{\circ} : \tau_{2}, \Delta^{\bullet}}{\vdash \Gamma^{\circ}, !\chi : \tau_{1} \lhd \tau_{2}, \Delta^{\bullet}} \\
 
-  \inferrule* [lab=rightarrow] {\vdash \Gamma^{\bullet}, \boxempty : \tau_{1} , \chi^{\bullet} : \tau_{2}, \Delta^{\circ}}{\vdash \Gamma^{\bullet}, !\chi : \tau_{1} \rhd \tau_{2}, \Delta^{\circ}} \\
+  \inferrule* [lab=ofcourseright] {\vdash \Gamma^{\bullet}, \boxempty : \tau_{1} , \chi^{\bullet} : \tau_{2}, \Delta^{\circ}}{\vdash \Gamma^{\bullet}, \chi! : \tau_{1} \rhd \tau_{2}, \Delta^{\circ}} \\
 
   \inferrule* [lab=$\rho_{\otimes}\perp\lhd$] {\vdash \Gamma, \mathsf{K}(\boxempty,u)! : \tau' \lhd \tau,  \vdash t : \tau, \Delta } {\vdash \Gamma, \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau', \Delta}
 
