@@ -342,7 +342,7 @@ We add a new sort, $X$, and the following maps
   \item $!(-) : X  \rightarrow T$
   \item $(-)! : X  \rightarrow T$
   \item $@ : T^{2} \rightarrow T$
-  \item $@_{\boxempty} : X^{2} \rightarrow T$
+  \item $@_{\boxempty} : X \times T \rightarrow T$
   \item $\mathsf{R} : T \rightarrow T$
   \item $\bindnasrepma_{\rho} : T^{2} \rightarrow T$
   \item $\sqcup_{\rho} : T^{2} \rightarrow T$
@@ -435,13 +435,13 @@ Below we identify the formation of each kind of context: tensor-parallel, tensor
 \subsubsection{Left and right context formation and cut}
 
 \begin{mathpar}
-  \inferrule* [lab=left-arrow] {\Gamma, \boxempty : \tau  \vdash \chi : \tau'} {\Gamma \vdash \chi ! : \tau' \lhd \tau}
+  \inferrule* [lab=$\lhd$] {\Gamma, \boxempty : \tau  \vdash \chi : \tau'} {\Gamma \vdash \chi ! : \tau' \lhd \tau}
 
-  \inferrule* [lab=right-arrow] {\Gamma, \boxempty : \tau  \vdash \chi : \tau'} {\Gamma \vdash !\chi : \tau \rhd \tau'} \\
+  \inferrule* [lab=$\rhd$] {\Gamma, \boxempty : \tau  \vdash \chi : \tau'} {\Gamma \vdash !\chi : \tau \rhd \tau'} \\
 
-  \inferrule* [lab=context-cut-left] {\Gamma \vdash \mathsf{K}(\boxempty,u)! : \tau' \lhd \tau \quad  \Delta \vdash t : \tau}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau'}
+  \inferrule* [lab=$\rho_{\boxempty \perp \lhd}$] {\Gamma \vdash \mathsf{K}(\boxempty,u)! : \tau' \lhd \tau \quad  \Delta \vdash t : \tau}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau'}
 
-  \inferrule* [lab=context-cut-right] {\Gamma \vdash !\mathsf{K}(t,\boxempty) : \tau \rhd \tau'\quad  \Delta \vdash u : \tau} {\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau'}\\
+  \inferrule* [lab=$\rho_{\boxempty \perp \rhd}$] {\Gamma \vdash !\mathsf{K}(t,\boxempty) : \tau \rhd \tau'\quad  \Delta \vdash u : \tau} {\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau'}\\
   \inferrule* [lab=$\rho_{\sqcup \perp \sqcap}$]{\Gamma \vdash \sqcup_{\rho} (t_{1}, t_{2}) : \rho_{\sqcup}(\tau_{2} \rhd \tau_{1}^{\perp}, \tau_{2})  \quad \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\sqcap}(\tau_{3} \rhd \tau_{1}, \tau_{3})}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{K}(t_{1}, t_{2}), \mathsf{K}(t_{3}, t_{4}))) : \mathsf{R}(r_{\mathsf{K}})}
 \end{mathpar}
   
