@@ -420,8 +420,6 @@ which allows the hole to be buried, rather than at the top level,
 
 \inferrule* [lab=$\rho_{\sqcup}$]{\Gamma \vdash t : \tau, u : \tau'}{\Gamma \vdash \sqcup_{\rho}(t,u) : \rho_{\sqcup}(\tau,\tau')}
 
-\inferrule* [lab=$\rho_{\sqcup \perp \sqcap}$]{\Gamma \vdash \sqcup_{\rho} (t_{1}, t_{2}) : \rho_{\sqcup}(\tau_{2} \rhd \tau_{1}^{\perp}, \tau_{2})  \quad \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\sqcap}(\tau_{3} \rhd \tau_{1}, \tau_{3})}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{K}(t_{1}, t_{2}), \mathsf{K}(t_{3}, t_{4}))) : \mathsf{R}(r_{\mathsf{K}})}
-
 \inferrule* [lab=$\rho_{\perp}$]{\Gamma \vdash t' : \tau^{\perp}\quad \Delta \vdash t : \tau }{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t',t)) : \mathsf{R}(r_{\mathsf{K}})}
 
 \end{mathpar}
@@ -439,11 +437,12 @@ Below we identify the formation of each kind of context: tensor-parallel, tensor
 \begin{mathpar}
   \inferrule* [lab=left-arrow] {\Gamma, \boxempty : \tau  \vdash \chi : \tau'} {\Gamma \vdash \chi ! : \tau' \lhd \tau}
 
-  \inferrule* [lab=right-arrow] {\Gamma, \boxempty : \tau  \vdash \chi : \tau'} {\Gamma \vdash !\chi : \tau \rhd \tau'}
+  \inferrule* [lab=right-arrow] {\Gamma, \boxempty : \tau  \vdash \chi : \tau'} {\Gamma \vdash !\chi : \tau \rhd \tau'} \\
 
   \inferrule* [lab=context-cut-left] {\Gamma \vdash \mathsf{K}(\boxempty,u)! : \tau' \lhd \tau \quad  \Delta \vdash t : \tau}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau'}
 
-  \inferrule* [lab=context-cut-right] {\Gamma \vdash !\mathsf{K}(t,\boxempty) : \tau \rhd \tau'\quad  \Delta \vdash u : \tau} {\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau'}
+  \inferrule* [lab=context-cut-right] {\Gamma \vdash !\mathsf{K}(t,\boxempty) : \tau \rhd \tau'\quad  \Delta \vdash u : \tau} {\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau'}\\
+  \inferrule* [lab=$\rho_{\sqcup \perp \sqcap}$]{\Gamma \vdash \sqcup_{\rho} (t_{1}, t_{2}) : \rho_{\sqcup}(\tau_{2} \rhd \tau_{1}^{\perp}, \tau_{2})  \quad \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\sqcap}(\tau_{3} \rhd \tau_{1}, \tau_{3})}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{K}(t_{1}, t_{2}), \mathsf{K}(t_{3}, t_{4}))) : \mathsf{R}(r_{\mathsf{K}})}
 \end{mathpar}
   
 \subsection{Classical Term assignment}
@@ -537,8 +536,6 @@ We introduce additional arrow types to mirror the introduction of $?$.
 
   \inferrule* [lab=$\rho_{\sqcup}$] {\vdash \Gamma, t : \tau, u : \tau'} {\vdash \Gamma, \sqcup(t,u) : \rho_{\sqcup}(\tau,\tau')}
 
-  \inferrule* [lab=$\rho_{\sqcap\perp\sqcup}$] {\vdash \Gamma, \sqcup\rho (t, u) : \rho_{\sqcup}(\tau_{3} \rhd \tau_{1}^{\perp}, u:\tau_{3})  \vdash \mathsf{K}(t', u') : \rho_{\sqcap}(\tau_{2} \rhd \tau_{1}, \tau_{2}), \Delta } {\vdash \Gamma, \mathsf{R}(\mathsf{K}(\mathsf{K}( t, u), \mathsf{K}(t', u')) : \mathsf{R}(r_{\mathsf{K}}), \Delta}
-
   \inferrule* [lab=$\rho_{\perp}$] {\vdash\Gamma,  t' : \tau^{\perp}  \vdash t : \tau, \Delta }{\vdash \Gamma, \mathsf{R}(\mathsf{K}(t',t)) : \mathsf{R}(r_{\mathsf{K}}), \Delta}
 \end{mathpar}
 
@@ -561,7 +558,9 @@ We introduce additional arrow types to mirror the introduction of $?$.
 
   \inferrule* [lab=$\rho_{\otimes}\perp\lhd$] {\vdash \Gamma, \mathsf{K}(\boxempty,u)! : \tau' \lhd \tau,  \vdash t : \tau, \Delta } {\vdash \Gamma, \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau', \Delta}
 
-  \inferrule* [lab=$\rho_{\otimes}\perp\rhd$] {\vdash \Gamma, !\mathsf{K}(t,\boxempty) : \tau \rhd \tau',  \Delta \vdash u : \tau}{\vdash \Gamma, \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau', \Delta}
+  \inferrule* [lab=$\rho_{\otimes}\perp\rhd$] {\vdash \Gamma, !\mathsf{K}(t,\boxempty) : \tau \rhd \tau',  \Delta \vdash u : \tau}{\vdash \Gamma, \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau', \Delta} \\
+
+  \inferrule* [lab=$\rho_{\sqcap\perp\sqcup}$] {\vdash \Gamma, \sqcup\rho (t, u) : \rho_{\sqcup}(\tau_{3} \rhd \tau_{1}^{\perp}, u:\tau_{3})  \vdash \mathsf{K}(t', u') : \rho_{\sqcap}(\tau_{2} \rhd \tau_{1}, \tau_{2}), \Delta } {\vdash \Gamma, \mathsf{R}(\mathsf{K}(\mathsf{K}( t, u), \mathsf{K}(t', u')) : \mathsf{R}(r_{\mathsf{K}}), \Delta}
 \end{mathpar}
 
 \section{Examples}
