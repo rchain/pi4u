@@ -420,7 +420,7 @@ which allows the hole to be buried, rather than at the top level,
 
 \inferrule* [lab=$\rho_{\sqcup}$]{\Gamma \vdash t : \tau, u : \tau'}{\Gamma \vdash \sqcup_{\rho}(t,u) : \rho_{\sqcup}(\tau,\tau')}
 
-\inferrule* [lab=$\rho_{\sqcup \perp \sqcap}$]{\Gamma \vdash \sqcup_{\rho} (t_{1}, t_{2}) : \rho_{\sqcup}(\tau_{3} \rhd \tau_{1}^{\perp}, \tau_{3})  \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\sqcap}(\tau_{2} \rhd \tau_{1}, \tau_{2})}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{K}(t_{1}, t_{2}), \mathsf{K}(t_{3}, t_{4}))) : \mathsf{R}(r_{\mathsf{K}})}
+\inferrule* [lab=$\rho_{\sqcup \perp \sqcap}$]{\Gamma \vdash \sqcup_{\rho} (t_{1}, t_{2}) : \rho_{\sqcup}(\tau_{2} \rhd \tau_{1}^{\perp}, \tau_{2})  \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\sqcap}(\tau_{3} \rhd \tau_{1}, \tau_{3})}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{K}(t_{1}, t_{2}), \mathsf{K}(t_{3}, t_{4}))) : \mathsf{R}(r_{\mathsf{K}})}
 
 \inferrule* [lab=$\rho_{\perp}$]{\Gamma \vdash t' : \tau^{\perp}, \Delta \vdash t : \tau }{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t',t)) : \mathsf{R}(r_{\mathsf{K}})}
 
