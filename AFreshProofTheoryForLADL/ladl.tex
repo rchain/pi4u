@@ -441,9 +441,9 @@ Below we identify the formation of each kind of context: tensor-parallel, tensor
 
   \inferrule* [lab=right-arrow] {\Gamma, \boxempty : \tau  \vdash \chi : \tau'} {\Gamma \vdash !\chi : \tau \rhd \tau'}
 
-  \inferrule* [lab=context-cut-left] {\Gamma \vdash \mathsf{K}(\boxempty,u)! : \tau' \lhd \tau,  \Delta \vdash t : \tau}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau'}
+  \inferrule* [lab=context-cut-left] {\Gamma \vdash \mathsf{K}(\boxempty,u)! : \tau' \lhd \tau \quad  \Delta \vdash t : \tau}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau'}
 
-  \inferrule* [lab=context-cut-right] {\Gamma \vdash !\mathsf{K}(t,\boxempty) : \tau \rhd \tau',  \Delta \vdash u : \tau} {\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau'}
+  \inferrule* [lab=context-cut-right] {\Gamma \vdash !\mathsf{K}(t,\boxempty) : \tau \rhd \tau'\quad  \Delta \vdash u : \tau} {\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau'}
 \end{mathpar}
   
 \subsection{Classical Term assignment}
