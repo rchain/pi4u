@@ -317,6 +317,9 @@ theory that requires an evaluation context to run the rewrite rule,
 then producing a contextualized version of the theory.
 
 \subsubsection{Resourced theory}
+
+%% TODO comment on fhat
+
 \begin{itemize}
   \item $\mathsf{c}, l_{\mathsf{K}}, r_{\mathsf{K}} : 1 \rightarrow T$
   \item $\mathsf{K} : T^{2} \rightarrow T$
@@ -327,11 +330,14 @@ then producing a contextualized version of the theory.
   \item $\mathsf{K}(l_{\mathsf{K}}, u) = u$
   \item $\mathsf{K}(t, r_{\mathsf{K}}) = t$
   \item $s(\rho(t,u)) = \mathsf{R}\mathsf{K}(t, u)$
-  \item $t(\rho(t,u)) = f(t,u)$                    %%// f can mention R, e.g. if R is not a linear resource
+  \item $t(\rho(t,u)) = \hat{f}(t,u)$                    %%// deleting Rs from fhat gives f
 \end{itemize}
 
 \subsubsection{Contextualized Resourced theory}
 We add a new sort, $X$, and the following maps
+
+%% TODO a version of @ where we can apply a term to a context and get a context
+%% Check equations involving @_box
 
 \begin{itemize}
   \item $\mathsf{c}, l_{\mathsf{K}}, r_{\mathsf{K}} : 1 \rightarrow T$
@@ -348,13 +354,13 @@ We add a new sort, $X$, and the following maps
   \item $\sqcup_{\rho} : T^{2} \rightarrow T$
   \item $\rho : T^{2} \rightarrow T$             %%//( \x -> M N) -> M{N/x}     for( y <- x )P | x!(Q) -> P{@Q/y}
   \item $s(\rho(t,u)) = \mathsf{R}\mathsf{K}(t, u)$ 
-  \item $t(\rho(t,u)) = f(t,u)$          %%// f can mention R, e.g. if R is not a linear resource
+  \item $t(\rho(t,u)) = \hat{f}(t,u)$          %%// deleting Rs from fhat gives f
   \item $\mathsf{K}(l_{\mathsf{K}}, u) = u$
   \item $\mathsf{K}(t, r_{\mathsf{K}}) = t$
   \item $@(\boxempty !,t) = t$
   \item $@(!\boxempty,t) = t$
   \item $@(\mathsf{K}_{\boxempty}^{l} (\chi, t)!, u) = \mathsf{K}(@_{\boxempty}(\chi, u), t)$
-  \item  $@(!\mathsf{K}_{\boxempty}^{r} (t, \chi), u) = \mathsf{K}(t, @_{\boxempty}(\chi, u))$
+  \item $@(!\mathsf{K}_{\boxempty}^{r} (t, \chi), u) = \mathsf{K}(t, @_{\boxempty}(\chi, u))$
 \end{itemize}
 
 As mentioned before, the basic notion of arrow is given by
