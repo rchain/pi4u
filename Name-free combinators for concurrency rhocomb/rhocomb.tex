@@ -177,27 +177,56 @@ Michael Stay
 \maketitle
 \begin{abstract}
 \noindent
-  Yoshida demonstrated how to eliminate the bound names coming from
-  the input prefix in the asynchronous {\pic}, but her combinators
-  still depend on the $\new$ operator to bind names.
-  We modify Yoshida's combinators by replacing $\new$ and replication
-  with reflective operators to provide the first combinator calculus
-  with no bound names into which the asynchronous {\pic} has a faithful
-  embedding.  
+  In \cite{DBLP:conf/popl/HondaY94} and
+  \cite{DBLP:journals/tcs/Yoshida02} Honda and Yoshida demonstrated
+  how to eliminate the bound names coming from the input prefix in the
+  asynchronous {\pic}, but their combinators still depend on the
+  $\new$ operator to bind names.  We extend these combinators by
+  replacing $\new$ and replication with reflective operators to
+  propose the first combinator calculus with no bound names into which
+  the asynchronous {\pic} has a faithful embedding.
 \end{abstract}
 
 \section{Introduction}
 
+While the focus of this paper is largely on the technical results of
+providing a name-free combinatory account of mobile concurrent
+computation through the use of reflection, it is useful to consider
+the larger context motivating them. Reflection and meta-programming
+features more generally are part of a growing number of mainstream
+languages. Java, C\#, even the Haskell and OCaml communities have seen
+growing interest in these features with efforts like template Haskell
+and MetaOCaml, respectively. In large measure this has to do the fact
+that programming at industrial scale requires the leverage of computer
+programs to write computer programs. Thus, meta-programming features
+are simply a practical necessity. On the other hand, reflection and
+meta-programming are not well explored in a strongly typed
+setting. This is one of the reasons why language designs based on
+typed $\lambda$-calculi have been so slow to adopt reflection as a
+feature by comparison to other language designs.
+
+In this setting, the idea that a single feature already enjoying
+widespread adoption could account for such a subtle phenomenon as the
+kind of binding found in the {\pic} is both intriguing and worth
+exploring, even if FM set theory provides a satisfying account of
+computation with nominal phenomena in other respects
+\cite{DBLP:journals/fac/GabbayP02}. However, it is precisely the
+foundational theoretical questions raised by the FM set theoretic
+approach that motivates the investigation in the first place: what
+better place to look for the source of ``atoms'' than in the
+reification of theory of computation requiring them?
+
 Many term calculi, like $\lambda$-calculus or {\pic}, involve binders
 for names, and the mathematics of bound variable names is
-subtle. Sch\"onfinkel introduced the SKI combinator calculus in 1924
-to clarify the role of quantified variables in intuitionistic logic by
-eliminating them \cite{finkel}; Curry developed Sch\"onfinkel's ideas
-much further. The difficulties are not merely theoretical, but
-represent a real practical challenge in the design of programming
-languages. In fact binding is one of the key features of
-the PoPLMark Challenge \cite{PoPLMark}. Certainly, the recent work by Jamie
-Gabbay and Andrew Pitts \cite{DBLP:journals/fac/GabbayP02} and others
+subtle. Sch\"onfinkel introduced the $\mathsf{SKI}$ combinator
+calculus in 1924 to clarify the role of quantified variables in
+intuitionistic logic by eliminating them \cite{finkel}; Curry
+developed Sch\"onfinkel's ideas much further. These difficulties are not
+merely theoretical, but represent a real practical challenge in the
+design of programming languages. In fact binding is one of the key
+features of the PoPLMark Challenge \cite{PoPLMark}. Certainly, the
+work by Jamie Gabbay and Andrew Pitts
+\cite{DBLP:journals/fac/GabbayP02} and others
 \cite{DBLP:journals/jcss/Clouston14} on nominal set theory has put the
 study of bound names and substitution on a much nicer foundation that
 can be shown to extend to practical implementations. However, it
@@ -232,47 +261,23 @@ provide the ``atoms'' used in the {\pic} as channels to produce the
 first name-free set of combinators that enjoys a full and faithful
 interpretation of the calculus.
 
-While the focus of the paper is largely on the technical results it is
-useful to consider the larger context motivating them. Reflection and
-meta-programming features more generally are part of a growing number
-of mainstream languages. Java, C\#, even the Haskell and OCaml
-communities have seen growing interest in these features with efforts
-like template Haskell and MetaOCaml, respectively. In large measure
-this has to do the fact that programming at industrial scale requires
-the leverage of computer programs to write computer programs. Thus,
-meta-programming features are simply a practical necessity. On the
-other hand, reflection and meta-programming have not received a
-theoretical account that fits well with strong typing. This is one of
-the reasons why language designs based on typed $\lambda$-calculi have
-been so slow to adopt reflection as a feature by comparison to other
-language designs.
-
-In this setting, the idea that a single feature already enjoying
-widespread adoption could account for such a subtle phenomenon as the
-kind of binding found in the {\pic} is both intriguing and worth
-exploring, even if FM set theory provides a satisfying account of
-computation with nominal phenomena in other respects. However, it is
-precisely the foundational theoretical questions raised by the FM set
-theoretic approach that motivates the investigation in the first place:
-what better place to look for the source of ``atoms'' than in the
-reification of theory of computation requiring them? 
-
 To be clear, we are not focusing on ordinary abstraction, as that is
 well solved by abstraction elimination from the $\lambda$-calculus to
-$\mathcal{SKI}$. Instead we are focused on binders for fresh
+$\mathsf{SKI}$. Instead we are focused on binders for fresh
 names. For example, the {\pic} (\cite{milner91polyadicpi}) has two
 binders for names: the $\new$ operator, which introduces a new name
 into scope, and the input prefix, which introduces a name for labeling
-locations for substitution.  Yoshida
-\cite{DBLP:journals/tcs/Yoshida02} describes an elimination algorithm
-that gets rid of input prefixes which corresponds in many respects to
-the elimination of lambda abstraction; but her combinators still
-fundamentally depend on the $\new$ operator.  In complementary work,
-Meredith and Radestock \cite{DBLP:journals/entcs/MeredithR05}
-introduce reflective operators into a higher-order {\pic} and implment
-$\new$ and replication in terms of reflection.  Here, we present a
-fusion of those ideas: a name-free concurrent combinator calculus into
-which Yoshida's combinators have a faithful embedding.
+locations for substitution.  Honda and Yoshida
+\cite{DBLP:conf/popl/HondaY94} \cite{DBLP:journals/tcs/Yoshida02}
+describe an elimination algorithm that gets rid of input prefixes
+which corresponds in many respects to the elimination of lambda
+abstraction; but their combinators still fundamentally depend on the
+$\new$ operator.  In complementary work, Meredith and Radestock
+\cite{DBLP:journals/entcs/MeredithR05} introduce reflective operators
+into a higher-order {\pic} and implment $\new$ and replication in
+terms of reflection.  Here, we present a fusion of those ideas: a
+name-free concurrent combinator calculus into which the Honda-Yoshida
+combinators have a faithful embedding.
 
 \subsubsection{Role of compositionality in theories of concurrency} 
 It is also interesting how compositionality plays out in this
@@ -280,9 +285,10 @@ setting. As we emphasize throughout the paper, the {\pic\;} is not a
 closed theory, but one depending on a theory of names. In other words,
 a fully specified theory of processes involves a composition of
 theories, namely \footnote{pun gratefully accepted} an application of
-the {\pic\;} with some theory of names. In this sense we derive the {\rhoc}
-from the fixed point of applying the theory of processes to itself
-(regarded as a theory of names). Symbolically,
+the {\pic\;} with some theory of names. In this sense we derive the
+{\rhoc} \cite{DBLP:journals/entcs/MeredithR05} from the fixed point of
+applying the theory of processes to itself (regarded as a theory of
+names). Symbolically,
 
 \begin{equation*}
   \mathcal{R} = \Pi[\quotep{\mathcal{R}}]
@@ -326,28 +332,28 @@ be constructed by composing the encoding into the {\rhoc} with the
 encoding into the reflective combinator calculus. We have provided the
 complete manifest, but have pushed the presentation of the {\rhoc} and
 the {\pic\;} and the encoding of the latter into the former in an
-appendix at the end as the {\pic\;} is quite well known at this point,
-and the {\rhoc} has been part of the concurrency literature for over a
-decade. This organization allows us to focus on the newer results of a
+appendix. This organization allows us to focus on the newer results of a
 name-free combinator calculus for mobile concurrency.
 
 \subsubsection{Related work}
 
-As mentioned previously, there is a long history of interest in
-combinatorial presentations of computational models, with Yoshida's
-work representing a seminal development for concurrent computation. We
-have also recently become aware of
+We have also recently become aware of
 \cite{DBLP:journals/toplas/RajaS97}. They achieve a similar goal, but
 without reflection, using a technique pioneered by Quine, who was also
-a pioneer of reflective techniques. \cite{Quine59} \cite{Quine60}
+a pioneer of reflective techniques. \cite{Quine59} \cite{Quine60} The
+key difference with respect to the treatment of fresh names is that
+they introduce globally unique names and then internalize a process
+that generates them. The approach taken here is more local, in the
+sense that reflection allows for the generation of names fresh with
+respect to a specific scope. This means there is no need for global
+uniqueness nor a centralized resource for generating the fresh names.
 
 \section{A reflective higher-order concurrent combinator calculus}
 
-\subsection{Yoshida's original combinator calculus}
+\subsection{Honda and Yoshida's original combinator calculus}
 
-This is the briefest account of Yoshida's original calculus while her
-paper, which is nearly 20 years old, is still an outstanding piece of
-research and well worth the effort to read in conjunction with these results.
+We summarize Honda and Yoshida's original calculus
+\cite{DBLP:journals/tcs/Yoshida02} below.
 
 \begin{mathpar}
   \inferrule* [lab=atom] {} { P \bc 0 \;|\; \mathsf{m}(a,b) \;|\; \mathsf{d}(a,b,c) \;|\; \mathsf{k}(a) \;|\; \mathsf{fw}(a,b) \;|\; \mathsf{b}_{\mathsf{r}}(a,b) \;|\; \mathsf{b}_{\mathsf{l}}(a,b) \;|\; \mathsf{s}(a,b,c) }
