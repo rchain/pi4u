@@ -271,8 +271,8 @@ of reflexive directed multigraphs:
 
 \begin{itemize}
   \item one sort $T$
-  \item function symbols $s, t: T \rightarrow T$
-  \item equations $ss = ts = s$, $st = tt = t$
+  \item function symbols $\mathsf{s}, \mathsf{t}: T \rightarrow T$
+  \item equations $\mathsf{ss} = \mathsf{ts} = \mathsf{s}$, $\mathsf{st} = \mathsf{tt} = \mathsf{t}$
 \end{itemize}
 
 To this theory, we add function symbols for each term constructor and
@@ -286,12 +286,12 @@ calculus by adding
   \item $\sigma : T^{3} \rightarrow T$
   \item $\kappa : T^{2} \rightarrow T$
   \item $\iota : T \rightarrow T$
-  \item $s\sigma(x, y, z) = (((S x) y) z$
-  \item $t\sigma(x, y, z) = ((x z) (y z))$
-  \item $s\kappa(x, y) = ((K x) y)$
-  \item $t\kappa(x, y) = x$
-  \item $s\iota(x) = (I x)$
-  \item $t\iota(x) = x$
+  \item $\mathsf{s}\sigma(x, y, z) = (((S x) y) z$
+  \item $\mathsf{t}\sigma(x, y, z) = ((x z) (y z))$
+  \item $\mathsf{s}\kappa(x, y) = ((K x) y)$
+  \item $\mathsf{t}\kappa(x, y) = x$
+  \item $\mathsf{s}\iota(x) = (I x)$
+  \item $\mathsf{t}\iota(x) = x$
 \end{itemize}
 
 We'll use the following symbols to talk about a generic term calculus
@@ -304,8 +304,8 @@ uses the term constructor as its source.
   \item $\rho : T^{2} \rightarrow T$             %%//( \x -> M N) → M{N/x}     for( y <- x )P | x!(Q) → P{@Q/y}$
   \item $\mathsf{K}(l_{\mathsf{K}}, u) = u$
   \item $\mathsf{K}(t, r_{\mathsf{K}}) = t$
-  \item $s(\rho(t,u)) = \mathsf{K}(t, u)$
-  \item $t(\rho(t,u)) = f(t,u)$
+  \item $\mathsf{s}(\rho(t,u)) = \mathsf{K}(t, u)$
+  \item $\mathsf{t}(\rho(t,u)) = f(t,u)$
 \end{itemize}
 
 Note that $\mathsf{K}$ may not be commutative, so we ask for either a left
@@ -326,8 +326,8 @@ then producing a contextualized version of the theory.
   \item $\rho : T^{2} \rightarrow T$             %%//( \x \rightarrow M N) → M{N/x}     for( y <- x )P | x!(Q) → P{@Q/y}
   \item $\mathsf{K}(l_{\mathsf{K}}, u) = u$
   \item $\mathsf{K}(t, r_{\mathsf{K}}) = t$
-  \item $s(\rho(t,u)) = \mathsf{R}\mathsf{K}(t, u)$
-  \item $t(\rho(t,u)) = f(t,u)$                    %%// f can mention R, e.g. if R is not a linear resource
+  \item $\mathsf{s}(\rho(t,u)) = \mathsf{R}\mathsf{K}(t, u)$
+  \item $\mathsf{t}(\rho(t,u)) = f(t,u)$                    %%// f can mention R, e.g. if R is not a linear resource
 \end{itemize}
 
 \subsubsection{Contextualized Resourced theory}
@@ -347,8 +347,8 @@ We add a new sort, $X$, and the following maps
   \item $\bindnasrepma_{\rho} : T^{2} \rightarrow T$
   \item $\sqcup_{\rho} : T^{2} \rightarrow T$
   \item $\rho : T^{2} \rightarrow T$             %%//( \x -> M N) -> M{N/x}     for( y <- x )P | x!(Q) -> P{@Q/y}
-  \item $s(\rho(t,u)) = \mathsf{R}\mathsf{K}(t, u)$ 
-  \item $t(\rho(t,u)) = f(t,u)$          %%// f can mention R, e.g. if R is not a linear resource
+  \item $\mathsf{s}(\rho(t,u)) = \mathsf{R}\mathsf{K}(t, u)$ 
+  \item $\mathsf{t}(\rho(t,u)) = f(t,u)$          %%// f can mention R, e.g. if R is not a linear resource
   \item $\mathsf{K}(l_{\mathsf{K}}, u) = u$
   \item $\mathsf{K}(t, r_{\mathsf{K}}) = t$
   \item $@(\boxempty !,t) = t$
@@ -488,8 +488,8 @@ We add new sorts, $X^{\circ}$, and $X^{\bullet}$, $X^{\circ\bullet}$, and the fo
   \item $\bindnasrepma_{\rho} : T^{2} \rightarrow T$
   \item $\sqcup_{\rho} : T^{2} \rightarrow T$
   \item $\rho : T^{2} \rightarrow T$             %%//( \x -> M N) -> M{N/x}     for( y <- x )P | x!(Q) -> P{@Q/y}
-  \item $s(\rho(t,u)) = \mathsf{R}\mathsf{K}(t, u) $
-  \item $t(\rho(t,u)) = f(t,u)$                      %%// f can mention R, e.g. if R is not a linear resource
+  \item $\mathsf{s}(\rho(t,u)) = \mathsf{R}\mathsf{K}(t, u) $
+  \item $\mathsf{t}(\rho(t,u)) = f(t,u)$                      %%// f can mention R, e.g. if R is not a linear resource
   \item $\mathsf{K}(l_{\mathsf{K}}, u) = u$
   \item $\mathsf{K}(t, r_{\mathsf{K}}) = t$
   \item $@(\boxempty!,t) = t$
@@ -610,27 +610,39 @@ the input format given above, we start with the Lawvere theory of
 reflexive directed multigraphs and add new sorts, function symbols,
 and equations.  The theory of reflexive directed multigraphs has
 
-%% one sort P
-%% function symbols src, trgt: P \rightarrow P
-%% equations src \circ src = trgt \circ src = src, trgt \circ trgt = src \circ trgt = trgt
+\begin{itemize}
+  \item one sort $P$
+  \item function symbols $\mathsf{s}, \mathsf{t} : P \rightarrow P$
+  \item equations
+    \begin{itemize}
+      \item $\mathsf{s} \circ \mathsf{s} = \mathsf{t} \circ \mathsf{s} = \mathsf{s}$,
+      \item $\mathsf{t} \circ \mathsf{t} = \mathsf{s} \circ \mathsf{t} = \mathsf{t} $
+    \end{itemize}
+\end{itemize}
 
-%% We adjoin a sort N for names. We express each of the syntactic generators as function symbols, thus 0 : 1 \rightarrow P, m : N x N \rightarrow P, @:P \rightarrow N, *:N \rightarrow P, |:P x P \rightarrow  P, etc. The base case rewrite rules are given in terms of the src and trgt functions, thus 
+We adjoin a sort $N$ for names. We express each of the syntactic generators as function symbols, thus $0 : 1 \rightarrow P$, $m : N x N \rightarrow P$, $@:P \rightarrow N$, $*:N \rightarrow P$, $|:P x P \rightarrow  P$, etc. The base case rewrite rules are given in terms of the $\mathsf{s}$ and $\mathsf{t}$ functions, thus 
 
-%% src( d(a, b, c) | m(a,d) \red m(b,d) | m(c,d) ) = d(a, b, c) | m(a,d)
-%% trgt( d(a, b, c) | m(a,d) \red m(b,d) | m(c,d) ) = m(b,d) | m(c,d)
+\begin{eqnarray*}
+  \mathsf{s}( d(a, b, c) | m(a,d) \red m(b,d) | m(c,d) ) & = & d(a, b, c) | m(a,d) \\
+  \mathsf{t}( d(a, b, c) | m(a,d) \red m(b,d) | m(c,d) ) & = & m(b,d) | m(c,d)
+\end{eqnarray*}
 
-%% Note that rewrites do not occur within a name because there is no rule for making src and @ commute with each other.
-%% The inference rule P \red P′ \Rightarrow P|Q \red P′|Q is encoded as an equation involving src, trgt, and |:
+Note that rewrites do not occur within a name because there is no rule for making $\mathsf{s}$ and $@$ commute with each other.
+The inference rule $P \red P' \Rightarrow P|Q \red P'|Q$ is encoded as an equation involving $\mathsf{s}$, $\mathsf{t}$, and $|$:
 
-%% src( P | Q ) = src(P) | src(Q)
-%% trgt( P | Q ) = trgt(P) | trgt(Q)
+\begin{eqnarray*}
+  \mathsf{s}( P | Q ) & = & \mathsf{s}(P) | \mathsf{s}(Q) \\
+  \mathsf{t}( P | Q ) & = & \mathsf{t}(P) | \mathsf{t}(Q)
+\end{eqnarray*}
 
-%% Structural congruence is encoded as equations:
+Structural congruence is encoded as equations:
 
-%% 0 | P = P
-%% P | Q = Q | P
-%% (P | (Q | R)) = ((P | Q) | R)
-%% *@P = P
+\begin{eqnarray*}
+  0 | P & = & P \\
+  P | Q & = & Q | P \\
+ (P | (Q | R)) & = & ((P | Q) | R) \\
+  *@P & = & P
+\end{eqnarray*}
 
 %% Given that congruence is equality, the final inference rule is an identity.
 \subsubsection{SKI}
