@@ -322,7 +322,7 @@ thinking, but provides powerful compression of proofs.
 \subsubsection{Outline of the paper}
 To be fully self-contained this paper would need to present four
 different calculi and two different encodings: the original {\pic},
-Yoshida's combinator calculus, and the encoding from the term calculus
+{\ccomb}, and the encoding from the term calculus
 to the combinator; the {\rhoc}, and the encoding from the {\pic\;} to
 the {\rhoc} and the new reflective combinator calculus, and the
 encoding from the term calculus to the reflective combinator
@@ -333,7 +333,7 @@ be constructed by composing the encoding into the {\rhoc} with the
 encoding into the reflective combinator calculus. We have provided the
 complete manifest, but have pushed the presentation of the {\rhoc} and
 the {\pic\;} and the encoding of the latter into the former in an
-appendix. This organization allows us to focus on the newer results of a
+appendix \ref{appendix:pic2rhoc}. This organization allows us to focus on the newer results of a
 name-free combinator calculus for mobile concurrency.
 
 \subsubsection{Related work}
@@ -386,63 +386,13 @@ These intuitions are formalized in the following rewrite rules.
   \mathsf{b}_{\mathsf{l}}(a,b) | \mathsf{m}(a,x) & \red \mathsf{fw}(x,b) \\
   \mathsf{s}(a,b,c) | \mathsf{m}(a,x) & \red \mathsf{fw}(b,c)
 \end{array}\]
-\[\begin{array}{rl}
-  \mathsf{*}P & \red P|\mathsf{*}P \\
-\end{array}\]
-\begin{mathpar}
-  \inferrule* {{P} \red {P}'} {{{P} | {Q}} \red {{P}' | {Q}}}
-  \and
-  \inferrule* {{{P} \scong {P}'} \andalso {{P}' \red {Q}'} \andalso {{Q}' \scong {Q}}}{{P} \red {Q}}
-\end{mathpar}
+
+Together with the usual rules for reduction in context.
 
 As in the {\pic}, the $\new$ operator is a binding operator for names,
-so Yoshida's calculus also has a notion of free and bound names. The
+so {\ccomb} also has a notion of free and bound names. The
 details are provided in an appendix below to make the paper more
-self-contained.
-
-\subsubsection{Translating the {\pic} into Yoshida's combinators}
-We assume the following annotations ($+$ stands for the output and $-$
-stands for the input), which denote how each name is used in the rules
-of interaction:
-
-\[\mathsf{m}(a^{+},v^{\pm});\mathsf{d}(a^{-},b^{+},c^{+});\mathsf{k}(a^{-});\mathsf{fw}(a^{-},b^{+});\mathsf{b}_{\mathsf{l}}(a^{-}b^{+});\mathsf{b}_{\mathsf{r}}(a^{-}b^{-});\mathsf{s}(a^{-}b^{-}c^{+})\]
-
-Note the annotated polarities are preserved by reduction, e.g.
-\[\binpar{\mathsf{d}(a^{-},b^{+},c^{+})}{\mathsf{m}(a^{+},v)} \to \binpar{\mathsf{m}(b^{+},v)}{\mathsf{m}(b^{+},v)}\]
-
-It is worth pointing out that we use a slightly different syntax for input-guarded processes. Where most readers familiar with $x?(y)P$ we write $\mathsf{for}(y \leftarrow x)P$, not only to be more instep with modern programming languages, but also because it generalizes more naturally to join constructions, such as $\mathsf{for}(y_1 \leftarrow x_1; \ldots; y_n \leftarrow x_n)P$.
-
-\begin{mathpar}
-  \meaningof{a!(b)} = \mathsf{m}(a,b)
-  \and
-  \meaningof{\mathsf{for}(x \leftarrow a)P} = \mathsf{for}^*(x \leftarrow a)\meaningof{P}
-  \and
-  \meaningof{P|Q} = \meaningof{P}|\meaningof{Q}
-  \and
-  \meaningof{(\mathsf{new}\;x)P} = (\mathsf{new}\;x)\meaningof{P}
-  \and
-  \meaningof{\mathsf{*}P} = \mathsf{*}\meaningof{P}
-  \and
-  \meaningof{0} = 0
-\end{mathpar}
-
-where
-
-\[\begin{array}{llrl}
-(I)&\mathsf{for}^*(x \leftarrow a)(P|Q) &=& (\mathsf{new}\; c_1c_2)(\mathsf{d}(a,c_1,c_2) | \mathsf{for}^*(x \leftarrow c_1)P | \mathsf{for}^*(x \leftarrow c_2)Q)\\
-(II)&\mathsf{for}^*(x \leftarrow a)(\mathsf{new}\; c')P &=& (\mathsf{new}\; c)\mathsf{for}^*(x \leftarrow a)P\substn{c}{c'} \\
-(III)& \mathsf{for}^*(x \leftarrow a)\pzero &=& \mathsf{k}(a) \\
-(IV)&\mathsf{for}^*(x \leftarrow a)\mathsf{*}P &=& (\mathsf{new}\;c)(\mathsf{fw}(a,c) | \mathsf{*}\mathsf{for}^*(x \leftarrow c)(P | \mathsf{m}(c,x)))\\
-(V)&\mathsf{for}^*(x \leftarrow a)c(v^+,\vec{w}) &=& (\mathsf{new}\;c)(\mathsf{s}(a,c,v) | c(c^+,\vec{w})) \mbox{\quad $x \notin \{v\vec{w}\}$}\\
-(VI)&\mathsf{for}^*(x \leftarrow a)c(v^-,\vec{w})&=& (\mathsf{new}\;c)(\mathsf{s}(a,v,c) | c(c^-,\vec{w})) \mbox{\quad $x \notin \{v\vec{w}\}$}\\
-(VII)&\mathsf{for}^*(x \leftarrow a)\mathsf{m}(v,x)&=& \mathsf{fw}(a,v) \mbox{\quad $x \neq v$}\\
-(VIII)&\mathsf{for}^*(x \leftarrow a)\mathsf{fw}(x,v)&=& \mathsf{b}_{\mathsf{l}}(a,v) \mbox{\quad $x \neq v$}\\
-(IX)&\mathsf{for}^*(x \leftarrow a)\mathsf{fw}(v,x)&=& \mathsf{b}_{\mathsf{r}}(a,v) \mbox{\quad $x \neq v$}\\
-(X)&\mathsf{for}^*(x \leftarrow a)c(\vec{v}_1x^+\vec{v}_2)&=&(\mathsf{new}\; c)\mathsf{for}^*(x \leftarrow a)(\mathsf{fw}(c,x) | c(\vec{v}_1c\vec{v}_2)) \mbox{\quad $x \notin \vec{v}_1$}\\
-(XI)&\mathsf{for}^*(x \leftarrow a)c(x^-\vec{v})&=& (\mathsf{new}\; c)\mathsf{for}^*(x \leftarrow a)(\mathsf{fw}(x,c) | c(c\vec{v}))\\
-(XII)&\mathsf{for}^*(x \leftarrow a)\mathsf{b}_{\mathsf{r}}(v,x^-)&=& (\mathsf{new}\; c_1c_2c_3)\mathsf{for}^*(x \leftarrow a)(\mathsf{d}(v,c_1,c_2)|\mathsf{s}(c_1,x,c_3)|\mathsf{b}_{\mathsf{r}}(c_2,c_3)) \mbox{\quad $x \notin \{v \}$}\\
-(XIII)&\mathsf{for}^*(x \leftarrow a)\mathsf{s}(v,x^-,w) &=& (\mathsf{new}\; c_1c_2)\mathsf{for}^*(x \leftarrow a)(\mathsf{s}(v,c_1,c_2) | \mathsf{m}(c_1,x) | \mathsf{b}_{\mathsf{l}}(c_2,w)) \mbox{\quad $x \notin \{v \}$}
-\end{array}\]
+self-contained. \ref{appendix:ccomb}
 
 \subsection{Reflective higher-order (RHO) combinator calculus}
 The {\pic} is not a closed theory, but rather a theory dependent upon
@@ -506,8 +456,7 @@ Rewrite rules
 \end{definition}
 
 Note that alpha equivalence is no longer part of structural
-congruence.  While there is a faithful embedding of Yoshida's
-combinators into RHO combinators (see below), RHO combinators can see
+congruence.  While there is a faithful embedding of {\ccomb} into RHO combinators (see below), RHO combinators can see
 the internal structure of names and distinguish them.
 
 \subsubsection{Implementing replication with reflection}
@@ -562,20 +511,20 @@ the ``paradoxical'' or ``fixed point'' combinator $Y$.
 
 \subsubsection{Implementing new names with reflection}
 
-Here we provide an encoding of Yoshida's combinator calculus into the
+Here we provide an encoding of {\ccomb} into the
 RHO combinator calculus. Since all names are global in the RHO
 combinator calculus, we encounter a small complication in the
 treatment of free names at the outset. There are several ways to
 handle this.  One is to insist that the translation be handed a closed
 program, one in which all names are bound either by input or by
 restriction, but this feels inelegant. Another is to provide
-an environment, $r : \mathcal{N}_{\mbox{\tiny Yoshida}} \rightarrow \QProc$, for
-mapping the free names in a Yoshida process into names in the RHO
+an environment, $r : \mathcal{N}_{\mathsf{CC}} \rightarrow \QProc$, for
+mapping the free names in a {\ccomb} process into names in the RHO
 combinator calculus. Maintaining the updates to the environment,
 however, obscures the simplicity of the translation. We adopt a third
 alternative.
 
-To hammer home the point that Yoshida's combinator calculus is
+To hammer home the point that {\ccomb} is
 parameterized in a theory of names, we instantiate her calculus with
 the names of the RHO combinator calculus. This is no different than
 instantiating her calculus using the natural numbers, or the set of URLs as the
@@ -587,17 +536,16 @@ exploit this fact.
 
 Let $\QProc$ be set of names in the RHO combinator calculus, $\Proc$
 be the set of terms of the RHO combinator calculus, and
-$\Proc_{\mbox{\tiny Yoshida}}$ be the set of terms of her combinator
+$\Proc_{\mathsf{CC}}$ be the set of terms of her combinator
 calculus built using $\QProc$ \emph{as the names}. The translation will be
 given in terms of a function \[\meaningof{-}_2( -, - ) : 
-    \Proc_{\mbox{\tiny Yoshida}} \times \QProc {\times} \QProc \red \Proc.\] 
+    \Proc_{\mathsf{CC}} \times \QProc {\times} \QProc \red \Proc.\] 
 The guiding intuition is that we construct alongside the process a distributed memory
 allocator, the process' access to which is mediated through the second argument
 to the function, called $p$ below. The first argument, called $n$ below, determines the shape of the memory for the given allocator.
 
-Since Yoshida's calculus is parametric in a set of names, we can
-choose $\QProc$ for that set.  Given a process $P$ in Yoshida's
-calculus, we pick names $n$ and $p$ in the RHO calculus such that $n \neq p$
+Since the {\ccomb} is parametric in a set of names, we can
+choose $\QProc$ for that set.  Given a process $P$ in {\ccomb}, we pick names $n$ and $p$ in the RHO calculus such that $n \neq p$
 and both are distinct from the free names of $P$.  Then we define
 
 \begin{equation*}
@@ -645,7 +593,7 @@ for all but replication and $\mathsf{new}$.
 \end{eqnarray*}
 
 These latter two forms require extra care. We define them in terms of
-a prefix form and then use a version of Yoshida's prefix elimination
+a prefix form and then use a version of Honda and Yoshida's prefix elimination
 to remove the prefix.
 
 \begin{eqnarray*}
@@ -673,7 +621,7 @@ prefix and new elimination.
         {(\binpar{D(x)}{\binpar{\outputp{n}{n'^l}}{\outputp{p}{p'^l}}})})}}}_4. \\
 \end{eqnarray*}
 
-To handle prefix elimination we must import most of Yoshida's
+To handle prefix elimination we import most of Honda and Yoshida's
 algorithm. The key difference is that we must allocate names that
 guarantee freshness relative to the free names of the processes being
 translated. In those rules below with a ``where'' clause, the specific
@@ -686,20 +634,24 @@ must update both the name allocator for each parallel component and
 the channels on which fresh names are communicate (so that there is no
 interference between the two components) in the recursive call. 
 
-Because the input to $\meaningof{-}_4$ is already in combinator form,
-we do not have to import rules 2 -- 4 of her algorithm. Like her, we
-assume the following annotations ($+$ stands for the output and $-$
+We assume the following annotations ($+$ stands for the output and $-$
 stands for the input), which denote how each name is used in the rules
-of interaction:
+of interaction, either as input, output, respectively:
 
 \[\mathsf{m}(a^{+},v^{\pm});\mathsf{d}(a^{-},b^{+},c^{+});\mathsf{k}(a^{-});\mathsf{fw}(a^{-},b^{+});\mathsf{b}_{\mathsf{l}}(a^{-}b^{+});\mathsf{b}_{\mathsf{r}}(a^{-}b^{-});\mathsf{s}(a^{-}b^{-}c^{+})\]
 
 As above the annotated polarities are preserved by reduction, e.g.
 \[\binpar{\mathsf{d}(a^{-},b^{+},c^{+})}{\mathsf{m}(a^{+},v)} \to \binpar{\mathsf{m}(b^{+},v)}{\mathsf{m}(b^{+},v)}\]
 
-Similarly, for economy of expression, we emulate Yoshida's use of
-$\emph{c}$ to represent any combinator matching the arity
-specification. 
+Similarly, for economy of expression, we emulate Honda and Yoshida's
+use of $\emph{c}$ to represent any combinator matching the arity
+specification. It is worth pointing out that we use a slightly
+different syntax for input-guarded processes. Where most readers
+familiar with {\pic} are used to $x?(y)P$ we write $\mathsf{for}(y
+\leftarrow x)P$, not only to be more instep with modern programming
+languages, but also because it generalizes more naturally to join
+constructions, such as $\mathsf{for}(y_1 \leftarrow x_1; \ldots; y_n
+\leftarrow x_n)P$.
 
 \[\begin{array}{llrl}
 (I)&  \meaningof{\prefix{p}{x}{\binpar{P}{Q}}}_4(n, q) 
@@ -751,14 +703,17 @@ specification.
 \end{array}\]
 
 Note that all $\new$-binding is now interpreted, as in Wischik's
-global $\pi$-calculus, as an input \cite{globalpi}.
+global $\pi$-calculus, as an input \cite{globalpi} in the following
+sense. The alpha-equivalence of $\new$ is handled by input-binding,
+while the freshness is handled by providing a name that is guaranteed
+to be fresh relative to the scope of use.
 
 It is also noteworthy that the translation is dependent on how the
 parallel compositions in a process are associated. Different
 associations will result in different bindings for $\new$
 names. This will not result in different behavior, however:
 while the RHO combinators can encode different behaviors depending
-on the choice of name, Yoshida's combinators cannot and the
+on the choice of name, {\ccomb} cannot and the
 embedding is insensitive to the choice.
 
 \subsubsection{Faithfulness of the translation}
@@ -768,11 +723,11 @@ An \emph{observation relation}, $\downarrow_{\mathcal{N}}$, over a set
 of names, $\mathcal N$, is the smallest relation satisfying the rules
 below.
 
-\infrule[Out-barb]{y \in {\mathcal N}, \; x \nameeq y}
-    {\mathsf{m}(x-) \downarrow_{\mathcal{N}} x}
-
-\infrule[Par-barb]{\mbox{$P\downarrow_{\mathcal{N}} x$ or $Q\downarrow_{\mathcal N} x$}}
-    {\binpar{P}{Q} \downarrow_{\mathcal{N}} x}
+\begin{mathpar}
+  \inferrule*[lab=Out-barb]{y \in {\mathcal N}, \; x \nameeq y}{\mathsf{m}(x-) \downarrow_{\mathcal{N}} x}
+  \and
+\inferrule*[lab=Par-barb]{\mbox{$P\downarrow_{\mathcal{N}} x$ or $Q\downarrow_{\mathcal N} x$}}{\binpar{P}{Q} \downarrow_{\mathcal{N}} x}
+ \end{mathpar}
 
 We write $P \Downarrow_{\mathcal{N}} x$ if there is $Q$ such that 
 $P \wred Q$ and $Q \downarrow_{\mathcal{N}} x$.
@@ -781,7 +736,7 @@ $P \wred Q$ and $Q \downarrow_{\mathcal{N}} x$.
 This definition is parametric in the the argument accepted in the
 second position in the message combinator, $\mathsf{m}(x-)$, {\em i.e.} the payload
 of the message: in the RHO combinators the payload is a process,
-while in Yoshida's the payload is a name. Likewise, because the
+while in {\ccomb} the payload is a name. Likewise, because the
 definition of barbed bisimulation given below is dependent on the
 definition of the observation relation, the definition is really a
 template for the notion of bisimulation that must be instantiated to
@@ -824,7 +779,7 @@ $P \wbbisim_{\mathcal N} Q$, if $P {\mathcal S}_{\mathcal N} Q$ for some ${\math
   the form $\dropn{x}$. The $b_r$ and $b_l$ combinators introduce new
   names from processes, but the do not introduce new reflection
   terms. Yet, this calculus suffices to faithfully represent the
-  Yoshida combinators. This is because the translation function is
+  {\ccomb}. This is because the translation function is
   carefully introducing just those terms, via the $D(x,v,w)$ operator,
   guided by the use of replication in the source to the
   translation. 
@@ -833,7 +788,7 @@ $P \wbbisim_{\mathcal N} Q$, if $P {\mathcal S}_{\mathcal N} Q$ for some ${\math
 \section{Conclusion and future work}
 We have shown how to construct a concurrent higher-order combinator
 calculus that uses reflection to avoid the necessity for new and bound
-names.  Yoshida's combinators, and therefore the asynchronous {\pic},
+names.  The {\ccomb}, and therefore the asynchronous {\pic},
 have a faithful embedding into the calculus. While the results are
 interesting in their own right we developed them to serve a larger
 purpose. In a forthcoming paper we demonstrate an algorithm taking a
@@ -865,7 +820,7 @@ reflection-based approach.
 \bibliographystyle{eptcs}
 \bibliography{rhocomb}
 
-\section{Appendix: the {\ccomb} revisited}
+\section{Appendix: the {\ccomb} revisited} \label{appendix:ccomb}
 We summarize the original {\ccomb} \cite{DBLP:journals/tcs/Yoshida02} below.
 
 \begin{mathpar}
@@ -889,7 +844,7 @@ $\mathsf{s}$ is used for pure synchronisation without value passing,
 which is indeed necessary in interaction scenarios.
 
 As in the {\pic}, the $\new$ operator is a binding operator
-for names, so Yoshida's calculus also has a notion of free and bound names.
+for names, so {\ccomb} also has a notion of free and bound names.
 
 \begin{mathpar}
   \freenames{\pzero} := \emptyset
@@ -949,7 +904,51 @@ Rewrite rules
   \inferrule* {{{P} \scong {P}'} \andalso {{P}' \red {Q}'} \andalso {{Q}' \scong {Q}}}{{P} \red {Q}}
 \end{mathpar}
 
-\section{Appendix: Translating the {\pic} into the {\rhoc}}
+\subsubsection{Translating the {\pic} into {\ccomb}}
+We assume the following annotations ($+$ stands for the output and $-$
+stands for the input), which denote how each name is used in the rules
+of interaction:
+
+\[\mathsf{m}(a^{+},v^{\pm});\mathsf{d}(a^{-},b^{+},c^{+});\mathsf{k}(a^{-});\mathsf{fw}(a^{-},b^{+});\mathsf{b}_{\mathsf{l}}(a^{-}b^{+});\mathsf{b}_{\mathsf{r}}(a^{-}b^{-});\mathsf{s}(a^{-}b^{-}c^{+})\]
+
+Note the annotated polarities are preserved by reduction, e.g.
+\[\binpar{\mathsf{d}(a^{-},b^{+},c^{+})}{\mathsf{m}(a^{+},v)} \to \binpar{\mathsf{m}(b^{+},v)}{\mathsf{m}(b^{+},v)}\]
+
+It is worth pointing out that we use a slightly different syntax for input-guarded processes. Where most readers familiar with $x?(y)P$ we write $\mathsf{for}(y \leftarrow x)P$, not only to be more instep with modern programming languages, but also because it generalizes more naturally to join constructions, such as $\mathsf{for}(y_1 \leftarrow x_1; \ldots; y_n \leftarrow x_n)P$.
+
+\begin{mathpar}
+  \meaningof{a!(b)} = \mathsf{m}(a,b)
+  \and
+  \meaningof{\mathsf{for}(x \leftarrow a)P} = \mathsf{for}^*(x \leftarrow a)\meaningof{P}
+  \and
+  \meaningof{P|Q} = \meaningof{P}|\meaningof{Q}
+  \and
+  \meaningof{(\mathsf{new}\;x)P} = (\mathsf{new}\;x)\meaningof{P}
+  \and
+  \meaningof{\mathsf{*}P} = \mathsf{*}\meaningof{P}
+  \and
+  \meaningof{0} = 0
+\end{mathpar}
+
+where
+
+\[\begin{array}{llrl}
+(I)&\mathsf{for}^*(x \leftarrow a)(P|Q) &=& (\mathsf{new}\; c_1c_2)(\mathsf{d}(a,c_1,c_2) | \mathsf{for}^*(x \leftarrow c_1)P | \mathsf{for}^*(x \leftarrow c_2)Q)\\
+(II)&\mathsf{for}^*(x \leftarrow a)(\mathsf{new}\; c')P &=& (\mathsf{new}\; c)\mathsf{for}^*(x \leftarrow a)P\substn{c}{c'} \\
+(III)& \mathsf{for}^*(x \leftarrow a)\pzero &=& \mathsf{k}(a) \\
+(IV)&\mathsf{for}^*(x \leftarrow a)\mathsf{*}P &=& (\mathsf{new}\;c)(\mathsf{fw}(a,c) | \mathsf{*}\mathsf{for}^*(x \leftarrow c)(P | \mathsf{m}(c,x)))\\
+(V)&\mathsf{for}^*(x \leftarrow a)c(v^+,\vec{w}) &=& (\mathsf{new}\;c)(\mathsf{s}(a,c,v) | c(c^+,\vec{w})) \mbox{\quad $x \notin \{v\vec{w}\}$}\\
+(VI)&\mathsf{for}^*(x \leftarrow a)c(v^-,\vec{w})&=& (\mathsf{new}\;c)(\mathsf{s}(a,v,c) | c(c^-,\vec{w})) \mbox{\quad $x \notin \{v\vec{w}\}$}\\
+(VII)&\mathsf{for}^*(x \leftarrow a)\mathsf{m}(v,x)&=& \mathsf{fw}(a,v) \mbox{\quad $x \neq v$}\\
+(VIII)&\mathsf{for}^*(x \leftarrow a)\mathsf{fw}(x,v)&=& \mathsf{b}_{\mathsf{l}}(a,v) \mbox{\quad $x \neq v$}\\
+(IX)&\mathsf{for}^*(x \leftarrow a)\mathsf{fw}(v,x)&=& \mathsf{b}_{\mathsf{r}}(a,v) \mbox{\quad $x \neq v$}\\
+(X)&\mathsf{for}^*(x \leftarrow a)c(\vec{v}_1x^+\vec{v}_2)&=&(\mathsf{new}\; c)\mathsf{for}^*(x \leftarrow a)(\mathsf{fw}(c,x) | c(\vec{v}_1c\vec{v}_2)) \mbox{\quad $x \notin \vec{v}_1$}\\
+(XI)&\mathsf{for}^*(x \leftarrow a)c(x^-\vec{v})&=& (\mathsf{new}\; c)\mathsf{for}^*(x \leftarrow a)(\mathsf{fw}(x,c) | c(c\vec{v}))\\
+(XII)&\mathsf{for}^*(x \leftarrow a)\mathsf{b}_{\mathsf{r}}(v,x^-)&=& (\mathsf{new}\; c_1c_2c_3)\mathsf{for}^*(x \leftarrow a)(\mathsf{d}(v,c_1,c_2)|\mathsf{s}(c_1,x,c_3)|\mathsf{b}_{\mathsf{r}}(c_2,c_3)) \mbox{\quad $x \notin \{v \}$}\\
+(XIII)&\mathsf{for}^*(x \leftarrow a)\mathsf{s}(v,x^-,w) &=& (\mathsf{new}\; c_1c_2)\mathsf{for}^*(x \leftarrow a)(\mathsf{s}(v,c_1,c_2) | \mathsf{m}(c_1,x) | \mathsf{b}_{\mathsf{l}}(c_2,w)) \mbox{\quad $x \notin \{v \}$}
+\end{array}\]
+
+\section{Appendix: Translating the {\pic} into the {\rhoc}} \label{appendix:pic2rhoc}
 \subsection{\rhoc}
 
 It is striking to compare the {\rhoc} with the {\pic} as the former is
