@@ -193,18 +193,18 @@ Michael Stay
 While the focus of this paper is largely on the technical results of
 providing a name-free combinatory account of mobile concurrent
 computation through the use of reflection, it is useful to consider
-the larger context motivating them. Reflection and meta-programming
-features more generally are part of a growing number of mainstream
-languages. Java, C\#, even the Haskell and OCaml communities have seen
-growing interest in these features with efforts like template Haskell
-and MetaOCaml, respectively. In large measure this has to do the fact
-that programming at industrial scale requires the leverage of computer
-programs to write computer programs. Thus, meta-programming features
-are simply a practical necessity. On the other hand, reflection and
-meta-programming are not well explored in a strongly typed
-setting. This is one of the reasons why language designs based on
-typed $\lambda$-calculi have been so slow to adopt reflection as a
-feature by comparison to other language designs.
+the larger context motivating these results. Reflection and
+meta-programming features more generally are part of a growing number
+of mainstream languages. Java, C\#, even the Haskell and OCaml
+communities have seen growing interest in these features with efforts
+like template Haskell and MetaOCaml, respectively. In large measure
+this has to do the fact that programming at industrial scale requires
+the leverage of computer programs to write computer programs. Thus,
+meta-programming features are simply a practical necessity. On the
+other hand, reflection and meta-programming are not well explored in a
+strongly typed setting. This is one of the reasons why language
+designs based on typed $\lambda$-calculi have been so slow to adopt
+reflection as a feature by comparison to other language designs.
 
 In this setting, the idea that a single feature already enjoying
 widespread adoption could account for such a subtle phenomenon as the
@@ -788,8 +788,8 @@ $P \wbbisim_{\mathcal N} Q$, if $P {\mathcal S}_{\mathcal N} Q$ for some ${\math
 \section{Conclusion and future work}
 We have shown how to construct a concurrent higher-order combinator
 calculus that uses reflection to avoid the necessity for new and bound
-names.  The {\ccomb}, and therefore the asynchronous {\pic},
-have a faithful embedding into the calculus. While the results are
+names.  The {\ccomb}, and therefore the asynchronous {\pic}, have a
+faithful embedding into the calculus. While the results are
 interesting in their own right we developed them to serve a larger
 purpose. In a forthcoming paper we demonstrate an algorithm taking a
 graph-enriched Lawvere theory (representing a formal specification of
@@ -800,22 +800,9 @@ soundness and completeness. Nominal phenomena do not neatly fit inside
 the expressive power of graph-enriched Lawvere theories, thus
 potentially limiting the scope of the applicability of this
 algorithm. However, with the reflective techniques we can extend this
-algorithm to cover many languages and term calculi with binding.
-
-At a more foundational level it turns out that the reflective
-techniques can be applied to set theory itself deriving a form of FM
-set theory in which the ``atoms'' of one set theory are the sets of
-another copy of set theory. Roughly speaking, we may imagine that
-there are ``red'' sets and ``black'' sets. The ``term constructors''
-of red set theory (the curly braces of set notation) can use either
-red sets or black sets, which the element-of predicate ($\in$) red set
-theory can only inspect red sets and treats black sets as
-``atomic''. The symmetric situation holds for black set theory: the
-element-of predicate cannot see inside red sets. This framework all
-the building blocks necessary to realize a version of FM set theory
-from a more traditional set theory with reflection and provides a
-bridge between Gabbay and Pitts' account of nominal phenomena and the
-reflection-based approach.
+algorithm to cover many languages and term calculi with binding; thus,
+providing a strongly typed version of a reflective, mobile concurrent
+calculus.
 
 \bibliographystyle{eptcs}
 \bibliography{rhocomb}
