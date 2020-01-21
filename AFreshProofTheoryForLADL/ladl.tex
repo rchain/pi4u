@@ -28,6 +28,8 @@
 \newcommand{\op}{\mathrm{op}}
 \newcommand{\NN}{\mathbb{N}}
 \newcommand{\pic}{$\pi$-calculus}
+\newcommand{\rhoc}{$\rho$-calculus}
+\newcommand{\lamc}{$\lambda$-calculus}
 \newcommand{\bc}{\mathbin{\mathbf{::=}}}
 \newcommand{\bm}{\mathbin{\mathbf\mid}}
 \newcommand{\quotep}[1]{\mathsf{@}#1}
@@ -80,7 +82,7 @@ Indeed, interactive models of computation are relatively new and offer
 distinct insights because they include the computational environment
 as part of the computational model. Examples include the {\pic}, in
 fact, all the mobile process calculi, as well as the
-$\lambda$-calculus. \cite{milner91polyadicpi}\cite{Barendregt84} However,
+{\lamc}. \cite{milner91polyadicpi}\cite{Barendregt84} However,
 interaction categories take inspiration from linear logic rather than
 to say axiomatically what interaction is.
 
@@ -107,7 +109,7 @@ a term constructor, say $\mathsf{K}$, taking at least two terms as
 arguments. That is, when viewed as a piece of syntax it is at least a
 tuple of terms. This bipartite split is what characterizes
 interaction. One of the arguments is the program and one is the
-environment. For example, in $\lambda-calculus$ application functions
+environment. For example, in {\lamc} application functions
 in the role of $\mathsf{K}$, and the term in function position is
 usually considered the program, while the term in argument position
 constitutes an environment. In the {\pic} parallel composition
@@ -143,15 +145,15 @@ the operations $(- \rhd -)$, and $(- \lhd -)$), as a redex term constructor
 might not be commutative. .
 
 \begin{eqnarray*}
-\tau \rhd_{\mathsf{K}} \tau' & \triangleq & \{ u \quad | \quad \exists t. u = \mathsf{!}\mathsf{K}_{\boxempty}^{r}(t, \boxempty),\forall u' : \tau. (\exists \rho : u@u' \rightarrow v) \Rightarrow v:\tau' \} \\
-\tau' \lhd_{\mathsf{K}} \tau & \triangleq & \{ t \quad | \quad \exists u. t = \mathsf{K}_{\boxempty}^{l}(\boxempty, u)\mathsf{!},\forall t' : \tau. (\exists \rho: t@t' \rightarrow v) \Rightarrow v : \tau' \}
+\tau \rhd_{\mathsf{K}} \tau' & \triangleq & \{ u \; | \; \exists t. u = \mathsf{!}\mathsf{K}_{\boxempty}^{r}(t, \boxempty),\forall u' : \tau. (\exists \rho : u@u' \rightarrow v) \Rightarrow v:\tau' \} \\
+\tau' \lhd_{\mathsf{K}} \tau & \triangleq & \{ t \; | \; \exists u. t = \mathsf{K}_{\boxempty}^{l}(\boxempty, u)\mathsf{!},\forall t' : \tau. (\exists \rho: t@t' \rightarrow v) \Rightarrow v : \tau' \}
 \end{eqnarray*}
 
 In the sequel we drop the subscript on the triangles if it's understood from
 context. We use the notation $\chi @ t$ to mean the term formed by
 substituting $t$ for hole in $\chi$. Thus, $\mathsf{K}(t, \boxempty)@u = \mathsf{K}(t, \boxempty)[u/\boxempty] = \mathsf{K}(t,u)$ and similarly, $\mathsf{K}(\boxempty, u)@t = \mathsf{K}(\boxempty, u)[t/\boxempty] = \mathsf{K}(t,u)$
 
-To give some examples, the comm rule of rho-calculus is given by
+To give some examples, the comm rule of {\rhoc} is given by
 
 \begin{equation*}
   \mathsf{for}( y \leftarrow x )P \quad | \quad x\mathsf{!}(Q) \rightarrow P\{ @Q/y \}
@@ -249,7 +251,7 @@ We add a resource, $\mathsf{R}$, which can be thought of as either an evaluation
 context, or as a constant. In the resourced theory, the rewrite rule
 only applies in an evaluation context.
 
-Then we add a notion of 1-holed context. We add a new sort, $X_{T}$, then a
+Then we add a notion of 1-holed context. We add a new sort, $X$, then a
 constant for the hole, together with left and right maps for placing
 the hole in either side of $\mathsf{K}$, along with left and right maps $!(-)$ and
 $(-)!$ essentially for treating contexts as abstractions. We add a map
@@ -299,17 +301,17 @@ with at least one binary term constructor and one rewrite rule that
 uses the term constructor as its source.
 
 \begin{itemize}
-  \item $\mathsf{c}, l_{\mathsf{K}}, r_{\mathsf{K}} : 1 -> T$
+  \item $\mathsf{c}, \mathsf{l}_{\mathsf{K}}, \mathsf{r}_{\mathsf{K}} : 1 -> T$
   \item $\mathsf{K} : T^{2} \rightarrow T$
   \item $\rho : T^{2} \rightarrow T$             %%//( \x -> M N) → M{N/x}     for( y <- x )P | x!(Q) → P{@Q/y}$
   \item $\mathsf{K}(l_{\mathsf{K}}, u) = u$
-  \item $\mathsf{K}(t, r_{\mathsf{K}}) = t$
+  \item $\mathsf{K}(t, \mathsf{r}_{\mathsf{K}}) = t$
   \item $\mathsf{s}(\rho(t,u)) = \mathsf{K}(t, u)$
   \item $\mathsf{t}(\rho(t,u)) = f(t,u)$
 \end{itemize}
 
 Note that $\mathsf{K}$ may not be commutative, so we ask for either a left
-identity, $l_{\mathsf{K}}$, or a right identity, $r_{\mathsf{K}}$, or if we have both they must
+identity, $\mathsf{l}_{\mathsf{K}}$, or a right identity, $\mathsf{r}_{\mathsf{K}}$, or if we have both they must
 coincide.
 
 We proceed in stages, producing first a resourced version of the
@@ -321,14 +323,14 @@ then producing a contextualized version of the theory.
 %% TODO comment on fhat
 
 \begin{itemize}
-  \item $\mathsf{c}, l_{\mathsf{K}}, r_{\mathsf{K}} : 1 \rightarrow T$
+  \item $\mathsf{c}, \mathsf{l}_{\mathsf{K}}, \mathsf{r}_{\mathsf{K}} : 1 \rightarrow T$
   \item $\mathsf{K} : T^{2} \rightarrow T$
   \item $\mathsf{R} : T \rightarrow T$
   \item $\bindnasrepma_{\rho} : T^{2} \rightarrow T$
   \item $\sqcup_{\rho} : T^{2} \rightarrow T$
   \item $\rho : T^{2} \rightarrow T$             %%//( \x \rightarrow M N) → M{N/x}     for( y <- x )P | x!(Q) → P{@Q/y}
-  \item $\mathsf{K}(l_{\mathsf{K}}, u) = u$
-  \item $\mathsf{K}(t, r_{\mathsf{K}}) = t$
+  \item $\mathsf{K}(\mathsf{l}_{\mathsf{K}}, u) = u$
+  \item $\mathsf{K}(t, \mathsf{r}_{\mathsf{K}}) = t$
   \item $\mathsf{s}(\rho(t,u)) = \mathsf{R}\mathsf{K}(t, u)$
   \item $\mathsf{t}(\rho(t,u)) = \hat{f}(t,u)$                    %%// deleting Rs from fhat gives f
 \end{itemize}
@@ -340,7 +342,7 @@ We add a new sort, $X$, and the following maps
 %% Check equations involving @_box
 
 \begin{itemize}
-  \item $\mathsf{c}, l_{\mathsf{K}}, r_{\mathsf{K}} : 1 \rightarrow T$
+  \item $\mathsf{c}, \mathsf{l}_{\mathsf{K}}, \mathsf{r}_{\mathsf{K}} : 1 \rightarrow T$
   \item $\mathsf{K} : T^{2} \rightarrow T$
   \item $\boxempty : 1 \rightarrow X$
   \item $\mathsf{K}_{\boxempty}^{l} : X \times T \rightarrow X$
@@ -355,8 +357,8 @@ We add a new sort, $X$, and the following maps
   \item $\rho : T^{2} \rightarrow T$             %%//( \x -> M N) -> M{N/x}     for( y <- x )P | x!(Q) -> P{@Q/y}
   \item $\mathsf{s}(\rho(t,u)) = \mathsf{R}\mathsf{K}(t, u)$ 
   \item $\mathsf{t}(\rho(t,u)) = \hat{f}(t,u)$          %%// deleting Rs from fhat gives f
-  \item $\mathsf{K}(l_{\mathsf{K}}, u) = u$
-  \item $\mathsf{K}(t, r_{\mathsf{K}}) = t$
+  \item $\mathsf{K}(\mathsf{l}_{\mathsf{K}}, u) = u$
+  \item $\mathsf{K}(t, \mathsf{r}_{\mathsf{K}}) = t$
   \item $@(\boxempty !,t) = t$
   \item $@(!\boxempty,t) = t$
   \item $@(\mathsf{K}_{\boxempty}^{l} (\chi, t)!, u) = \mathsf{K}(@_{\boxempty}(\chi, u), t)$
@@ -366,15 +368,15 @@ We add a new sort, $X$, and the following maps
 As mentioned before, the basic notion of arrow is given by
 
 \begin{eqnarray*}
-  \tau \rhd_{\mathsf{K}} \tau' & \triangleq  & \{ u | \exists t. u = !\mathsf{K}_{\boxempty}^{r}(t, \boxempty),\forall u':\tau. (\exists \rho : u@u'\rightarrow v) \Rightarrow v:\tau' \} \\
-  \tau'\lhd_{\mathsf{K}} \tau & \triangleq  & \{ t | \exists u. t = \mathsf{K}_{\boxempty}^{l}(\boxempty, u)!,\forall t':\tau. (\exists \rho : t@t'\rightarrow v) \Rightarrow v:\tau'\}
+  \tau \rhd_{\mathsf{K}} \tau' & \triangleq  & \{ u \; | \; \exists t. u = !\mathsf{K}_{\boxempty}^{r}(t, \boxempty),\forall u':\tau. (\exists \rho : u@u'\rightarrow v) \Rightarrow v:\tau' \} \\
+  \tau'\lhd_{\mathsf{K}} \tau & \triangleq  & \{ t \; | \; \exists u. t = \mathsf{K}_{\boxempty}^{l}(\boxempty, u)!,\forall t':\tau. (\exists \rho : t@t'\rightarrow v) \Rightarrow v:\tau'\}
 \end{eqnarray*}
 
 However, they can be generalized to
 
 \begin{eqnarray*}
-  \tau \rhd_{\mathsf{K}} \tau' & \triangleq  & \{ u | \exists t, \chi. u = !\mathsf{K}_{\boxempty}^{r}(t, \chi),\forall u':\tau. (\exists \rho : u@u'\rightarrow v) \Rightarrow v:\tau' \} \\
-  \tau'\lhd_{\mathsf{K}} \tau & \triangleq  & \{ t | \exists u, \chi. t = \mathsf{K}_{\boxempty}^{l}(\chi, u)!,\forall t':\tau. (\exists \rho : t@t'\rightarrow v) \Rightarrow v:\tau'\}
+  \tau \rhd_{\mathsf{K}} \tau' & \triangleq  & \{ u \; | \; \exists t, \chi. u = !\mathsf{K}_{\boxempty}^{r}(t, \chi),\forall u':\tau. (\exists \rho : u@u'\rightarrow v) \Rightarrow v:\tau' \} \\
+  \tau'\lhd_{\mathsf{K}} \tau & \triangleq  & \{ t \; | \; \exists u, \chi. t = \mathsf{K}_{\boxempty}^{l}(\chi, u)!,\forall t':\tau. (\exists \rho : t@t'\rightarrow v) \Rightarrow v:\tau'\}
 \end{eqnarray*}
 
 which allows the hole to be buried, rather than at the top level,
@@ -386,9 +388,9 @@ which allows the hole to be buried, rather than at the top level,
 
 \subsubsection{Abbreviations}
 \begin{eqnarray*}
-  \tau^{\perp} & = & \tau \rhd r_{\mathsf{K}} \\
+  \tau^{\perp} & = & \tau \rhd \mathsf{r}_{\mathsf{K}} \\
   \tau^{\circ} & = & \tau \rhd \{\} \\
-  ^{\perp}\tau & = & l_{\mathsf{K}} \lhd \tau \\
+  ^{\perp}\tau & = & \mathsf{l}_{\mathsf{K}} \lhd \tau \\
   ^{\circ}\tau & = & \{\} \lhd \tau
 \end{eqnarray*}
 
@@ -417,16 +419,16 @@ which allows the hole to be buried, rather than at the top level,
 
   \inferrule* [lab=$\rho_{\bindnasrepma}$]{\Gamma \vdash t : \tau, u : \tau'}{\Gamma \vdash \bindnasrepma_{\rho} (t, u) : \rho_{\bindnasrepma}(\tau, \tau')}
 
-\inferrule* [lab=$\rho_{\bindnasrepma \perp \otimes}$]{\Gamma \vdash \bindnasrepma_{\rho} (t_{1}, t_{2}) : \rho_{\bindnasrepma}(\tau_{1}^{\perp}, \tau_{2}^{\perp}) \quad \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\otimes}(\tau_{1}, \tau_{2}) }{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{K}(t_{1}, t_{3}), \mathsf{K}(t_{2}, t_{4}))) : \mathsf{R}(r_{\mathsf{K}})}
+\inferrule* [lab=$\rho_{\bindnasrepma \perp \otimes}$]{\Gamma \vdash \bindnasrepma_{\rho} (t_{1}, t_{2}) : \rho_{\bindnasrepma}(\tau_{1}^{\perp}, \tau_{2}^{\perp}) \quad \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\otimes}(\tau_{1}, \tau_{2}) }{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{K}(t_{1}, t_{3}), \mathsf{K}(t_{2}, t_{4}))) : \mathsf{R}(\mathsf{r}_{\mathsf{K}})}
   
 %% \tau \rhd \tau' = { u | \exists t,\chi. u = !\mathsf{K}_{\boxempty}^{r}(t, \chi),\forall u':\tau. (\exists \rho: u@u' \rightarrow v) \Rightarrow v:\tau' }
-%% \tau\perp = \tau \rhd r_{\mathsf{K}} = { u | \exists t,\chi. u = !\mathsf{K}_{\boxvoid}^{r}(t, \chi),\forall u':\tau. (\exists \rho: u@u' \rightarrow v) \Rightarrow v:r_{\mathsf{K}} }
+%% \tau\perp = \tau \rhd \mathsf{r}_{\mathsf{K}} = { u | \exists t,\chi. u = !\mathsf{K}_{\boxvoid}^{r}(t, \chi),\forall u':\tau. (\exists \rho: u@u' \rightarrow v) \Rightarrow v:\mathsf{r}_{\mathsf{K}} }
 
 \inferrule* [lab=$\rho_{\sqcap}$]{\Gamma \vdash t : \tau, u : \tau'}{\Gamma \vdash \mathsf{K}(t,u) : \rho_{\sqcap}(\tau,\tau')}
 
 \inferrule* [lab=$\rho_{\sqcup}$]{\Gamma \vdash t : \tau, u : \tau'}{\Gamma \vdash \sqcup_{\rho}(t,u) : \rho_{\sqcup}(\tau,\tau')}
 
-\inferrule* [lab=$\rho_{\perp}$]{\Gamma \vdash t' : \tau^{\perp}\quad \Delta \vdash t : \tau }{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t',t)) : \mathsf{R}(r_{\mathsf{K}})}
+\inferrule* [lab=$\rho_{\perp}$]{\Gamma \vdash t' : \tau^{\perp}\quad \Delta \vdash t : \tau }{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t',t)) : \mathsf{R}(\mathsf{r}_{\mathsf{K}})}
 
 \end{mathpar}
 \subsection{Contexts, their types and cuts}
@@ -448,7 +450,7 @@ Below we identify the formation of each kind of context: tensor-parallel, tensor
   \inferrule* [lab=$\rho_{\boxempty \perp \lhd}$] {\Gamma \vdash \mathsf{K}(\boxempty,u)! : \tau' \lhd \tau \quad  \Delta \vdash t : \tau}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau'}
 
   \inferrule* [lab=$\rho_{\boxempty \perp \rhd}$] {\Gamma \vdash !\mathsf{K}(t,\boxempty) : \tau \rhd \tau'\quad  \Delta \vdash u : \tau} {\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau'}\\
-  \inferrule* [lab=$\rho_{\sqcup \perp \sqcap}$]{\Gamma \vdash \sqcup_{\rho} (t_{1}, t_{2}) : \rho_{\sqcup}(\tau_{2} \rhd \tau_{1}^{\perp}, \tau_{2})  \quad \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\sqcap}(\tau_{3} \rhd \tau_{1}, \tau_{3})}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{K}(t_{1}, t_{2}), \mathsf{K}(t_{3}, t_{4}))) : \mathsf{R}(r_{\mathsf{K}})}
+  \inferrule* [lab=$\rho_{\sqcup \perp \sqcap}$]{\Gamma \vdash \sqcup_{\rho} (t_{1}, t_{2}) : \rho_{\sqcup}(\tau_{2} \rhd \tau_{1}^{\perp}, \tau_{2})  \quad \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\sqcap}(\tau_{3} \rhd \tau_{1}, \tau_{3})}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{K}(t_{1}, t_{2}), \mathsf{K}(t_{3}, t_{4}))) : \mathsf{R}(\mathsf{r}_{\mathsf{K}})}
 \end{mathpar}
   
 \subsection{Classical Term assignment}
@@ -470,7 +472,7 @@ $\mathsf{K}( \boxempty : \tau^{\perp}, \boxempty : \tau )$
 
 Expanding this out and instantiating $\mathsf{K}$ to application, we would get
 
-$\mathsf{App}( \boxempty : \tau \rhd l_{\mathsf{K}}, \boxempty : \tau )$
+$\mathsf{App}( \boxempty : \tau \rhd \mathsf{l}_{\mathsf{K}}, \boxempty : \tau )$
 
 This yields exactly the property we are demanding.
 
@@ -479,7 +481,7 @@ More formally, we adapt the Lawvere theory as follows.
 We add new sorts, $X^{\circ}$, and $X^{\bullet}$, $X^{\circ\bullet}$, and the following maps
 
 \begin{itemize}
-  \item $\mathsf{c}, l_{\mathsf{K}}, r_{\mathsf{K}} : 1 \rightarrow T$
+  \item $\mathsf{c}, \mathsf{l}_{\mathsf{K}}, \mathsf{r}_{\mathsf{K}} : 1 \rightarrow T$
   \item $\mathsf{K} : T^{2} \rightarrow T$
   \item $\mathsf{K}_{A} : 1 \rightarrow X^{\circ\bullet}$
   \item $\mathsf{K}_{\boxempty\blacksquare} : X^{\circ} \times X^{\bullet} \rightarrow X^{\circ\bullet}$
@@ -496,8 +498,8 @@ We add new sorts, $X^{\circ}$, and $X^{\bullet}$, $X^{\circ\bullet}$, and the fo
   \item $\rho : T^{2} \rightarrow T$             %%//( \x -> M N) -> M{N/x}     for( y <- x )P | x!(Q) -> P{@Q/y}
   \item $\mathsf{s}(\rho(t,u)) = \mathsf{R}\mathsf{K}(t, u) $
   \item $\mathsf{t}(\rho(t,u)) = f(t,u)$                      %%// f can mention R, e.g. if R is not a linear resource
-  \item $\mathsf{K}(l_{\mathsf{K}}, u) = u$
-  \item $\mathsf{K}(t, r_{\mathsf{K}}) = t$
+  \item $\mathsf{K}(\mathsf{l}_{\mathsf{K}}, u) = u$
+  \item $\mathsf{K}(t, \mathsf{r}_{\mathsf{K}}) = t$
   \item $@(\boxempty!,t) = t$
   \item $@(!\boxempty,t) = t$
   \item $@(\blacksquare ?,t) = t$
@@ -508,8 +510,8 @@ We add new sorts, $X^{\circ}$, and $X^{\bullet}$, $X^{\circ\bullet}$, and the fo
 \end{itemize}
 
 \begin{eqnarray*}
-  \tau \RHD_{\mathsf{K}} \tau' & \triangleq  & \{ u | \exists t, \chi. u = ?\mathsf{K}_{\boxempty}^{r}(t, \chi),\forall u':\tau. (\exists \rho : u@u'\rightarrow v) \Rightarrow v:\tau' \} \\
-  \tau'\LHD_{\mathsf{K}} \tau & \triangleq  & \{ t | \exists u, \chi. t = \mathsf{K}_{\boxempty}^{l}(\chi, u)?,\forall t':\tau. (\exists \rho : t@t'\rightarrow v) \Rightarrow v:\tau'\}
+  \tau \RHD_{\mathsf{K}} \tau' & \triangleq  & \{ u \; |\; \exists t, \chi. u = ?\mathsf{K}_{\boxempty}^{r}(t, \chi),\forall u':\tau. (\exists \rho : u@u'\rightarrow v) \Rightarrow v:\tau' \} \\
+  \tau'\LHD_{\mathsf{K}} \tau & \triangleq  & \{ t \; |\; \exists u, \chi. t = \mathsf{K}_{\boxempty}^{l}(\chi, u)?,\forall t':\tau. (\exists \rho : t@t'\rightarrow v) \Rightarrow v:\tau'\}
 \end{eqnarray*}
 
 In the sequel we will use the notation $\Gamma^{\circ}$ (respectively,
@@ -536,13 +538,13 @@ We introduce additional arrow types to mirror the introduction of $?$.
 
   \inferrule* [lab=$\rho_{\bindnasrepma}$] {\vdash \Gamma, t : \tau, u : \tau'} {\vdash \Gamma, \bindnasrepma_{\rho}(t, u) : \rho_{\bindnasrepma}(\tau, \tau')}
 
-  \inferrule* [lab=$\rho_{\bindnasrepma\perp\otimes}$] {\vdash \Gamma, \bindnasrepma_{\rho} (t', u') : \rho_{\bindnasrepma}(\tau^{\perp}, \tau'^{\perp})  \vdash \mathsf{K}(t, u) : \rho_{\otimes}(\tau, \tau'), \Delta}{\vdash \Gamma, \mathsf{R}(\mathsf{K}(\mathsf{K}(t', t), \mathsf{K}(u', u))) : \mathsf{R}(r_{\mathsf{K}}), \Delta}
+  \inferrule* [lab=$\rho_{\bindnasrepma\perp\otimes}$] {\vdash \Gamma, \bindnasrepma_{\rho} (t', u') : \rho_{\bindnasrepma}(\tau^{\perp}, \tau'^{\perp})  \vdash \mathsf{K}(t, u) : \rho_{\otimes}(\tau, \tau'), \Delta}{\vdash \Gamma, \mathsf{R}(\mathsf{K}(\mathsf{K}(t', t), \mathsf{K}(u', u))) : \mathsf{R}(\mathsf{r}_{\mathsf{K}}), \Delta}
 
   \inferrule* [lab=$\rho_{\sqcap}$] {\vdash \Gamma, t : \tau, u : \tau'}{\vdash \Gamma, \mathsf{K}(t,u) : \rho_{\sqcap}(\tau,\tau')}
 
   \inferrule* [lab=$\rho_{\sqcup}$] {\vdash \Gamma, t : \tau, u : \tau'} {\vdash \Gamma, \sqcup(t,u) : \rho_{\sqcup}(\tau,\tau')}
 
-  \inferrule* [lab=$\rho_{\perp}$] {\vdash\Gamma,  t' : \tau^{\perp}  \vdash t : \tau, \Delta }{\vdash \Gamma, \mathsf{R}(\mathsf{K}(t',t)) : \mathsf{R}(r_{\mathsf{K}}), \Delta}
+  \inferrule* [lab=$\rho_{\perp}$] {\vdash\Gamma,  t' : \tau^{\perp}  \vdash t : \tau, \Delta }{\vdash \Gamma, \mathsf{R}(\mathsf{K}(t',t)) : \mathsf{R}(\mathsf{r}_{\mathsf{K}}), \Delta}
 \end{mathpar}
 
 \subsection{Contexts, their types and cuts}
@@ -566,7 +568,7 @@ We introduce additional arrow types to mirror the introduction of $?$.
 
   \inferrule* [lab=$\rho_{\otimes}\perp\rhd$] {\vdash \Gamma, !\mathsf{K}(t,\boxempty) : \tau \rhd \tau',  \Delta \vdash u : \tau}{\vdash \Gamma, \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau', \Delta} \\
 
-  \inferrule* [lab=$\rho_{\sqcap\perp\sqcup}$] {\vdash \Gamma, \sqcup\rho (t, u) : \rho_{\sqcup}(\tau_{3} \rhd \tau_{1}^{\perp}, u:\tau_{3})  \vdash \mathsf{K}(t', u') : \rho_{\sqcap}(\tau_{2} \rhd \tau_{1}, \tau_{2}), \Delta } {\vdash \Gamma, \mathsf{R}(\mathsf{K}(\mathsf{K}( t, u), \mathsf{K}(t', u')) : \mathsf{R}(r_{\mathsf{K}}), \Delta}
+  \inferrule* [lab=$\rho_{\sqcap\perp\sqcup}$] {\vdash \Gamma, \sqcup\rho (t, u) : \rho_{\sqcup}(\tau_{3} \rhd \tau_{1}^{\perp}, u:\tau_{3})  \vdash \mathsf{K}(t', u') : \rho_{\sqcap}(\tau_{2} \rhd \tau_{1}, \tau_{2}), \Delta } {\vdash \Gamma, \mathsf{R}(\mathsf{K}(\mathsf{K}( t, u), \mathsf{K}(t', u')) : \mathsf{R}(\mathsf{r}_{\mathsf{K}}), \Delta}
 \end{mathpar}
 
 \section{Examples}
@@ -728,7 +730,7 @@ In this section, we prove a cut-elimination theorem.
 \subsection{Cut-elimination}
 Every proof that uses a cut can be transformed into a proof that does
 not use a cut.  Compilation from contextualized resource theory back
-to original theory. In $\lambda$-calculus and {\pic}, $\mathsf{K}$ is
+to original theory. In {\lamc} and {\pic}, $\mathsf{K}$ is
 not directly interpreted as application or parallel,
 respectively. Instead, it turns into a data type so we can extract the
 info using a par term introduced in the contextualized resource
@@ -777,7 +779,7 @@ operational semantics of the notion of computation provided in the
 graph-enriched Lawvere theory.
 
 We have not addressed nominal aspects of rewrite systems such as the
-$\lambda$-calculus or the {\pic}. We note that there are two very
+{\lamc} or the {\pic}. We note that there are two very
 promising directions. One is captured in Clouston's work on nominal
 Lawvere theories. \cite{DBLP:journals/jcss/Clouston14} The other is
 expressed in Fiore's work on HOAS. \cite{DBLP:conf/csl/FioreH10} It
