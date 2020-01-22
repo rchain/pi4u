@@ -7,14 +7,16 @@ Meta programming is bla bla bla
 This paper demonstrates the reflective operators from meta-programming
 are useful for ... to eliminate not only the bound names coming from
 ... but also ... in the asynchronous pi-calculus. We extend ...
+The nameless combinators are useful for .... 
 
-I also conclude what is the application in the abstract.
+I also conclude what is the application as I still do
+not understand why rho-CC-calculus are useful. 
 
 
 INTRODUCTION
 
 Delete the first sentence
-Start from the second sentence but delete more generally
+Start from the second sentence but delete "more generally"
 
 Second para
 
@@ -29,30 +31,32 @@ not find in the following paragraph
 
 The CC combinator calculus ==> the CC-calculus (here CC means concurrent combinators)
 
-1.0.1 (the section numbering is strange. Can you use *? 
+1.0.1 (the section numbering is strange. Can you use *)? 
 
 please delete footnote 1
 
 I do not think the sentence from Symbolically, will help at all since
-it is not fully explained. Can you please try to explain in English?
+it is not fully explained. Can you please try to explain in English
+from more high-level viewpoint?
 Similarly, the paragraph starts from This is exactly -- I found very
 difficult to understand.
 
-My suggestion is to delete from Symbolically and rewrite this
+My suggestion is to delete from Symbolically until the end of the next
+section and rewrite this
 paragraph like:
 
 This fixed point consgtruction is used to implement the rho calculus
 in OCaml, Haskell and Scala, and is essential for the typed version of
-the rho calculus to provide the soundness of the code by the
+the rho calculus to provide the soundness of code by the
 construction.
 
-(The above sentence is my guess since I do not understand)
+(The above sentence is my guess since I do not understand around this paragraph)
 
 OCaml, Haskell and Scala (the font is wrong) 
 
 Please do not use wasn't. was not
 
-Not Yoshida Honda and Yoshida's 
+Not Yoshida -- Honda and Yoshida's 
 
 
 1.0.2
@@ -61,7 +65,7 @@ Please fix the numbering
 
 an appendix 5 ==> an appendix
 
-Related work should be in the conclusion (please refer the previous
+Related work should be in the conclusion (please look at the previous
 scan)
 
 [8] [9] The key difference ... the place of the citation is wrong 
