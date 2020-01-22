@@ -11,3 +11,60 @@ are useful for ... to eliminate not only the bound names coming from
 I also conclude what is the application in the abstract.
 
 
+INTRODUCTION
+
+Delete the first sentence
+Start from the second sentence but delete more generally
+
+Second para
+
+citation after the pi-calculus
+citation after the FM set (what is FM set? it appeared later! please
+make coherence)
+
+Page 2
+
+However, this raises a new question ==> what is a new question? I do
+not find in the following paragraph
+
+The CC combinator calculus ==> the CC-calculus (here CC means concurrent combinators)
+
+1.0.1 (the section numbering is strange. Can you use *? 
+
+please delete footnote 1
+
+I do not think the sentence from Symbolically, will help at all since
+it is not fully explained. Can you please try to explain in English?
+Similarly, the paragraph starts from This is exactly -- I found very
+difficult to understand.
+
+My suggestion is to delete from Symbolically and rewrite this
+paragraph like:
+
+This fixed point consgtruction is used to implement the rho calculus
+in OCaml, Haskell and Scala, and is essential for the typed version of
+the rho calculus to provide the soundness of the code by the
+construction.
+
+(The above sentence is my guess since I do not understand)
+
+OCaml, Haskell and Scala (the font is wrong) 
+
+Please do not use wasn't. was not
+
+Not Yoshida Honda and Yoshida's 
+
+
+1.0.2
+
+Please fix the numbering
+
+an appendix 5 ==> an appendix
+
+Related work should be in the conclusion (please refer the previous
+scan)
+
+[8] [9] The key difference ... the place of the citation is wrong 
+
+
+
