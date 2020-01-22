@@ -1,0 +1,13 @@
+ABSTRACT
+
+It should be improved, starting from some big picture under
+meta-programming.
+
+Meta programming is bla bla bla
+This paper demonstrates the reflective operators from meta-programming
+are useful for ... to eliminate not only the bound names coming from
+... but also ... in the asynchronous pi-calculus. We extend ...
+
+I also conclude what is the application in the abstract.
+
+
