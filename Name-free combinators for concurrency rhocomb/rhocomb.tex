@@ -195,7 +195,7 @@ Michael Stay
 \section{Introduction}
 
 Our purpose in reporting these results is singular. We have developed
-a algorithm, the logic as a distributive law algorithm (aka LADL),
+an algorithm, the logic as a distributive law algorithm (aka LADL),
 that calculates a type system for a given model of computation. We
 want to test the limits of our algorithm. In particular, we would like
 to apply the algorithm to a model of computation that enjoys the most
@@ -322,8 +322,16 @@ terms of reflection.  This work presents a fusion of those ideas: a
 name-free concurrent combinator calculus into which the {\ccomb} have
 a faithful embedding.
 
-In light of these considerations we felt it worthwhile to document the
-model prior to reporting on the LADL algorithm.
+It is worth mentioning that these results mean that it is possible to
+extend Honda and Yoshida's original minimality and separation
+results. \cite{DBLP:journals/tcs/Yoshida02} Specifically, this
+calculus uses neither the $\mathsf{new}$ operator nor replication, but
+only the original combinators together with a single combinator for
+reflection, and yet capture the full power of the {\pic}. Thus, it is
+possible extend the original results by considering combinator sets
+that include or exclude the reflection combinator. In light of these
+considerations we felt it worthwhile to document the model prior to
+reporting on the LADL algorithm.
 
 \subsubsection{Role of compositionality in theories of concurrency} 
 It is also interesting how compositionality plays out in this
