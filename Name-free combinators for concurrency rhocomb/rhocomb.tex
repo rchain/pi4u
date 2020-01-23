@@ -178,56 +178,94 @@ Michael Stay
 \maketitle
 \begin{abstract}
 \noindent
-  In \cite{DBLP:conf/popl/HondaY94} and
-  \cite{DBLP:journals/tcs/Yoshida02} Honda and Yoshida demonstrated
-  how to eliminate the bound names coming from the input prefix in the
-  asynchronous {\pic}, but their combinators still depend on the
-  $\new$ operator to bind names.  We extend these combinators by
-  replacing $\new$ and replication with reflective operators to
-  propose the first combinator calculus with no bound names into which
-  the asynchronous {\pic} has a faithful embedding.
+  Developing an entirely name-free account of mobile concurrency has
+  long been a goal of the concurrency semantics community, but to date
+  has been somewhat elusive. However, it turns out that there are two
+  partial solutions that may be combined. In particular, Honda and
+  Yoshida eliminate the use of abstraction in input-guarded processes
+  \cite{DBLP:conf/popl/HondaY94} \cite{DBLP:journals/tcs/Yoshida02},
+  but still make heavy use of the $\mathsf{new}$ operator. Meanwhile
+  \cite{DBLP:journals/entcs/MeredithR05} eliminate the $\mathsf{new}$
+  operator, but make essential use of input-guard abstraction. The two
+  solutions are compatible and may be composed, yielding the first
+  entirely name-free account of mobile concurrency that does not
+  suffer a centralized resource ensuring global uniqueness of names.
 \end{abstract}
 
 \section{Introduction}
 
-While the focus of this paper is largely on the technical results of
-providing a name-free combinatory account of mobile concurrent
-computation through the use of reflection, it is useful to consider
-the larger context motivating these results. Reflection and
-meta-programming features more generally are part of a growing number
-of mainstream languages. Java, C\#, even the Haskell and OCaml
+Our purpose in reporting these results is singular. We have developed
+a algorithm, the logic as a distributive law algorithm (aka LADL),
+that calculates a type system for a given model of computation. We
+want to test the limits of our algorithm. In particular, we would like
+to apply the algorithm to a model of computation that enjoys the most
+advanced features of computation today. For us, this means mobile
+concurrency, as evinced in models of computation like the {\pic} or
+the {\rhoc}. However, all such models currently proposed make heavy
+use of nominal phenomena. Even Honda and Yoshida's combinatory model
+makes heavy use of nominal phenomena. \cite{DBLP:conf/popl/HondaY94}
+\cite{DBLP:journals/tcs/Yoshida02} While our algorithm can handle
+nominal phenomena, it seriously complicates the presentation of the
+core features of the algorithm, which we hope to illustrate in a
+series of upcoming papers. So, we would like to test our algorithm on
+a version of mobile concurrency that makes no use of nominal
+phenomena.
+
+It turns out that developing an entirely name-free account of mobile
+concurrency has long been a goal of the concurrency semantics
+community, but to date has been somewhat elusive. However, it turns
+out that there are two partial solutions that may be combined. In
+particular, Honda and Yoshida eliminate the use of abstraction in
+input-guarded processes, but still make heavy use of the
+$\mathsf{new}$ operator. Meanwhile
+\cite{DBLP:journals/entcs/MeredithR05} eliminate the $\mathsf{new}$
+operator, but make essential use of input-guard abstraction. The two
+solutions are compatible and may be composed, yielding the first
+entirely name-free account of mobile concurrency, that does not suffer
+a centralized resource ensuring global uniqueness of names. This model
+of computation is amenable to the most elementary form of our
+algorithm for generating type systems, which already counts as an
+illustration of its utility!
+
+However, it is useful to consider the larger context motivating these
+results. It is remarkable that a single feature, i.e. reflection, suffices
+to produce the first such entirely combinatory model of mobile
+concurrency. Reflection has been the ugly step child of theoretical
+computer science, resisting compelling type theoretic analysis. This
+is one of the reasons why language designs based on typed
+$\lambda$-calculi have been so slow to adopt reflection as a feature
+by comparison to other language designs. On the other hand, reflection
+and meta-programming features more generally are part of a growing
+number of mainstream languages. Java, C\#, even the Haskell and OCaml
 communities have seen growing interest in these features with efforts
 like template Haskell and MetaOCaml, respectively. In large measure
-this has to do the fact that programming at industrial scale requires
-the leverage of computer programs to write computer programs. Thus,
-meta-programming features are simply a practical necessity. On the
-other hand, reflection and meta-programming are not well explored in a
-strongly typed setting. This is one of the reasons why language
-designs based on typed $\lambda$-calculi have been so slow to adopt
-reflection as a feature by comparison to other language designs.
+this has to do with the practical realities of programming at
+industrial scale. Such efforts require the leverage of computer
+programs to write computer programs. Thus, meta-programming features
+are simply a practical necessity.
 
-In this setting, the idea that a single feature already enjoying
-widespread adoption could account for such a subtle phenomenon as the
-kind of binding found in the {\pic} is both intriguing and worth
-exploring, even if FM set theory provides a satisfying account of
+It is worth noting that there are deep foundational questions at play
+here. Even if FM set theory provides a satisfying account of
 computation with nominal phenomena in other respects
-\cite{DBLP:journals/fac/GabbayP02}. However, it is precisely the
+\cite{DBLP:journals/fac/GabbayP02}, it must suffer the existence of
+``atoms''. In Chaitin's analysis of the risk present in a theory,
+``atoms'' constitute a source of risk. Indeed, it is precisely the
 foundational theoretical questions raised by the FM set theoretic
-approach that motivates the investigation in the first place: what
-better place to look for the source of ``atoms'' than in the
-reification of theory of computation requiring them?
+approach that motivated Meredith and Radestock's the investigation of
+the {\rhoc}: what better place to look for the source of ``atoms''
+than in the reification of theory of computation requiring them?
 
-Many term calculi, like $\lambda$-calculus or {\pic}, involve binders
-for names, and the mathematics of bound variable names is
-subtle. Sch\"onfinkel introduced the $\mathsf{SKI}$ combinator
-calculus in 1924 to clarify the role of quantified variables in
-intuitionistic logic by eliminating them \cite{finkel}; Curry
-developed Sch\"onfinkel's ideas much further. These difficulties are not
-merely theoretical, but represent a real practical challenge in the
-design of programming languages. In fact binding is one of the key
-features of the PoPLMark Challenge \cite{PoPLMark}. Certainly, the
-work by Jamie Gabbay and Andrew Pitts
-\cite{DBLP:journals/fac/GabbayP02} and others
+To understand this risk consider the following. Many term calculi,
+like $\lambda$-calculus or {\pic}, involve binders for names, and the
+mathematics of bound variable names is subtle. Sch\"onfinkel
+introduced the $\mathsf{SKI}$ combinator calculus in 1924 to clarify
+the role of quantified variables in intuitionistic logic by
+eliminating them \cite{finkel}; Curry developed Sch\"onfinkel's ideas
+much further. These difficulties are not merely theoretical, but
+represent a real practical challenge in the design of programming
+languages. In fact binding is one of the key features of the PoPLMark
+Challenge \cite{PoPLMark}. Certainly, the work by Jamie Gabbay and
+Andrew Pitts \cite{DBLP:journals/fac/GabbayP02} and others
 \cite{DBLP:journals/jcss/Clouston14} on nominal set theory has put the
 study of bound names and substitution on a much nicer foundation that
 can be shown to extend to practical implementations. However, it
@@ -235,7 +273,7 @@ introduces an intriguing conundrum.
 
 Specifically, the work of Gabbay and Pitts relies on a version of set
 theory (Fraenkel-Mostowski set theory, which we abbreivate to FM set
-theory) that admits an infinite supply of ``atoms''. This raises the
+theory) that admits an \emph{infinite} supply of ``atoms''. This raises the
 question of where these atoms come from, which has both theoretical
 and practical implications. On the practical side, infinite sets of
 ``atomic'' entities, i.e. entities with no internal structure, are not
@@ -262,23 +300,25 @@ provide the ``atoms'' used in the {\pic} as channels to produce the
 first name-free set of combinators that enjoys a full and faithful
 interpretation of the calculus.
 
-To be clear, we are not focusing on ordinary abstraction, as that is
-well solved by abstraction elimination from the $\lambda$-calculus to
-$\mathsf{SKI}$. Instead we are focused on binders for fresh names. For
-example, the {\pic} (\cite{milner91polyadicpi}) has two binders for
-names: the $\new$ operator, which introduces a new name into scope,
-and the input prefix, which introduces a name for labeling locations
-for substitution.  Honda and Yoshida \cite{DBLP:conf/popl/HondaY94}
+To be clear, the model eliminates both ordinary abstraction as well as
+binders for fresh names. For example, the {\pic}
+(\cite{milner91polyadicpi}) has two binders for names: the $\new$
+operator, which introduces a new name into scope, and the input
+prefix, which introduces a name for labeling locations for
+substitution.  Honda and Yoshida \cite{DBLP:conf/popl/HondaY94}
 \cite{DBLP:journals/tcs/Yoshida02} describe an elimination algorithm
 that gets rid of input prefixes which corresponds in many respects to
 the elimination of lambda abstraction; but their combinators (referred
 to in the sequel as the {\ccomb} still fundamentally depend on the
 $\new$ operator.  In complementary work, Meredith and Radestock
 \cite{DBLP:journals/entcs/MeredithR05} introduce reflective operators
-into a higher-order {\pic} and implment $\new$ and replication in
-terms of reflection.  Here, we present a fusion of those ideas: a
+into a higher-order {\pic} and implement $\new$ and replication in
+terms of reflection.  This work presents a fusion of those ideas: a
 name-free concurrent combinator calculus into which the {\ccomb} have
 a faithful embedding.
+
+In light of these considerations we felt it worthwhile to document the
+model prior to reporting on the LADL algorithm.
 
 \subsubsection{Role of compositionality in theories of concurrency} 
 It is also interesting how compositionality plays out in this
