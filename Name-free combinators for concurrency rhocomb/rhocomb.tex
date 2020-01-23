@@ -201,9 +201,11 @@ want to test the limits of our algorithm. In particular, we would like
 to apply the algorithm to a model of computation that enjoys the most
 advanced features of computation today. For us, this means mobile
 concurrency, as evinced in models of computation like the {\pic} or
-the {\rhoc}. However, all such models currently proposed make heavy
-use of nominal phenomena. Even Honda and Yoshida's combinatory model
-makes heavy use of nominal phenomena. \cite{DBLP:conf/popl/HondaY94}
+the {\rhoc}. \cite{DBLP:conf/concur/Milner92}
+\cite{DBLP:journals/entcs/MeredithR05} However, all such models
+currently proposed make heavy use of nominal phenomena. Even Honda and
+Yoshida's combinatory model makes heavy use of nominal
+phenomena. \cite{DBLP:conf/popl/HondaY94}
 \cite{DBLP:journals/tcs/Yoshida02} While our algorithm can handle
 nominal phenomena, it seriously complicates the presentation of the
 core features of the algorithm, which we hope to illustrate in a
@@ -285,19 +287,20 @@ internal structure the entire set can be represented by a single
 recursive equation. Potentially then, the natural numbers or some
 other effectively representable set could provide the source of atoms
 used in an FM-set theoretic account of binding in practical
-implementations. However, this raises a new question.
+implementations. 
 
-In order to represent and compute these effectively representable sets
-a notion of computation must already be in place. If that notion of
-computation relies on a notion of binding, then not a lot progress has
-been made! As in \cite{DBLP:journals/entcs/MeredithR05} we argue that
-this circularity, instead of being an obstacle to overcome, might be a
-clue to an alternative approach to binding phenomena; and one that
-ties together two important computational phenomena that have not
-normally been considered as related. More explicitly, we extend the
-argument made by Meredith and Radestock that reflection suffices to
-provide the ``atoms'' used in the {\pic} as channels to produce the
-first name-free set of combinators that enjoys a full and faithful
+However, this raises a new question. In order to represent and compute
+these effectively representable sets a notion of computation must
+already be in place. If that notion of computation relies on a notion
+of binding, then not a lot progress has been made! As in
+\cite{DBLP:journals/entcs/MeredithR05} we argue that this circularity,
+instead of being an obstacle to overcome, might be a clue to an
+alternative approach to binding phenomena; and one that ties together
+two important computational phenomena that have not normally been
+considered as related. More explicitly, we extend the argument made by
+Meredith and Radestock that reflection suffices to provide the
+``atoms'' used in the {\pic} as channels to produce the first
+name-free set of combinators that enjoys a full and faithful
 interpretation of the calculus.
 
 To be clear, the model eliminates both ordinary abstraction as well as
@@ -325,24 +328,23 @@ It is also interesting how compositionality plays out in this
 setting. As we emphasize throughout the paper, the {\pic\;} is not a
 closed theory, but one depending on a theory of names. In other words,
 a fully specified theory of processes involves a composition of
-theories, namely \footnote{pun gratefully accepted} an application of
-the {\pic\;} with some theory of names. In this sense we derive the
-{\rhoc} \cite{DBLP:journals/entcs/MeredithR05} from the fixed point of
+theories, namely an application of the {\pic\;} with some theory of
+names. In this sense we derive the {\rhoc}
+\cite{DBLP:journals/entcs/MeredithR05} from the fixed point of
 applying the theory of processes to itself (regarded as a theory of
-names). Symbolically,
+names). Symbolically, let $\Pi[X]$ denote the theory of processes
+generated from the names given by $X$, and $\quotep{\Pi[X]}$ denote
+the quoted forms of the processes so generated. Then the {\rhoc} is
+the fixed point of the equation
 
 \begin{equation*}
   \mathcal{R} = \Pi[\quotep{\mathcal{R}}]
 \end{equation*}
 
-where $\Pi$ produces a theory of processes from whatever it is given
-as a theory of names and $\quotep{\mathcal{R}}$ is the quoted forms of
-said processes, regarding them as names.
-
 This is exactly the kind of design level thinking that
 compositionality should promote, and it is actually surprising that
 this particular solution for a name-free version of a concurrent
-calculus wasn't found sooner. In point of fact, the initial
+calculus was not found sooner. In point of fact, the initial
 implementations of {\rhoc} in \textsf{OCaml}, \textsf{Haskell}, and
 \textsf{Scala} all used exactly this fixed point formulation to define the
 syntax for the {\rhoc}. The fact that the code type-checks
@@ -380,14 +382,15 @@ name-free combinator calculus for mobile concurrency.
 
 We have also recently become aware of
 \cite{DBLP:journals/toplas/RajaS97}. They achieve a similar goal, but
-without reflection, using a technique pioneered by Quine, who was also
-a pioneer of reflective techniques. \cite{Quine59} \cite{Quine60} The
-key difference with respect to the treatment of fresh names is that
-they introduce globally unique names and then internalize a process
-that generates them. The approach taken here is more local, in the
-sense that reflection allows for the generation of names fresh with
-respect to a specific scope. This means there is no need for global
-uniqueness nor a centralized resource for generating the fresh names.
+without reflection, using a technique pioneered by Quine
+(\cite{Quine59} \cite{Quine60}), who was also a pioneer of reflective
+techniques. The key difference with respect to the treatment of fresh
+names is that they introduce globally unique names and then
+internalize a process that generates them. The approach taken here is
+more local, in the sense that reflection allows for the generation of
+names fresh with respect to a specific scope. This means there is no
+need for global uniqueness nor a centralized resource for generating
+the fresh names.
 
 \section{A reflective higher-order concurrent combinator calculus}
 

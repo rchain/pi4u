@@ -350,7 +350,9 @@ We add a new sort, $X$, and the following maps
   \item $!(-) : X  \rightarrow T$
   \item $(-)! : X  \rightarrow T$
   \item $@ : T^{2} \rightarrow T$
-  \item $@_{\boxempty} : X \times T \rightarrow T$
+  \item $@_{\boxempty}^{l} : X \times T \rightarrow T$
+  \item $@_{\boxempty}^{r} : T \times X \rightarrow X$
+  \item $@_{\boxempty\boxempty} : X^{2} \rightarrow X$
   \item $\mathsf{R} : T \rightarrow T$
   \item $\bindnasrepma_{\rho} : T^{2} \rightarrow T$
   \item $\sqcup_{\rho} : T^{2} \rightarrow T$
@@ -361,8 +363,11 @@ We add a new sort, $X$, and the following maps
   \item $\mathsf{K}(t, \mathsf{r}_{\mathsf{K}}) = t$
   \item $@(\boxempty !,t) = t$
   \item $@(!\boxempty,t) = t$
+  \item $@_{\boxempty}^{l}(\boxempty ,t) = t$
+  \item $@_{\boxempty\boxempty}(\boxempty,\chi) = \chi$
   \item $@(\mathsf{K}_{\boxempty}^{l} (\chi, t)!, u) = \mathsf{K}(@_{\boxempty}(\chi, u), t)$
   \item $@(!\mathsf{K}_{\boxempty}^{r} (t, \chi), u) = \mathsf{K}(t, @_{\boxempty}(\chi, u))$
+  \item $@(\mathsf{K}_{\boxempty}^{l} (\chi, t)!, \chi')! = \mathsf{K}(@_{\boxempty\boxempty}(\chi, \chi'), t)$
 \end{itemize}
 
 As mentioned before, the basic notion of arrow is given by
