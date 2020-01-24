@@ -184,14 +184,14 @@ Michael Stay
   has been somewhat elusive. However, it turns out that there are two
   partial solutions that may be combined. In particular, Honda and
   Yoshida eliminate the use of abstraction in input-guarded processes
-  \cite{DBLP:conf/popl/HondaY94,DBLP:journals/tcs/Yoshida02},
-  but still make heavy use of the $\mathsf{new}$ operator. Meanwhile
-  \NYnote{author names}
-  \cite{DBLP:journals/entcs/MeredithR05} eliminate the $\mathsf{new}$
-  operator, but make essential use of input-guard abstraction. The two
-  solutions are compatible and may be composed, yielding the first
-  entirely name-free account of mobile concurrency that does not
-  suffer a centralized resource ensuring global uniqueness of names.
+  \cite{DBLP:conf/popl/HondaY94,DBLP:journals/tcs/Yoshida02}, but
+  still make heavy use of the $\mathsf{new}$ operator. Meanwhile
+  Meredith and Radestock \cite{DBLP:journals/entcs/MeredithR05}
+  eliminate the $\mathsf{new}$ operator, but make essential use of
+  input-guard abstraction. The two solutions are compatible and may be
+  composed, yielding the first entirely name-free account of mobile
+  concurrency that does not suffer a centralized resource ensuring
+  global uniqueness of names.
 \end{abstract}
 
 \section{Introduction}
@@ -205,14 +205,10 @@ advanced features of computation today. For us, this means mobile
 concurrency, as evinced in models of computation like the {\pic} or
 the {\rhoc}
 \cite{DBLP:conf/concur/Milner92,DBLP:journals/entcs/MeredithR05}.
-\NYnote{You often put the citations before . -- please do not do. I correced.}
-However, all such models
-currently proposed make heavy use of nominal phenomena. Even Honda and
-Yoshida's combinatory model makes heavy use of nominal
-phenomena. \cite{DBLP:conf/popl/HondaY94}
-\cite{DBLP:journals/tcs/Yoshida02}
-\NYnote{Here error}
-While our algorithm can handle
+However, all such models currently proposed make heavy use of nominal
+phenomena. Even Honda and Yoshida's combinatory model
+\cite{DBLP:conf/popl/HondaY94} \cite{DBLP:journals/tcs/Yoshida02}
+makes heavy use of nominal phenomena. While our algorithm can handle
 nominal phenomena, it seriously complicates the presentation of the
 core features of the algorithm, which we hope to illustrate in a
 series of upcoming papers. So, we would like to test our algorithm on
@@ -225,8 +221,7 @@ community, but to date has been somewhat elusive. However, it turns
 out that there are two partial solutions that may be combined. In
 particular, Honda and Yoshida eliminate the use of abstraction in
 input-guarded processes, but still make heavy use of the
-$\mathsf{new}$ operator. Meanwhile
-  \NYnote{author names}
+$\mathsf{new}$ operator. Meanwhile Meredith and Radestock
 \cite{DBLP:journals/entcs/MeredithR05} eliminate the $\mathsf{new}$
 operator, but make essential use of input-guard abstraction. The two
 solutions are compatible and may be composed, yielding the first
@@ -330,15 +325,13 @@ name-free concurrent combinator calculus into which the {\ccomb} have
 a faithful embedding.
 
 It is worth mentioning that these results mean that it is possible to
-extend Honda and Yoshida's original minimality and separation
-results. \cite{DBLP:journals/tcs/Yoshida02}
-\NYnote{Again typo}
-Specifically, this
-calculus uses neither the $\mathsf{new}$ operator nor replication, but
-only the original combinators together with a single combinator for
-reflection, and yet capture the full power of the {\pic}. Thus, it is
-possible extend the original results by considering combinator sets
-that include or exclude the reflection combinator. In light of these
+extend Honda and Yoshida's original minimality and separation results
+\cite{DBLP:journals/tcs/Yoshida02}. Specifically, this calculus uses
+neither the $\mathsf{new}$ operator nor replication, but only the
+original combinators together with a single combinator for reflection,
+and yet capture the full power of the {\pic}. Thus, it is possible
+extend the original results by considering combinator sets that
+include or exclude the reflection combinator. In light of these
 considerations we felt it worthwhile to document the model prior to
 reporting on the LADL algorithm.
 
