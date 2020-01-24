@@ -184,7 +184,7 @@ Michael Stay
   has been somewhat elusive. However, it turns out that there are two
   partial solutions that may be combined. In particular, Honda and
   Yoshida eliminate the use of abstraction in input-guarded processes
-  \cite{DBLP:conf/popl/HondaY94} \cite{DBLP:journals/tcs/Yoshida02},
+  \cite{DBLP:conf/popl/HondaY94,DBLP:journals/tcs/Yoshida02},
   but still make heavy use of the $\mathsf{new}$ operator. Meanwhile
   \NYnote{author names}
   \cite{DBLP:journals/entcs/MeredithR05} eliminate the $\mathsf{new}$
@@ -226,6 +226,7 @@ out that there are two partial solutions that may be combined. In
 particular, Honda and Yoshida eliminate the use of abstraction in
 input-guarded processes, but still make heavy use of the
 $\mathsf{new}$ operator. Meanwhile
+  \NYnote{author names}
 \cite{DBLP:journals/entcs/MeredithR05} eliminate the $\mathsf{new}$
 operator, but make essential use of input-guard abstraction. The two
 solutions are compatible and may be composed, yielding the first
@@ -236,7 +237,7 @@ algorithm for generating type systems, which already counts as an
 illustration of its utility!
 
 However, it is useful to consider the larger context motivating these
-results. It is remarkable that a single feature, i.e. reflection, suffices
+results. It is remarkable that a single feature, i.e. \emph{reflection}, suffices
 to produce the first such entirely combinatory model of mobile
 concurrency. Reflection has been the ugly step child of theoretical
 computer science, resisting compelling type theoretic analysis. This
@@ -330,7 +331,9 @@ a faithful embedding.
 
 It is worth mentioning that these results mean that it is possible to
 extend Honda and Yoshida's original minimality and separation
-results. \cite{DBLP:journals/tcs/Yoshida02} Specifically, this
+results. \cite{DBLP:journals/tcs/Yoshida02}
+\NYnote{Again typo}
+Specifically, this
 calculus uses neither the $\mathsf{new}$ operator nor replication, but
 only the original combinators together with a single combinator for
 reflection, and yet capture the full power of the {\pic}. Thus, it is
@@ -339,7 +342,7 @@ that include or exclude the reflection combinator. In light of these
 considerations we felt it worthwhile to document the model prior to
 reporting on the LADL algorithm.
 
-\subsubsection{Role of compositionality in theories of concurrency} 
+\subsubsection*{Role of compositionality in theories of concurrency} 
 It is also interesting how compositionality plays out in this
 setting. As we emphasize throughout the paper, the {\pic\;} is not a
 closed theory, but one depending on a theory of names. In other words,
@@ -377,7 +380,7 @@ reflective account of name construction and deconstruction; thus
 illustrating that compositionality is not just for design-level
 thinking, but provides powerful compression of proofs.
 
-\subsubsection{Outline of the paper}
+\subsubsection*{Outline of the paper}
 To be fully self-contained this paper would need to present four
 different calculi and two different encodings: the original {\pic},
 {\ccomb}, and the encoding from the term calculus
@@ -394,19 +397,6 @@ the {\pic\;} and the encoding of the latter into the former in an
 appendix \ref{appendix:pic2rhoc}. This organization allows us to focus on the newer results of a
 name-free combinator calculus for mobile concurrency.
 
-\subsubsection{Related work}
-
-We have also recently become aware of
-\cite{DBLP:journals/toplas/RajaS97}. They achieve a similar goal, but
-without reflection, using a technique pioneered by Quine
-(\cite{Quine59} \cite{Quine60}), who was also a pioneer of reflective
-techniques. The key difference with respect to the treatment of fresh
-names is that they introduce globally unique names and then
-internalize a process that generates them. The approach taken here is
-more local, in the sense that reflection allows for the generation of
-names fresh with respect to a specific scope. This means there is no
-need for global uniqueness nor a centralized resource for generating
-the fresh names.
 
 \section{A reflective higher-order concurrent combinator calculus}
 
@@ -844,11 +834,26 @@ $P \wbbisim_{\mathcal N} Q$, if $P {\mathcal S}_{\mathcal N} Q$ for some ${\math
   translation. 
 \end{remark}
 
-\section{Conclusion and future work}
+\section{Conclusion, related and future work}
 We have shown how to construct a concurrent higher-order combinator
 calculus that uses reflection to avoid the necessity for new and bound
 names.  The {\ccomb}, and therefore the asynchronous {\pic}, have a
-faithful embedding into the calculus. While the results are
+faithful embedding into the calculus.
+
+Apart from the work in \cite{DBLP:conf/popl/HondaY94,DBLP:journals/tcs/Yoshida02},
+the work \cite{DBLP:journals/toplas/RajaS97}
+has achieved a similar goal with ours, but
+without reflection, using a technique pioneered by Quine
+(\cite{Quine59} \cite{Quine60}), who was also a pioneer of reflective
+techniques. The key difference with respect to the treatment of fresh
+names is that they introduce globally unique names and then
+internalize a process that generates them. The approach taken here is
+more local, in the sense that reflection allows for the generation of
+names fresh with respect to a specific scope. This means there is no
+need for global uniqueness nor a centralized resource for generating
+the fresh names.
+
+While the results in this paper are
 interesting in their own right we developed them to serve a larger
 purpose. In a forthcoming paper we demonstrate an algorithm taking a
 graph-enriched Lawvere theory (representing a formal specification of
