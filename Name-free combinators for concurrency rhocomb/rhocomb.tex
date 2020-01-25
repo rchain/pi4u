@@ -39,7 +39,7 @@
 \newcommand{\op}{\mathrm{op}}
 \newcommand{\NN}{\mathbb{N}}
 \newcommand{\pic}{$\pi$-calculus}
-\newcommand{\ccomb}{$\mathsf{CC}$-combinator calculus}
+\newcommand{\ccomb}{$\mathsf{CC}$-calculus}
 
 % Double brackets
 \newcommand{\ldb}{[\![}
@@ -138,6 +138,7 @@
 \newtheorem{remark}{Remark}
 \theoremstyle{remark}
 \newtheorem{example}{Example}
+\newtheorem{conjecture}{Conjecture}
 
 \makeatletter
 \gdef\tshortstack{\@ifnextchar[\@tshortstack{\@tshortstack[c]}}
@@ -386,8 +387,7 @@ $\new$ elimination, combine and how the encoding from the {\pic\;} can
 be constructed by composing the encoding into the {\rhoc} with the
 encoding into the reflective combinator calculus. We have provided the
 complete manifest, but have pushed the presentation of the {\rhoc} and
-the {\pic\;} and the encoding of the latter into the former in an
-appendix \ref{appendix:pic2rhoc}. This organization allows us to focus on the newer results of a
+the {\pic{}} and the encoding of the latter into the former in Appendix. This organization allows us to focus on the newer results of a
 name-free combinator calculus for mobile concurrency.
 
 
@@ -433,8 +433,8 @@ Together with the usual rules for reduction in context.
 
 As in the {\pic}, the $\new$ operator is a binding operator for names,
 so {\ccomb} also has a notion of free and bound names. The
-details are provided in an appendix below to make the paper more
-self-contained. \ref{appendix:ccomb}
+details are provided in Appendix~\ref{appendix:ccomb} to make the paper more
+self-contained.
 
 \subsection{Reflective higher-order (RHO) combinator calculus}
 The {\pic} is not a closed theory, but rather a theory dependent upon
@@ -498,7 +498,11 @@ Rewrite rules
 \end{definition}
 
 Note that alpha equivalence is no longer part of structural
-congruence.  While there is a faithful embedding of {\ccomb} into RHO combinators (see below), RHO combinators can see
+congruence.  While there is a faithful embedding of {\ccomb} into
+RHO combinators (see below), \NYnote{It is too long to say
+RHO combinator calculus I propose you introduce the abbrev like
+CC$\rho$ as macros and replace all occurrences of RHO combinator
+calculus. This saves the space.} RHO combinators can see
 the internal structure of names and distinguish them.
 
 \subsubsection{Implementing replication with reflection}
@@ -530,11 +534,11 @@ recursion) can be implemented in a higher-order process algebra
 \cite{SangiorgiWalker}. As our first example of calculation with the
 machinery thus far presented we give the construction explicitly in
 the RHO combinator calculus.
-
 \begin{definition}[Replication]
   \label{replication}
   $D(x,v,w) := (\mathsf{d}(x,v,w) | \mathsf{fw}(v,x) | {*}(w))$
 \end{definition}
+By the above definition, we have:
 \[\begin{array}{rl}
   \mathsf{*}_{(x,v,w)} P &= \mathsf{m}(x,\quotep{(D(x,v,w) \; |\; P)}) \; |\; D(x,v,w) \\
         &= \mathsf{d}(x,v,w) \; |\; \mathsf{fw}(v,x) \; |\; {*}(w) \; |\; \mathsf{m}(x,\quotep{(D(x,v,w) \; |\; P)}) \\
@@ -543,8 +547,7 @@ the RHO combinator calculus.
         &\red \mathsf{m}(x,\quotep{(D(x,v,w) \; |\; P)}) \; |\; D(x,v,w) \; |\; P \\
         & = \; \mathsf{*}_{(x,v,w)} P \; |\; P
 \end{array}\]
-
-Of course, this encoding, as an implementation, runs away, unfolding
+This encoding, as an implementation, runs away, unfolding
 $\mathsf{*}P$ eagerly. It is possible to obtain a lazier
 replication operator restricted to the embedding of
 input-guarded $\pi$ processes. The reader familiar with the
@@ -567,7 +570,9 @@ however, obscures the simplicity of the translation. We adopt a third
 alternative.
 
 To hammer home the point that {\ccomb} is
-parameterized in a theory of names, we instantiate her calculus with
+parameterized in a theory of names, we instantiate her calculus
+\NYnote{Please replace her calculus or she to their or them -- please
+  check all sections and Appendix carefully.} with
 the names of the RHO combinator calculus. This is no different than
 instantiating her calculus using the natural numbers, or the set of URLs as the
 set of names. Just as there is no connection between the structure of
@@ -589,18 +594,16 @@ to the function, called $p$ below. The first argument, called $n$ below, determi
 Since the {\ccomb} is parametric in a set of names, we can
 choose $\QProc$ for that set.  Given a process $P$ in {\ccomb}, we pick names $n$ and $p$ in the RHO calculus such that $n \neq p$
 and both are distinct from the free names of $P$.  Then we define
-
+the mapping with two name constructors $x^r$ and $x^l$ as:
 \begin{equation*}
-  \meaningof{P} = \meaningof{P}_2(n, p),
+  \meaningof{P} = \meaningof{P}_2(n, p)
+  \quad \mbox{with} \quad 
+   x^l := \quotep{\mathsf{b}_{\mathsf{l}}(x,\mathsf{m}(x,*x))}, \ 
+   x^r := \quotep{\mathsf{b}_{\mathsf{r}}(x,\mathsf{m}(x,*x))}
 \end{equation*}
-
-Name allocation will make heavy use of the following two name
-constructors
-
-\begin{tabular}{cc}
-  $x^l := \quotep{\mathsf{b}_{\mathsf{l}}(x,\mathsf{m}(x,*x))}$ & $x^r := \quotep{\mathsf{b}_{\mathsf{r}}(x,\mathsf{m}(x,*x))}$
-\end{tabular}
-
+%\begin{tabular}{cc}
+%  $x^l := \quotep{\mathsf{b}_{\mathsf{l}}(x,\mathsf{m}(x,*x))}$ & $x^r := \quotep{\mathsf{b}_{\mathsf{r}}(x,\mathsf{m}(x,*x))}$
+%\end{tabular}
 Note that by construction, $\quotep{P}$ cannot occur as a name in $P$
 and hence any name derived from a process that is built using
 $\quotep{P}$ cannot occur in $P$. Thus, the effect of the superscripts
@@ -617,9 +620,8 @@ elimination.
 
 The interpretation function $\meaningof{-}_2(n, p)$ is straightforward
 for all but replication and $\mathsf{new}$.
-
 \begin{eqnarray*}
-    \meaningof{\pzero}_2 (n,p)
+\meaningof{\pzero}_2 (n,p)
       & = &
        \pzero \\
     \meaningof{\emph{c}(\vect{a})}_2 (n,p) 
@@ -631,13 +633,11 @@ for all but replication and $\mathsf{new}$.
     \meaningof{P \juxtap Q}_2 (n,p) 
       & = & 
     \meaningof{P}_2 (n^l, p^l)
-         \juxtap \meaningof{Q}_2 (n^r, p^r) \\ 
+         \juxtap \meaningof{Q}_2 (n^r, p^r)  
 \end{eqnarray*}
-
 These latter two forms require extra care. We define them in terms of
 a prefix form and then use a version of Honda and Yoshida's prefix elimination
 to remove the prefix.
-
 \begin{eqnarray*}
     \meaningof{\mathsf{*} P}_2 (n,p)
           & = & \binpar{\mathsf{m}(x, \quotep{\meaningof{P}_3(n^r,p^r)})}
@@ -651,18 +651,14 @@ to remove the prefix.
           & = & 
          \meaningof{\prefix{p}{x}{\binpar{\meaningof{P}_2 ( n^l, p^l )}{\mathsf{m}(p, n)}}}_4(n, p)
 \end{eqnarray*}
-
 As expected, the interpretation of replication makes use of the $D$
 operator defined above. Note that name allocation is intertwined with
 prefix and new elimination.
-         
 \begin{eqnarray*}
   \meaningof{P}_3(n, p) 
     & := & 
       \meaningof{\prefix{n}{n'}{\prefix{p}{p'}{(\binpar{\meaningof{P}_2(n',p')}
-        {(\binpar{D(x)}{\binpar{\outputp{n}{n'^l}}{\outputp{p}{p'^l}}})})}}}_4. \\
-\end{eqnarray*}
-
+        {(\binpar{D(x)}{\binpar{\outputp{n}{n'^l}}{\outputp{p}{p'^l}}})})}}}_4. \end{eqnarray*}
 To handle prefix elimination we import most of Honda and Yoshida's
 algorithm. The key difference is that we must allocate names that
 guarantee freshness relative to the free names of the processes being
@@ -694,8 +690,8 @@ familiar with {\pic} are used to $x?(y)P$ we write $\mathsf{for}(y
 languages, but also because it generalizes more naturally to join
 constructions, such as $\mathsf{for}(y_1 \leftarrow x_1; \ldots; y_n
 \leftarrow x_n)P$.
-
-\[\begin{array}{llrl}
+\[\small
+\begin{array}{llrl}
 (I)&  \meaningof{\prefix{p}{x}{\binpar{P}{Q}}}_4(n, q) 
     & := & 
     (\mathsf{d}(p,v,w)|\binpar{\meaningof{\prefix{v}{x}{P}}_{4}(n_{1}, q_{1})}{\meaningof{\prefix{w}{x}{Q}}_{4}(n_{2}, q_{2}) } \\
@@ -744,9 +740,14 @@ constructions, such as $\mathsf{for}(y_1 \leftarrow x_1; \ldots; y_n
     & & & \mbox{and $n' = \quotep{(\mathsf{m}(w_{1},w_{2}))}$}
 \end{array}\]
 
+\begin{example}
+\NYnote{Please put some example. You can look at POPL paper where we
+  demonstrate this main translation as small key examples. Do not
+  worry about the space.}
+\end{example}
 Note that all $\new$-binding is now interpreted, as in Wischik's
-global $\pi$-calculus, as an input \cite{globalpi} in the following
-sense. The alpha-equivalence of $\new$ is handled by input-binding,
+global $\pi$-calculus, as an input \cite{globalpi}:
+the alpha-equivalence of $\new$ is handled by input-binding,
 while the freshness is handled by providing a name that is guaranteed
 to be fresh relative to the scope of use.
 
@@ -759,23 +760,21 @@ on the choice of name, {\ccomb} cannot and the
 embedding is insensitive to the choice.
 
 \subsubsection{Faithfulness of the translation}
+\NYnote{We need some short description of this subsection}
 
-\begin{definition}
-An \emph{observation relation}, $\downarrow_{\mathcal{N}}$, over a set
-of names, $\mathcal N$, is the smallest relation satisfying the rules
-below.
 
-\begin{mathpar}
-  \inferrule*[lab=Out-barb]{y \in {\mathcal N}, \; x \nameeq y}{\mathsf{m}(x-) \downarrow_{\mathcal{N}} x}
-  \and
-\inferrule*[lab=Par-barb]{\mbox{$P\downarrow_{\mathcal{N}} x$ or $Q\downarrow_{\mathcal N} x$}}{\binpar{P}{Q} \downarrow_{\mathcal{N}} x}
- \end{mathpar}
+We define \emph{observation relation}, $\downarrow_{\mathcal{N}}$, over a set
+of names, $\mathcal N$, as the smallest relation satisfying the rules:
+(1) if $y \in {\mathcal N}, \; x \nameeq y$, then
+$\mathsf{m}(x-) \downarrow_{\mathcal{N}} x$
+and
+(2) if 
+$P\downarrow_{\mathcal{N}} x$ or $Q\downarrow_{\mathcal N} x$, 
+then ${\binpar{P}{Q} \downarrow_{\mathcal{N}} x}$.
 
 We write $P \Downarrow_{\mathcal{N}} x$ if there is $Q$ such that 
 $P \wred Q$ and $Q \downarrow_{\mathcal{N}} x$.
-\end{definition}
-
-This definition is parametric in the the argument accepted in the
+The above definition is parametric in the the argument accepted in the
 second position in the message combinator, $\mathsf{m}(x-)$, {\em i.e.} the payload
 of the message: in the RHO combinators the payload is a process,
 while in {\ccomb} the payload is a name. Likewise, because the
@@ -792,27 +791,28 @@ the kind of payload accepted by the message combinator.
 %\label{def.bbisim}
 An  ${\mathcal N}$-\emph{barbed bisimulation} over a set of names, ${\mathcal N}$, is a symmetric binary relation 
 ${\mathcal S}_{\mathcal N}$ between agents such that $P{\mathcal S}_{\mathcal N}Q$ implies:
-\begin{enumerate}
-\item If $P \red P'$ then $Q \wred Q'$ and $P'{\mathcal S}_{\mathcal N} Q'$.
-\item If $P\downarrow_{\mathcal N} x$, then $Q\Downarrow_{\mathcal N} x$.
-\end{enumerate}
+(1) If $P \red P'$ then $Q \wred Q'$ and $P'{\mathcal S}_{\mathcal N}
+Q'$; and 
+ (2) If $P\downarrow_{\mathcal N} x$, then $Q\Downarrow_{\mathcal N} x$.
 $P$ is ${\mathcal N}$-barbed bisimilar to $Q$, written
 $P \wbbisim_{\mathcal N} Q$, if $P {\mathcal S}_{\mathcal N} Q$ for some ${\mathcal N}$-barbed bisimulation ${\mathcal S}_{\mathcal N}$.
 \end{definition}
 
-\begin{theorem}
+\begin{conjecture} 
   $P \wbbisim_{\pi} Q \iff \ldb P \rdb \wbbisim_{\texttt{FN}(P)} \ldb Q \rdb$.
-\end{theorem}
+\end{conjecture}
 
 \begin{proof}[Proof sketch]
   The forward direction $\Rightarrow$ is immediate from the definition
   of the translation. The reverse direction is only interesting in the
   case of $!$ and $\mathsf{new}$. The replication case follows immediately
-  from the calculation following definition \ref{replication}. 
+  from the calculation following Definition \ref{replication}. 
   In the $\new$ case, transitions on $\mathsf{new}$-bound
   names will be in one-to-one correspondence with names provided by
   the name parameters of the translation function. By construction,
   these are not observable by the observation relation.
+  We shall submit the full proof to the special issue of
+  PLACES'20 (journal) if this paper is accepted.
 \end{proof}
 
 \begin{remark}
