@@ -208,7 +208,7 @@ the {\rhoc}
 \cite{DBLP:conf/concur/Milner92,DBLP:journals/entcs/MeredithR05}.
 However, all such models currently proposed make heavy use of nominal
 phenomena. Even Honda and Yoshida's combinatory model
-\cite{DBLP:conf/popl/HondaY94} \cite{DBLP:journals/tcs/Yoshida02}
+\cite{DBLP:conf/popl/HondaY94,DBLP:journals/tcs/Yoshida02}
 makes heavy use of nominal phenomena. While our algorithm can handle
 nominal phenomena, it seriously complicates the presentation of the
 core features of the algorithm, which we hope to illustrate in a
@@ -313,8 +313,7 @@ binders for fresh names. For example, the {\pic}
 (\cite{milner91polyadicpi}) has two binders for names: the $\new$
 operator, which introduces a new name into scope, and the input
 prefix, which introduces a name for labeling locations for
-substitution.  Honda and Yoshida \cite{DBLP:conf/popl/HondaY94}
-\cite{DBLP:journals/tcs/Yoshida02} describe an elimination algorithm
+substitution.  Honda and Yoshida \cite{DBLP:conf/popl/HondaY94,DBLP:journals/tcs/Yoshida02} describe an elimination algorithm
 that gets rid of input prefixes which corresponds in many respects to
 the elimination of lambda abstraction; but their combinators (referred
 to in the sequel as the {\ccomb} still fundamentally depend on the
@@ -837,7 +836,7 @@ Apart from the work in \cite{DBLP:conf/popl/HondaY94,DBLP:journals/tcs/Yoshida02
 the work \cite{DBLP:journals/toplas/RajaS97}
 has achieved a similar goal with ours, but
 without reflection, using a technique pioneered by Quine
-(\cite{Quine59} \cite{Quine60}), who was also a pioneer of reflective
+(\cite{Quine59,Quine60}), who was also a pioneer of reflective
 techniques. The key difference with respect to the treatment of fresh
 names is that they introduce globally unique names and then
 internalize a process that generates them. The approach taken here is
