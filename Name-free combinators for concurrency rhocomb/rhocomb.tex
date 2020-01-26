@@ -755,8 +755,13 @@ on the choice of name, {\ccomb} cannot and the
 embedding is insensitive to the choice.
 
 \subsubsection{Faithfulness of the translation}
-\NYnote{We need some short description of this subsection}
-
+To establish the faithfulness of the translation we need to establish
+that equivalence in {\ccomb} means equivalence in
+{\rhocc}. Bisimulation is the natural notion of equivalence in both
+calculi. However, as we observed before, names are \emph{global} in
+the {\rhocc}, so we have to have a way of restricting to just the set
+of names actually in play in order to get the notions of equivalence
+to line up.
 
 We define \emph{observation relation}, $\downarrow_{\mathcal{N}}$, over a set
 of names, $\mathcal N$, as the smallest relation satisfying the rules:
