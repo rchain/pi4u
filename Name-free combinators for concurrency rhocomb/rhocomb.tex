@@ -315,16 +315,17 @@ binders for fresh names. For example, the {\pic}
 (\cite{milner91polyadicpi}) has two binders for names: the $\new$
 operator, which introduces a new name into scope, and the input
 prefix, which introduces a name for labeling locations for
-substitution.  Honda and Yoshida \cite{DBLP:conf/popl/HondaY94,DBLP:journals/tcs/Yoshida02} describe an elimination algorithm
-that gets rid of input prefixes which corresponds in many respects to
-the elimination of lambda abstraction; but their combinators (referred
-to in the sequel as the {\ccomb} still fundamentally depend on the
-$\new$ operator.  In complementary work, Meredith and Radestock
-\cite{DBLP:journals/entcs/MeredithR05} introduce reflective operators
-into a higher-order {\pic} and implement $\new$ and replication in
-terms of reflection.  This work presents a fusion of those ideas: a
-name-free concurrent combinator calculus into which the {\ccomb} have
-a faithful embedding.
+substitution.  Honda and Yoshida
+\cite{DBLP:conf/popl/HondaY94,DBLP:journals/tcs/Yoshida02} describe an
+elimination algorithm that gets rid of input prefixes which
+corresponds in many respects to the elimination of lambda abstraction;
+but their combinators (referred to in the sequel as the {\ccomb} still
+fundamentally depend on the $\new$ operator.  In complementary work,
+Meredith and Radestock \cite{DBLP:journals/entcs/MeredithR05}
+introduce reflective operators into a higher-order {\pic} and
+implement $\new$ and replication in terms of reflection.  This work
+presents a fusion of those ideas: a name-free concurrent combinator
+calculus into which the {\ccomb} have a faithful embedding.
 
 It is worth mentioning that these results mean that it is possible to
 extend Honda and Yoshida's original minimality and separation results
@@ -353,15 +354,14 @@ the fixed point of the equation:
 %\begin{equation*}
   $\mathcal{R} = \Pi[\quotep{\mathcal{R}}]$, 
 %\end{equation*}
-This exactly models at the design level, 
-compositionality should promote, and it is actually surprising that
-this particular solution for a name-free version of a concurrent
-calculus was not found sooner. In point of fact, the initial
-implementations of {\rhoc} in OCaml, Haskell, and Scala all used
-exactly this fixed point formulation to define the syntax for the
-{\rhoc}. The fact that the code type-checks and that the types are
-inhabited provides some assurance of the soundness of the
-construction.
+This is exactly the kind of design level thinking compositionality
+should foster, and it is actually surprising that this particular
+solution for a name-free version of a concurrent calculus was not
+found sooner. In point of fact, the initial implementations of {\rhoc}
+in OCaml, Haskell, and Scala all used exactly this fixed point
+formulation to define the syntax for the {\rhoc}. The fact that the
+code type-checks and that the types are inhabited provides some
+assurance of the soundness of the construction.
 
 The combinator versions take compositionality a step further by
 removing even more of the syntax, effectively arriving at a variant of
