@@ -731,11 +731,11 @@ constructions, such as $\mathsf{for}(y_1 \leftarrow x_1; \ldots; y_n
 
 \begin{example}
   To illustrate, let's look at the end-to-end translation of the {\pic} process
-  \[\binpar{\prefix{y}{x}{0}}{(\mathsf{new}\;u)x!(u)}\].
+  \[\binpar{\prefix{x}{y}{0}}{(\mathsf{new}\;u)x!(u)}\].
   The {\ccomb} translation will yield (see \ref{appendix:ccomb} for details)
 \begin{eqnarray*}
-  \meaningof{\binpar{\prefix{y}{x}{0}}{(\mathsf{new}\;u)x!(u)}} & = & \binpar{\meaningof{\prefix{y}{x}{0}}}{(\meaningof{\mathsf{new}\;u)x!(u)}} \\
-  & = & \binpar{\meaningof{\prefixst{y}{x}{0}}}{(\mathsf{new}\;u)\meaningof{x!(u)}} \\
+  \meaningof{\binpar{\prefix{x}{y}{0}}{(\mathsf{new}\;u)x!(u)}} & = & \binpar{\meaningof{\prefix{x}{y}{0}}}{(\meaningof{\mathsf{new}\;u)x!(u)}} \\
+  & = & \binpar{\meaningof{\prefixst{x}{y}{0}}}{(\mathsf{new}\;u)\meaningof{x!(u)}} \\
   & = & \binpar{\mathsf{k}(x)}{(\mathsf{new}\;u)\mathsf{m}(x,u)} \\
 \end{eqnarray*}
 If we new translate the resulting process into {\rhocc}, we get
