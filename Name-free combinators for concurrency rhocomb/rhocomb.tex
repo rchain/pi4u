@@ -88,7 +88,8 @@
 %\newcommand{\lift}[2]{\texttt{lift} \; #1 \concat #2}
 \newcommand{\binpar}[2]{#1 | #2}
 \newcommand{\outputp}[2]{#1!(#2)}
-\newcommand{\prefix}[3]{\mathsf{for}(#2 \leftarrow #1?) #3}
+\newcommand{\prefix}[3]{\mathsf{for}(#2 \leftarrow #1) #3}
+\newcommand{\prefixst}[3]{\mathsf{for*}(#2 \leftarrow #1) #3}
 \newcommand{\lift}[2]{#1 \lliftb #2 \rliftb}
 \newcommand{\clift}[1]{\lliftb #1 \rliftb}
 \newcommand{\quotep}[1]{\mathsf{@}#1}
@@ -621,10 +622,10 @@ for all but replication and $\mathsf{new}$.
        \pzero \\
     \meaningof{\emph{c}(\vect{a})}_2 (n,p) 
       & = & 
-      \emph{c}(\vect{a})\mbox{, where $\emph{c}$ is any combinator but $m$} \\
-    \meaningof{\mathsf{m}(a,\quotep{P})}_2 (n,p) 
-      & = & 
-          \mathsf{m}(a, \quotep{\meaningof{P}}_2 (n,p)) \\
+      \emph{c}(\vect{a})\\ %%\mbox{, where $\emph{c}$ is any combinator but $m$} 
+    %% \meaningof{\mathsf{m}(a,\quotep{P})}_2 (n,p) 
+    %%   & = & 
+    %%       \mathsf{m}(a, \quotep{\meaningof{P}}_2 (n,p)) \\
     \meaningof{P \juxtap Q}_2 (n,p) 
       & = & 
     \meaningof{P}_2 (n^l, p^l)
@@ -644,7 +645,7 @@ to remove the prefix.
                       w = @(\meaningof{P}_2(n,p))^{rr} \\
     \meaningof{(\new \; x ) P}_2 (n, p) 
           & = & 
-         \meaningof{\prefix{p}{x}{\binpar{\meaningof{P}_2 ( n^l, p^l )}{\mathsf{m}(p, n)}}}_4(n, p)
+         \binpar{\meaningof{\prefix{p}{x}{{\meaningof{P}_2 ( n^l, p^l )}}}_4(n, p)}{\mathsf{m}(p, n)}
 \end{eqnarray*}
 As expected, the interpretation of replication makes use of the $D$
 operator defined above. Note that name allocation is intertwined with
@@ -736,15 +737,35 @@ constructions, such as $\mathsf{for}(y_1 \leftarrow x_1; \ldots; y_n
 \end{array}\]
 
 \begin{example}
-\NYnote{Please put some example. You can look at POPL paper where we
-  demonstrate this main translation as small key examples. Do not
-  worry about the space.}
-\end{example}
+  To illustrate, let's look at the end-to-end translation of the {\pic} process
+  \[\binpar{\prefix{y}{x}{0}}{(\mathsf{new}\;u)x!(u)}\].
+  The {\ccomb} translation will yield (see \ref{appendix:ccomb} for details)
+\begin{eqnarray*}
+  \meaningof{\binpar{\prefix{y}{x}{0}}{(\mathsf{new}\;u)x!(u)}} & = & \binpar{\meaningof{\prefix{y}{x}{0}}}{(\meaningof{\mathsf{new}\;u)x!(u)}} \\
+  & = & \binpar{\meaningof{\prefixst{y}{x}{0}}}{(\mathsf{new}\;u)\meaningof{x!(u)}} \\
+  & = & \binpar{\mathsf{k}(x)}{(\mathsf{new}\;u)\mathsf{m}(x,u)} \\
+\end{eqnarray*}
+If we new translate the resulting process into {\rhocc}, we get
+\begin{eqnarray*}
+  \meaningof{\binpar{\mathsf{k}(x)}{(\mathsf{new}\;u)\mathsf{m}(x,u)}} & = & \meaningof{\binpar{\mathsf{k}(x)}{(\mathsf{new}\;u)\mathsf{m}(x,u)}}_{2}(n,p)\\
+  & = & \binpar{\meaningof{\mathsf{k}(x)}_{2}(n^{l},p^{l})}{\meaningof{\mathsf{(new}\;u)\mathsf{m}(x,u)}_{2}(n^{r},p^{r})} \\
+  & = & \binpar{\mathsf{k}(x)}{\meaningof{\binpar{\prefix{p^{r}}{u}{\meaningof{\mathsf{m}(x,u)}_{2}(n^{rl},p^{rl})}}{\mathsf{m}(p^{r},n^{r})}}_{4}(n^{r},p^{r})} \\
+  & = & \binpar{\mathsf{k}(x)}{\binpar{\meaningof{\prefix{p^{r}}{u}{\meaningof{\mathsf{m}(x,u)}_{2}(n^{rl},p^{rl})}}_{4}(n^{rl},p^{rl})}{\mathsf{m}(p^{r},n^{r})}} \\
+  & = & \binpar{\mathsf{k}(x)}{\binpar{\meaningof{\prefix{p^{r}}{u}{\mathsf{m}(x,u)}}_{4}(n^{rl},p^{rl})}{\mathsf{m}(p^{r},n^{r})}} \\
+  & = & \binpar{\mathsf{k}(x)}{\binpar{\mathsf{fw}(p^{r},x)}{\mathsf{m}(p^{r},n^{r})}} \\
+\end{eqnarray*}
 Note that all $\new$-binding is now interpreted, as in Wischik's
-global $\pi$-calculus, as an input \cite{globalpi}:
-the alpha-equivalence of $\new$ is handled by input-binding,
-while the freshness is handled by providing a name that is guaranteed
-to be fresh relative to the scope of use.
+global $\pi$-calculus, as an input \cite{globalpi}: the
+alpha-equivalence of $\new$ is handled by input-binding, while the
+freshness is handled by providing a name that is guaranteed to be
+fresh relative to the scope of use. Further, observe that to reduce
+$\binpar{\mathsf{k}(x)}{(\mathsf{new}\;u)\mathsf{m}(x,u)}$ it is
+necessary to invocake structural equivalence, yielding
+$(\mathsf{new}\;u)\binpar{\mathsf{k}(x)}{\mathsf{m}(x,u)}$. This step
+corresponds exactly to the forwarding of $n^{r}$ along $p^{r}$ in the
+reduction of
+$\binpar{\mathsf{k}(x)}{\binpar{\mathsf{fw}(p^{r},x)}{\mathsf{m}(p^{r},n^{r})}}$
+\end{example}
 
 It is also noteworthy that the translation is dependent on how the
 parallel compositions in a process are associated. Different
