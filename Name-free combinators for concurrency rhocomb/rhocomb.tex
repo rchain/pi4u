@@ -252,48 +252,38 @@ programs to write computer programs. Thus, meta-programming features
 are simply a practical necessity.
 
 It is worth noting that there are deep foundational questions at play
-here. Even if Fraenkel-Mostowski set theory provides a satisfying
-account of computation with nominal phenomena in other respects
-\cite{DBLP:journals/fac/GabbayP02}, it must suffer the existence of
-``atoms''. In Chaitin's analysis of the risk present in a theory
-\cite{chaitin1999unknowable}, ``atoms'' constitute a source of
-risk. Indeed, it is precisely the foundational theoretical questions
-raised by the Fraenkel-Mostowski set theoretic approach that motivated
-Meredith and Radestock's the investigation of the {\rhoc}: what better
-place to look for the source of ``atoms'' than in the reification of
-the theory of computation requiring them?
-
-To understand this risk consider the following. Many term calculi,
-like $\lambda$-calculus or {\pic}, involve binders for names, and the
-mathematics of bound variable names is subtle. Sch\"onfinkel
-introduced the $\mathsf{SKI}$ combinator calculus in 1924 to clarify
-the role of quantified variables in intuitionistic logic by
-eliminating them \cite{finkel}; Curry developed Sch\"onfinkel's ideas
-much further. These difficulties are not merely theoretical, but
-represent a real practical challenge in the design of programming
-languages. In fact binding is one of the key features of the PoPLMark
-Challenge \cite{PoPLMark}. Certainly, the work by Jamie Gabbay and
+here. Many term calculi, like $\lambda$-calculus or {\pic}, involve
+binders for names, and the mathematics of bound variable names is
+subtle. Sch\"onfinkel introduced the $\mathsf{SKI}$ combinator
+calculus in 1924 to clarify the role of quantified variables in
+intuitionistic logic by eliminating them \cite{finkel}; Curry
+developed Sch\"onfinkel's ideas much further. These subtleties are not
+merely theoretical, but represent a real practical challenge in the
+design of programming languages. In fact binding is one of the key
+features of the PoPLMark Challenge \cite{PoPLMark}. Certainly, the work by Jamie Gabbay and
 Andrew Pitts \cite{DBLP:journals/fac/GabbayP02} and others
 \cite{DBLP:journals/jcss/Clouston14} on nominal set theory has put the
 study of bound names and substitution on a much nicer foundation that
 can be shown to extend to practical implementations. However, it
 introduces an intriguing conundrum.
 
-Specifically, the work of Gabbay and Pitts relies on a version of set
-theory (Fraenkel-Mostowski set theory, which we abbreivate to FM set
-theory) that admits an \emph{infinite} supply of ``atoms''. This raises the
-question of where these atoms come from, which has both theoretical
-and practical implications. On the practical side, infinite sets of
-``atomic'' entities, i.e. entities with no internal structure, are not
-realizable on modern computers. Modern computers fundamentally rely on
-sets of elements with effective internal structure to provide the kind
-of compression necessary to produce or compute with infinite sets. The
-natural numbers is a prime example. Because of their very regular
-internal structure the entire set can be represented by a single
-recursive equation. Potentially then, the natural numbers or some
-other effectively representable set could provide the source of atoms
-used in an FM-set theoretic account of binding in practical
-implementations. 
+Fraenkel-Mostowski set theory (which we abbreivate to FM set theory)
+must suffer the existence of \emph{infinite} supply of ``atoms''
+\cite{DBLP:journals/fac/GabbayP02}. In Chaitin's analysis of the risk
+present in a theory \cite{chaitin1999unknowable}, ``atoms'' constitute
+a source of risk. The question is: where do these atoms come from?
+The answer has both theoretical and practical implications. On the
+practical side, infinite sets of ``atomic'' entities, i.e. entities
+with no internal structure, are not realizable on modern
+computers. Modern computers fundamentally rely on sets of elements
+with effective internal structure to provide the kind of compression
+necessary to produce or compute with infinite sets. The natural
+numbers is a prime example. Because of their very regular internal
+structure the entire set can be represented by a single recursive
+equation. Potentially then, the natural numbers or some other
+effectively representable set could provide the source of atoms used
+in an FM-set theoretic account of binding in practical
+implementations.
 
 However, this raises a new question, one of circularity. In order to
 represent and compute these effectively representable sets that will
@@ -302,7 +292,9 @@ place. If that notion of computation relies on a notion of binding,
 then not a lot progress has been made! As in
 \cite{DBLP:journals/entcs/MeredithR05} we argue that this circularity,
 instead of being an obstacle to overcome, might be a clue to an
-alternative approach to binding phenomena; and one that ties together
+alternative approach to binding phenomena. What better place to
+look for the source of ``atoms'' than in the reification of the theory
+of computation requiring them? This answer ties together
 two important computational phenomena that have not normally been
 considered as related. More explicitly, we extend the argument made by
 Meredith and Radestock that reflection suffices to provide the
@@ -319,9 +311,9 @@ substitution.  Honda and Yoshida
 \cite{DBLP:conf/popl/HondaY94,DBLP:journals/tcs/Yoshida02} describe an
 elimination algorithm that gets rid of input prefixes which
 corresponds in many respects to the elimination of lambda abstraction;
-but their combinators (referred to in the sequel as the {\ccomb}) still
-fundamentally depend on the $\new$ operator.  In complementary work,
-Meredith and Radestock \cite{DBLP:journals/entcs/MeredithR05}
+but their combinators (referred to in the sequel as the {\ccomb})
+still fundamentally depend on the $\new$ operator.  In complementary
+work, Meredith and Radestock \cite{DBLP:journals/entcs/MeredithR05}
 introduce reflective operators into a higher-order {\pic} and
 implement $\new$ and replication in terms of reflection.  This work
 presents a fusion of those ideas: a name-free concurrent combinator
@@ -339,15 +331,11 @@ considerations we felt it worthwhile to document the model prior to
 reporting on the LADL algorithm.
 
 \paragraph*{Role of compositionality in theories of concurrency} 
-It is also interesting how compositionality plays out in this
-setting. As we emphasize throughout the paper, the {\pic\;} is not a
-closed theory, but one depending on a theory of names. In other words,
-a fully specified theory of processes involves a composition of
-theories, namely an application of the {\pic\;} with some theory of
-names. In this sense we derive the {\rhoc}
-\cite{DBLP:journals/entcs/MeredithR05} from the fixed point of
-applying the theory of processes to itself (regarded as a theory of
-names). Symbolically, let $\Pi[X]$ denote the theory of processes
+Since the {\pic} is not a closed theory, but one dependent on a set of
+names, we can imagine supplying the theory itself as a set of names
+and regard the {\rhoc} \cite{DBLP:journals/entcs/MeredithR05} as a
+fixed point of applying the theory of processes to
+itself. Symbolically, let $\Pi[X]$ denote the theory of processes
 generated from the names given by $X$, and $\quotep{\Pi[X]}$ denote
 the quoted forms of the processes so generated. Then the {\rhoc} is
 the fixed point of the equation: $\mathcal{R} =
@@ -610,21 +598,9 @@ elimination.
 
 The interpretation function $\meaningof{-}_2(n, p)$ is straightforward
 for all but replication and $\mathsf{new}$.
-\begin{eqnarray*}
-\meaningof{\pzero}_2 (n,p)
-      & = &
-       \pzero \\
-    \meaningof{\emph{c}(\vect{a})}_2 (n,p) 
-      & = & 
-      \emph{c}(\vect{a})\\ %%\mbox{, where $\emph{c}$ is any combinator but $m$} 
-    %% \meaningof{\mathsf{m}(a,\quotep{P})}_2 (n,p) 
-    %%   & = & 
-    %%       \mathsf{m}(a, \quotep{\meaningof{P}}_2 (n,p)) \\
-    \meaningof{P \juxtap Q}_2 (n,p) 
-      & = & 
-    \meaningof{P}_2 (n^l, p^l)
-         \juxtap \meaningof{Q}_2 (n^r, p^r)  
-\end{eqnarray*}
+\[\begin{array}{ccc}
+\meaningof{\pzero}_2 (n,p) = \pzero & \meaningof{\emph{c}(\vect{a})}_2 (n,p) = \emph{c}(\vect{a}) & \meaningof{P \juxtap Q}_2 (n,p)  =  \meaningof{P}_2 (n^l, p^l) \juxtap \meaningof{Q}_2 (n^r, p^r)  
+\end{array}\]
 These latter two forms require extra care. We define them in terms of
 a prefix form and then use a version of Honda and Yoshida's prefix elimination
 to remove the prefix.
