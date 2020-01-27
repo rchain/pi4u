@@ -330,34 +330,33 @@ include or exclude the reflection combinator. In light of these
 considerations we felt it worthwhile to document the model prior to
 reporting on the LADL algorithm.
 
-\paragraph*{Role of compositionality in theories of concurrency} 
-Since the {\pic} is not a closed theory, but one dependent on a set of
-names, we can imagine supplying the theory itself as a set of names
-and regard the {\rhoc} \cite{DBLP:journals/entcs/MeredithR05} as a
-fixed point of applying the theory of processes to
-itself. Symbolically, let $\Pi[X]$ denote the theory of processes
-generated from the names given by $X$, and $\quotep{\Pi[X]}$ denote
-the quoted forms of the processes so generated. Then the {\rhoc} is
-the fixed point of the equation: $\mathcal{R} =
-\Pi[\quotep{\mathcal{R}}]$. This equation captures exactly the kind of
-design level thinking compositionality should foster, and it is
-actually surprising that this particular solution for a name-free
-version of a concurrent calculus was not found sooner. In point of
-fact, the initial implementations of {\rhoc} in OCaml, Haskell, and
-Scala all used this very fixed point formulation to define the syntax
-for the {\rhoc}. The fact that the code type-checks and that the types
-are inhabited provides some assurance of the soundness of the
-construction.
+%% \paragraph*{Role of compositionality in theories of concurrency} 
+%% Since the {\pic} is not a closed theory, but one dependent on a set of
+%% names, we can imagine supplying the theory itself as a set of names
+%% and regard the {\rhoc} \cite{DBLP:journals/entcs/MeredithR05} as a
+%% kind of fixed point. Symbolically, the {\rhoc} is the fixed point of
+%% the equation: $\mathsf{R} = \Pi[\quotep{\mathsf{R}}]$, where
+%% $\Pi[X]$ denotes the theory of processes generated from the names
+%% given by $X$, and $\quotep{\Pi[X]}$ denote the quoted forms of the
+%% processes so generated. This equation captures exactly the kind of
+%% design level thinking compositionality should foster, and it is
+%% actually surprising that this particular solution for a name-free
+%% version of a concurrent calculus was not found sooner. In point of
+%% fact, the initial implementations of {\rhoc} in OCaml, Haskell, and
+%% Scala all used this very fixed point formulation to define the syntax
+%% for the {\rhoc}. The fact that the code type-checks and that the types
+%% are inhabited provides some assurance of the soundness of the
+%% construction.
 
-The combinator versions take compositionality a step further by
-removing even more of the syntax, effectively arriving at a variant of
-an applicative algebra over a small handfull of combinators to account
-for all binding and mobility phenomena. Further still, the soundness
-of the semantics makes essential use of compositionality because we
-are effectively composing the {\ccomb}' original semantics with the
-reflective account of name construction and deconstruction; thus
-illustrating that compositionality is not just for design-level
-thinking, but provides powerful compression of proofs.
+%% The combinator versions take compositionality a step further by
+%% removing even more of the syntax, effectively arriving at a variant of
+%% an applicative algebra over a small handfull of combinators to account
+%% for all binding and mobility phenomena. Further still, the soundness
+%% of the semantics makes essential use of compositionality because we
+%% are effectively composing the {\ccomb}' original semantics with the
+%% reflective account of name construction and deconstruction; thus
+%% illustrating that compositionality is not just for design-level
+%% thinking, but provides powerful compression of proofs.
 
 \paragraph*{Outline}
 To be fully self-contained this paper needs to present four different
