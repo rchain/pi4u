@@ -235,21 +235,21 @@ algorithm for generating type systems, which already counts as an
 illustration of its utility!
 
 However, it is useful to consider the larger context motivating these
-results. It is remarkable that a single feature, i.e. \emph{reflection}, suffices
-to produce the first such entirely combinatory model of mobile
-concurrency. Reflection has been the ugly step child of theoretical
-computer science, resisting compelling type theoretic analysis. This
-is one of the reasons why language designs based on typed
-$\lambda$-calculi have been so slow to adopt reflection as a feature
-by comparison to other language designs. On the other hand, reflection
-and meta-programming features more generally are part of a growing
-number of mainstream languages. Java, C\#, even the Haskell and OCaml
-communities have seen growing interest in these features with efforts
-like template Haskell and MetaOCaml, respectively. In large measure
-this has to do with the practical realities of programming at
-industrial scale. Such efforts require the leverage of computer
-programs to write computer programs. Thus, meta-programming features
-are simply a practical necessity.
+results. It is remarkable that a single feature,
+i.e. \emph{reflection}, suffices to produce the first such entirely
+combinatory model of mobile concurrency. Reflection has been the ugly
+step child of theoretical computer science, resisting compelling type
+theoretic analysis. This is one of the reasons why language designs
+based on typed $\lambda$-calculi have been so slow to adopt reflection
+as a feature by comparison to other language designs. On the other
+hand, reflection and meta-programming features more generally are
+already part of a number of mainstream languages. Java, C\#, Scala,
+even the Haskell and OCaml communities have seen growing interest in
+these features with efforts like template Haskell and MetaOCaml,
+respectively. In large measure this has to do with the practical
+realities of programming at industrial scale. Such efforts require the
+leverage of computer programs to write computer programs. Thus,
+meta-programming features are simply a practical necessity.
 
 It is worth noting that there are deep foundational questions at play
 here. Many term calculi, like $\lambda$-calculus or {\pic}, involve
@@ -362,12 +362,12 @@ reporting on the LADL algorithm.
 To be fully self-contained this paper needs to present four different
 calculi and two different encodings: the original {\pic}, {\ccomb},
 and the encoding from the term calculus to the combinator; the
-{\rhoc}, and the encoding from the {\pic\;} to the {\rhoc} and the new
+{\rhoc}, and the encoding from the {\pic} to the {\rhoc} and the new
 reflective combinator calculus, and the encoding from the term
 calculus to the reflective combinator calculus. Such a manifest
 provides all the technical inventory to illustrate how the two
 encoding techniques, prefix elimination and $\new$ elimination,
-combine and how the encoding from the {\pic\;} can be constructed by
+combine and how the encoding from the {\pic} can be constructed by
 composing the encoding into the {\rhoc} with the encoding into the
 reflective combinator calculus. We have provided the complete
 manifest, but have pushed the presentation of the {\rhoc} and the
@@ -733,7 +733,7 @@ necessary to invoke structural equivalence, yielding
 $(\mathsf{new}\;u)\binpar{\mathsf{k}(x)}{\mathsf{m}(x,u)}$. This step
 corresponds exactly to the forwarding of $n^{r}$ along $p^{r}$ to $x$ in the
 reduction of
-$\binpar{\mathsf{k}(x)}{\binpar{\mathsf{fw}(p^{r},x)}{\mathsf{m}(p^{r},n^{r})}}$
+$\binpar{\mathsf{k}(x)}{\binpar{\mathsf{fw}(p^{r},x)}{\mathsf{m}(p^{r},n^{r})}}$.
 \end{example}
 
 It is also noteworthy that the translation is dependent on how the
@@ -836,23 +836,26 @@ names fresh with respect to a specific scope. This means there is no
 need for global uniqueness nor a centralized resource for generating
 the fresh names.
 
-While the results in this paper are
-interesting in their own right we developed them to serve a larger
-purpose. In a forthcoming paper we demonstrate an algorithm taking a
-graph-enriched Lawvere theory (representing a formal specification of
-a term calculus) and a more vanilla Lawvere theory (representing a
-specification of a notion of collection, such as set, or bag, or list,
-etc) and produce a type system for the term calculus enjoying
-soundness and completeness. Nominal phenomena do not neatly fit inside
-the expressive power of graph-enriched Lawvere theories, thus
-potentially limiting the scope of the applicability of this
-algorithm. However, with the reflective techniques we can extend this
-algorithm to cover many languages and term calculi with binding; thus,
-providing a strongly typed version of a reflective, mobile concurrent
-calculus.
+While the results in this paper are interesting in their own right we
+developed them to serve a larger purpose. In a forthcoming paper we
+demonstrate an algorithm taking a graph-enriched Lawvere theory
+(representing a formal specification of a term calculus) and a more
+vanilla Lawvere theory (representing a specification of a notion of
+collection, such as set, or bag, or list, etc) and produce a type
+system for the term calculus enjoying soundness and
+completeness. Nominal phenomena do not neatly fit inside the
+expressive power of graph-enriched Lawvere theories, thus potentially
+limiting the scope of the applicability of this algorithm. However,
+with the reflective techniques we can extend this algorithm to cover
+many languages and term calculi with binding; thus, providing a
+strongly typed version of a reflective, mobile concurrent
+calculus. Typing of this kind is especially important in environments
+like smart contracting blockchains where a single race condition can cost the
+whole network tens of millions of dollars.
 
-\bibliographystyle{eptcs}
-\bibliography{rhocomb}
+\paragraph{Acknowledgments} We would like to acknowledge Nobuko Yoshida for her thoughtful feedback and comments. They made the paper much better.
+
+\bibliographystyle{eptcs} \bibliography{rhocomb}
 
 \section{Appendix: the {\ccomb} revisited} \label{appendix:ccomb}
 We summarize the original {\ccomb} \cite{DBLP:journals/tcs/Yoshida02} below.
