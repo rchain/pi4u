@@ -304,7 +304,7 @@ interpretation of the calculus.
 
 To be clear, the model eliminates both ordinary abstraction as well as
 binders for fresh names. For example, the {\pic}
-(\cite{milner91polyadicpi}) has two binders for names: the $\new$
+\cite{milner91polyadicpi} has two binders for names: the $\new$
 operator, which introduces a new name into scope, and the input
 prefix, which introduces a name for labeling locations for
 substitution.  Honda and Yoshida
@@ -372,8 +372,8 @@ composing the encoding into the {\rhoc} with the encoding into the
 reflective combinator calculus. We have provided the complete
 manifest, but have pushed the presentation of the {\rhoc} and the
 {\pic{}} and the encoding of the latter into the former into one
-appendix \ref{appendix:pic2rhoc}, and the details of the {\ccomb} into
-another \ref{appendix:ccomb}. This organization allows us to focus on
+Appendix~\ref{appendix:pic2rhoc}, and the details of the {\ccomb} into
+another Appendix~\ref{appendix:ccomb}. This organization allows us to focus on
 the newer results of a name-free combinator calculus for mobile
 concurrency.
 
@@ -708,7 +708,7 @@ constructions, such as $\mathsf{for}(y_1 \leftarrow x_1; \ldots; y_n
 \begin{example}
   To illustrate, let's look at the end-to-end translation of the {\pic} process
   \[\binpar{\prefix{x}{y}{0}}{(\mathsf{new}\;u)x!(u)}\].
-  The {\ccomb} translation will yield (see \ref{appendix:ccomb} for details)
+  The {\ccomb} translation will yield (see Appendix~\ref{appendix:ccomb} for details)
 \begin{eqnarray*}
   \meaningof{\binpar{\prefix{x}{y}{0}}{(\mathsf{new}\;u)x!(u)}} & = & \binpar{\meaningof{\prefix{x}{y}{0}}}{(\meaningof{\mathsf{new}\;u)x!(u)}} \\
   & = & \binpar{\meaningof{\prefixst{x}{y}{0}}}{(\mathsf{new}\;u)\meaningof{x!(u)}} \\
@@ -827,7 +827,7 @@ Apart from the work in \cite{DBLP:conf/popl/HondaY94,DBLP:journals/tcs/Yoshida02
 the work \cite{DBLP:journals/toplas/RajaS97}
 has achieved a similar goal with ours, but
 without reflection, using a technique pioneered by Quine
-(\cite{Quine59,Quine60}), who was also a pioneer of reflective
+\cite{Quine59,Quine60}, who was also a pioneer of reflective
 techniques. The key difference with respect to the treatment of fresh
 names is that they introduce globally unique names and then
 internalize a process that generates them. The approach taken here is

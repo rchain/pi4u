@@ -418,20 +418,20 @@ which allows the hole to be buried, rather than at the top level,
 
 \subsection{Terms, their types and cuts}
 \begin{mathpar}
-  \inferrule* [lab=constants] {} {\vdash \mathsf{c} : \mathsf{C}}
+  \inferrule* [lab=constants] {} {\vdash \mathsf{c} : \mathsf{C}} \\
 
   \inferrule* [lab=$\rho_{\otimes}$]{\Gamma \vdash t : \tau  \quad \Delta \vdash u : \tau'}{\Gamma, \Delta \vdash \mathsf{K}(t, u) : \rho_{\otimes}(\tau, \tau')}
 
-  \inferrule* [lab=$\rho_{\bindnasrepma}$]{\Gamma \vdash t : \tau, u : \tau'}{\Gamma \vdash \bindnasrepma_{\rho} (t, u) : \rho_{\bindnasrepma}(\tau, \tau')}
+  \inferrule* [lab=$\rho_{\bindnasrepma}$]{\Gamma \vdash t : \tau, u : \tau'}{\Gamma \vdash \bindnasrepma_{\rho} (t, u) : \rho_{\bindnasrepma}(\tau, \tau')} \\
+
+\inferrule* [lab=$\rho_{\sqcap}$]{\Gamma \vdash t : \tau, u : \tau'}{\Gamma \vdash \mathsf{K}(t,u) : \rho_{\sqcap}(\tau,\tau')}
+
+\inferrule* [lab=$\rho_{\sqcup}$]{\Gamma \vdash t : \tau, u : \tau'}{\Gamma \vdash \sqcup_{\rho}(t,u) : \rho_{\sqcup}(\tau,\tau')} \\
 
 \inferrule* [lab=$\rho_{\bindnasrepma \perp \otimes}$]{\Gamma \vdash \bindnasrepma_{\rho} (t_{1}, t_{2}) : \rho_{\bindnasrepma}(\tau_{1}^{\perp}, \tau_{2}^{\perp}) \quad \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\otimes}(\tau_{1}, \tau_{2}) }{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{K}(t_{1}, t_{3}), \mathsf{K}(t_{2}, t_{4}))) : \mathsf{R}(\mathsf{r}_{\mathsf{K}})}
   
 %% \tau \rhd \tau' = { u | \exists t,\chi. u = !\mathsf{K}_{\boxempty}^{r}(t, \chi),\forall u':\tau. (\exists \rho: u@u' \rightarrow v) \Rightarrow v:\tau' }
 %% \tau\perp = \tau \rhd \mathsf{r}_{\mathsf{K}} = { u | \exists t,\chi. u = !\mathsf{K}_{\boxvoid}^{r}(t, \chi),\forall u':\tau. (\exists \rho: u@u' \rightarrow v) \Rightarrow v:\mathsf{r}_{\mathsf{K}} }
-
-\inferrule* [lab=$\rho_{\sqcap}$]{\Gamma \vdash t : \tau, u : \tau'}{\Gamma \vdash \mathsf{K}(t,u) : \rho_{\sqcap}(\tau,\tau')}
-
-\inferrule* [lab=$\rho_{\sqcup}$]{\Gamma \vdash t : \tau, u : \tau'}{\Gamma \vdash \sqcup_{\rho}(t,u) : \rho_{\sqcup}(\tau,\tau')}
 
 \inferrule* [lab=$\rho_{\perp}$]{\Gamma \vdash t' : \tau^{\perp}\quad \Delta \vdash t : \tau }{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t',t)) : \mathsf{R}(\mathsf{r}_{\mathsf{K}})}
 
