@@ -858,134 +858,6 @@ whole network tens of millions of dollars.
 
 \bibliographystyle{eptcs} \bibliography{rhocomb}
 
-\section{Appendix: the {\ccomb} revisited} \label{appendix:ccomb}
-We summarize the original {\ccomb} \cite{DBLP:journals/tcs/Yoshida02} below.
-
-\begin{mathpar}
-  \inferrule* [lab=atom] {} { P \bc 0 \;|\; \mathsf{m}(a,b) \;|\; \mathsf{d}(a,b,c) \;|\; \mathsf{k}(a) \;|\; \mathsf{fw}(a,b) \;|\; \mathsf{b}_{\mathsf{r}}(a,b) \;|\; \mathsf{b}_{\mathsf{l}}(a,b) \;|\; \mathsf{s}(a,b,c) }
-  \and
-  \inferrule* [lab=process] {} {\bm \; (\new\; a)P \;|\; P|P \;|\; \mathsf{*}P}
-\end{mathpar}
-
-We write $\mathsf{c};\mathsf{c'};\ldots;$ to denote these
-agents. $\mathsf{m}(a,b)$ (message) carries $a$ name $b$ to name $a$,
-$\mathsf{d}$ (duplicator) distributes a message to two locations,
-$\mathsf{fw}$ (forwarder) forwards a message (thus linking two
-locations), $\mathsf{k}$ (killer) kills a message, while
-$\mathsf{b}_{\mathsf{r}}$ (right binder), $\mathsf{b}_{\mathsf{l}}$
-(left binder) and $\mathsf{s}$ (synchroniser) generate new links. In
-particular $\mathsf{b}_{\mathsf{r}}$ and $\mathsf{b}_{\mathsf{l}}$
-represent two different ways of binding names – in
-$\mathsf{b}_{\mathsf{r}}$ one uses the received name for output, while
-in $\mathsf{b}_{\mathsf{l}}$ one uses it for input. In contrast,
-$\mathsf{s}$ is used for pure synchronisation without value passing,
-which is indeed necessary in interaction scenarios.
-
-As in the {\pic}, the $\new$ operator is a binding operator
-for names, so {\ccomb} also has a notion of free and bound names.
-
-\begin{mathpar}
-  \freenames{\pzero} := \emptyset
-  \and
-  \freenames{\mathsf{k}(a)} := \{ a \}
-  \and
-  \freenames{\mathsf{m}(a,b)} = \freenames{f(a,b)} = \freenames{\mathsf{b}_{\mathsf{r}}(a,b)} = \freenames{\mathsf{b}_{\mathsf{l}}(a,b)} := \{ a, b \}
-  \and
-  \freenames{\mathsf{d}(a,b,c)} = \freenames{\mathsf{s}(a,b,c)} := \{ a, b, c \}
-  \and
-  \freenames{(\new\;a)P} := \freenames{P} \setminus \{ a \}
-  \and
-  \freenames{P|Q} := \freenames{P} \cup \freenames{Q}
-  \and
-  \freenames{!P} := \freenames{P}
-\end{mathpar}
-
-The bound names of a process, $\boundnames{P}$, are those names occurring in $P$
-that are not free. For example, in $(\new\; b)\mathsf{m}(a,b)$, the name $a$ is free, while $b$ is bound.
-
-In the following definition, $\vect{x}$ indicates a list of names,
-$u:\vect{x}$ indicates the concatenation of $u$ onto the vector, and
-abuse set notation $u \in \vect{x}$ to assert or require that $u$
-occurs in $\vect{x}$.
-
-\begin{definition}
-Two processes, $P,Q$, are alpha-equivalent if $P = Q\{\vect{y}/\vect{x}\}$ for
-some $\vect{x} \in \boundnames{Q},\vect{y} \in \boundnames{P}$, where $Q\{\vect{y}/\vect{x}\}$
-denotes the capture-avoiding substitution of $\vect{y}$ for $\vect{x}$ in $Q$.
-\end{definition}
-
-\begin{definition}
-  The {\em structural congruence} $\equiv$
-  between processes \cite{SangiorgiWalker} is the least congruence containing
-  alpha-equivalence and satisfying the commutative monoid laws
-  (associativity, commutativity and $\pzero$ as identity) for parallel
-  composition $|$.
-\end{definition}
-
-\noindent Rewrite rules
-\[\begin{array}{rl}
-  \mathsf{d}(a,b,c) | \mathsf{m}(a,x) & \red \mathsf{m}(b,x) | \mathsf{m}(c,x) \\
-  \mathsf{k}(a) | \mathsf{m}(a,x) & \red 0 \\
-  \mathsf{fw}(a,b) | \mathsf{m}(a,x) & \red \mathsf{m}(b,x) \\
-\end{array} \quad \quad
-\begin{array}{rl}
-  \mathsf{b}_{\mathsf{r}}(a,b) | \mathsf{m}(a,x) & \red \mathsf{fw}(b,x) \\
-  \mathsf{b}_{\mathsf{l}}(a,b) | \mathsf{m}(a,x) & \red \mathsf{fw}(x,b) \\
-  \mathsf{s}(a,b,c) | \mathsf{m}(a,x) & \red \mathsf{fw}(b,c)
-\end{array}\]
-\[\begin{array}{rl}
-  \mathsf{*}P & \red P|\mathsf{*}P \\
-\end{array}\]
-\begin{mathpar}
-  \inferrule* {{P} \red {P}'} {{{P} | {Q}} \red {{P}' | {Q}}}
-  \and
-  \inferrule* {{{P} \scong {P}'} \andalso {{P}' \red {Q}'} \andalso {{Q}' \scong {Q}}}{{P} \red {Q}}
-\end{mathpar}
-
-\subsubsection{Translating the {\pic} into {\ccomb}}
-We assume the following annotations ($+$ stands for the output and $-$
-stands for the input), which denote how each name is used in the rules
-of interaction:
-
-\[\mathsf{m}(a^{+},v^{\pm});\mathsf{d}(a^{-},b^{+},c^{+});\mathsf{k}(a^{-});\mathsf{fw}(a^{-},b^{+});\mathsf{b}_{\mathsf{l}}(a^{-}b^{+});\mathsf{b}_{\mathsf{r}}(a^{-}b^{-});\mathsf{s}(a^{-}b^{-}c^{+})\]
-
-Note the annotated polarities are preserved by reduction, e.g.
-\[\binpar{\mathsf{d}(a^{-},b^{+},c^{+})}{\mathsf{m}(a^{+},v)} \to \binpar{\mathsf{m}(b^{+},v)}{\mathsf{m}(b^{+},v)}\]
-
-It is worth pointing out that we use a slightly different syntax for input-guarded processes. Where most readers familiar with $x?(y)P$ we write $\mathsf{for}(y \leftarrow x)P$, not only to be more instep with modern programming languages, but also because it generalizes more naturally to join constructions, such as $\mathsf{for}(y_1 \leftarrow x_1; \ldots; y_n \leftarrow x_n)P$.
-
-\begin{mathpar}
-  \meaningof{a!(b)} = \mathsf{m}(a,b)
-  \and
-  \meaningof{\mathsf{for}(x \leftarrow a)P} = \mathsf{for}^*(x \leftarrow a)\meaningof{P}
-  \and
-  \meaningof{P|Q} = \meaningof{P}|\meaningof{Q}
-  \and
-  \meaningof{(\mathsf{new}\;x)P} = (\mathsf{new}\;x)\meaningof{P}
-  \and
-  \meaningof{\mathsf{*}P} = \mathsf{*}\meaningof{P}
-  \and
-  \meaningof{0} = 0
-\end{mathpar}
-
-where
-
-\[\begin{array}{llrl}
-(I)&\mathsf{for}^*(x \leftarrow a)(P|Q) &=& (\mathsf{new}\; c_1c_2)(\mathsf{d}(a,c_1,c_2) | \mathsf{for}^*(x \leftarrow c_1)P | \mathsf{for}^*(x \leftarrow c_2)Q)\\
-(II)&\mathsf{for}^*(x \leftarrow a)(\mathsf{new}\; c')P &=& (\mathsf{new}\; c)\mathsf{for}^*(x \leftarrow a)P\substn{c}{c'} \\
-(III)& \mathsf{for}^*(x \leftarrow a)\pzero &=& \mathsf{k}(a) \\
-(IV)&\mathsf{for}^*(x \leftarrow a)\mathsf{*}P &=& (\mathsf{new}\;c)(\mathsf{fw}(a,c) | \mathsf{*}\mathsf{for}^*(x \leftarrow c)(P | \mathsf{m}(c,x)))\\
-(V)&\mathsf{for}^*(x \leftarrow a)c(v^+,\vec{w}) &=& (\mathsf{new}\;c)(\mathsf{s}(a,c,v) | c(c^+,\vec{w})) \mbox{\quad $x \notin \{v\vec{w}\}$}\\
-(VI)&\mathsf{for}^*(x \leftarrow a)c(v^-,\vec{w})&=& (\mathsf{new}\;c)(\mathsf{s}(a,v,c) | c(c^-,\vec{w})) \mbox{\quad $x \notin \{v\vec{w}\}$}\\
-(VII)&\mathsf{for}^*(x \leftarrow a)\mathsf{m}(v,x)&=& \mathsf{fw}(a,v) \mbox{\quad $x \neq v$}\\
-(VIII)&\mathsf{for}^*(x \leftarrow a)\mathsf{fw}(x,v)&=& \mathsf{b}_{\mathsf{l}}(a,v) \mbox{\quad $x \neq v$}\\
-(IX)&\mathsf{for}^*(x \leftarrow a)\mathsf{fw}(v,x)&=& \mathsf{b}_{\mathsf{r}}(a,v) \mbox{\quad $x \neq v$}\\
-(X)&\mathsf{for}^*(x \leftarrow a)c(\vec{v}_1x^+\vec{v}_2)&=&(\mathsf{new}\; c)\mathsf{for}^*(x \leftarrow a)(\mathsf{fw}(c,x) | c(\vec{v}_1c\vec{v}_2)) \mbox{\quad $x \notin \vec{v}_1$}\\
-(XI)&\mathsf{for}^*(x \leftarrow a)c(x^-\vec{v})&=& (\mathsf{new}\; c)\mathsf{for}^*(x \leftarrow a)(\mathsf{fw}(x,c) | c(c\vec{v}))\\
-(XII)&\mathsf{for}^*(x \leftarrow a)\mathsf{b}_{\mathsf{r}}(v,x^-)&=& (\mathsf{new}\; c_1c_2c_3)\mathsf{for}^*(x \leftarrow a)(\mathsf{d}(v,c_1,c_2)|\mathsf{s}(c_1,x,c_3)|\mathsf{b}_{\mathsf{r}}(c_2,c_3)) \mbox{\quad $x \notin \{v \}$}\\
-(XIII)&\mathsf{for}^*(x \leftarrow a)\mathsf{s}(v,x^-,w) &=& (\mathsf{new}\; c_1c_2)\mathsf{for}^*(x \leftarrow a)(\mathsf{s}(v,c_1,c_2) | \mathsf{m}(c_1,x) | \mathsf{b}_{\mathsf{l}}(c_2,w)) \mbox{\quad $x \notin \{v \}$}
-\end{array}\]
-
 \section{Appendix: Translating the {\pic} into the {\rhoc}} \label{appendix:pic2rhoc}
 \subsection{\rhoc}
 
@@ -1249,6 +1121,134 @@ our introduction of a less standard bisimulation.
 	this issue at the theoretical level and may make way to offer
 	guidance to implementations.
 \end{example}
+
+\section{Appendix: the {\ccomb} revisited} \label{appendix:ccomb}
+We summarize the original {\ccomb} \cite{DBLP:journals/tcs/Yoshida02} below.
+
+\begin{mathpar}
+  \inferrule* [lab=atom] {} { P \bc 0 \;|\; \mathsf{m}(a,b) \;|\; \mathsf{d}(a,b,c) \;|\; \mathsf{k}(a) \;|\; \mathsf{fw}(a,b) \;|\; \mathsf{b}_{\mathsf{r}}(a,b) \;|\; \mathsf{b}_{\mathsf{l}}(a,b) \;|\; \mathsf{s}(a,b,c) }
+  \and
+  \inferrule* [lab=process] {} {\bm \; (\new\; a)P \;|\; P|P \;|\; \mathsf{*}P}
+\end{mathpar}
+
+We write $\mathsf{c};\mathsf{c'};\ldots;$ to denote these
+agents. $\mathsf{m}(a,b)$ (message) carries $a$ name $b$ to name $a$,
+$\mathsf{d}$ (duplicator) distributes a message to two locations,
+$\mathsf{fw}$ (forwarder) forwards a message (thus linking two
+locations), $\mathsf{k}$ (killer) kills a message, while
+$\mathsf{b}_{\mathsf{r}}$ (right binder), $\mathsf{b}_{\mathsf{l}}$
+(left binder) and $\mathsf{s}$ (synchroniser) generate new links. In
+particular $\mathsf{b}_{\mathsf{r}}$ and $\mathsf{b}_{\mathsf{l}}$
+represent two different ways of binding names – in
+$\mathsf{b}_{\mathsf{r}}$ one uses the received name for output, while
+in $\mathsf{b}_{\mathsf{l}}$ one uses it for input. In contrast,
+$\mathsf{s}$ is used for pure synchronisation without value passing,
+which is indeed necessary in interaction scenarios.
+
+As in the {\pic}, the $\new$ operator is a binding operator
+for names, so {\ccomb} also has a notion of free and bound names.
+
+\begin{mathpar}
+  \freenames{\pzero} := \emptyset
+  \and
+  \freenames{\mathsf{k}(a)} := \{ a \}
+  \and
+  \freenames{\mathsf{m}(a,b)} = \freenames{f(a,b)} = \freenames{\mathsf{b}_{\mathsf{r}}(a,b)} = \freenames{\mathsf{b}_{\mathsf{l}}(a,b)} := \{ a, b \}
+  \and
+  \freenames{\mathsf{d}(a,b,c)} = \freenames{\mathsf{s}(a,b,c)} := \{ a, b, c \}
+  \and
+  \freenames{(\new\;a)P} := \freenames{P} \setminus \{ a \}
+  \and
+  \freenames{P|Q} := \freenames{P} \cup \freenames{Q}
+  \and
+  \freenames{!P} := \freenames{P}
+\end{mathpar}
+
+The bound names of a process, $\boundnames{P}$, are those names occurring in $P$
+that are not free. For example, in $(\new\; b)\mathsf{m}(a,b)$, the name $a$ is free, while $b$ is bound.
+
+In the following definition, $\vect{x}$ indicates a list of names,
+$u:\vect{x}$ indicates the concatenation of $u$ onto the vector, and
+abuse set notation $u \in \vect{x}$ to assert or require that $u$
+occurs in $\vect{x}$.
+
+\begin{definition}
+Two processes, $P,Q$, are alpha-equivalent if $P = Q\{\vect{y}/\vect{x}\}$ for
+some $\vect{x} \in \boundnames{Q},\vect{y} \in \boundnames{P}$, where $Q\{\vect{y}/\vect{x}\}$
+denotes the capture-avoiding substitution of $\vect{y}$ for $\vect{x}$ in $Q$.
+\end{definition}
+
+\begin{definition}
+  The {\em structural congruence} $\equiv$
+  between processes \cite{SangiorgiWalker} is the least congruence containing
+  alpha-equivalence and satisfying the commutative monoid laws
+  (associativity, commutativity and $\pzero$ as identity) for parallel
+  composition $|$.
+\end{definition}
+
+\noindent Rewrite rules
+\[\begin{array}{rl}
+  \mathsf{d}(a,b,c) | \mathsf{m}(a,x) & \red \mathsf{m}(b,x) | \mathsf{m}(c,x) \\
+  \mathsf{k}(a) | \mathsf{m}(a,x) & \red 0 \\
+  \mathsf{fw}(a,b) | \mathsf{m}(a,x) & \red \mathsf{m}(b,x) \\
+\end{array} \quad \quad
+\begin{array}{rl}
+  \mathsf{b}_{\mathsf{r}}(a,b) | \mathsf{m}(a,x) & \red \mathsf{fw}(b,x) \\
+  \mathsf{b}_{\mathsf{l}}(a,b) | \mathsf{m}(a,x) & \red \mathsf{fw}(x,b) \\
+  \mathsf{s}(a,b,c) | \mathsf{m}(a,x) & \red \mathsf{fw}(b,c)
+\end{array}\]
+\[\begin{array}{rl}
+  \mathsf{*}P & \red P|\mathsf{*}P \\
+\end{array}\]
+\begin{mathpar}
+  \inferrule* {{P} \red {P}'} {{{P} | {Q}} \red {{P}' | {Q}}}
+  \and
+  \inferrule* {{{P} \scong {P}'} \andalso {{P}' \red {Q}'} \andalso {{Q}' \scong {Q}}}{{P} \red {Q}}
+\end{mathpar}
+
+\subsubsection{Translating the {\pic} into {\ccomb}}
+We assume the following annotations ($+$ stands for the output and $-$
+stands for the input), which denote how each name is used in the rules
+of interaction:
+
+\[\mathsf{m}(a^{+},v^{\pm});\mathsf{d}(a^{-},b^{+},c^{+});\mathsf{k}(a^{-});\mathsf{fw}(a^{-},b^{+});\mathsf{b}_{\mathsf{l}}(a^{-}b^{+});\mathsf{b}_{\mathsf{r}}(a^{-}b^{-});\mathsf{s}(a^{-}b^{-}c^{+})\]
+
+Note the annotated polarities are preserved by reduction, e.g.
+\[\binpar{\mathsf{d}(a^{-},b^{+},c^{+})}{\mathsf{m}(a^{+},v)} \to \binpar{\mathsf{m}(b^{+},v)}{\mathsf{m}(b^{+},v)}\]
+
+It is worth pointing out that we use a slightly different syntax for input-guarded processes. Where most readers familiar with $x?(y)P$ we write $\mathsf{for}(y \leftarrow x)P$, not only to be more instep with modern programming languages, but also because it generalizes more naturally to join constructions, such as $\mathsf{for}(y_1 \leftarrow x_1; \ldots; y_n \leftarrow x_n)P$.
+
+\begin{mathpar}
+  \meaningof{a!(b)} = \mathsf{m}(a,b)
+  \and
+  \meaningof{\mathsf{for}(x \leftarrow a)P} = \mathsf{for}^*(x \leftarrow a)\meaningof{P}
+  \and
+  \meaningof{P|Q} = \meaningof{P}|\meaningof{Q}
+  \and
+  \meaningof{(\mathsf{new}\;x)P} = (\mathsf{new}\;x)\meaningof{P}
+  \and
+  \meaningof{\mathsf{*}P} = \mathsf{*}\meaningof{P}
+  \and
+  \meaningof{0} = 0
+\end{mathpar}
+
+where
+
+\[\begin{array}{llrl}
+(I)&\mathsf{for}^*(x \leftarrow a)(P|Q) &=& (\mathsf{new}\; c_1c_2)(\mathsf{d}(a,c_1,c_2) | \mathsf{for}^*(x \leftarrow c_1)P | \mathsf{for}^*(x \leftarrow c_2)Q)\\
+(II)&\mathsf{for}^*(x \leftarrow a)(\mathsf{new}\; c')P &=& (\mathsf{new}\; c)\mathsf{for}^*(x \leftarrow a)P\substn{c}{c'} \\
+(III)& \mathsf{for}^*(x \leftarrow a)\pzero &=& \mathsf{k}(a) \\
+(IV)&\mathsf{for}^*(x \leftarrow a)\mathsf{*}P &=& (\mathsf{new}\;c)(\mathsf{fw}(a,c) | \mathsf{*}\mathsf{for}^*(x \leftarrow c)(P | \mathsf{m}(c,x)))\\
+(V)&\mathsf{for}^*(x \leftarrow a)c(v^+,\vec{w}) &=& (\mathsf{new}\;c)(\mathsf{s}(a,c,v) | c(c^+,\vec{w})) \mbox{\quad $x \notin \{v\vec{w}\}$}\\
+(VI)&\mathsf{for}^*(x \leftarrow a)c(v^-,\vec{w})&=& (\mathsf{new}\;c)(\mathsf{s}(a,v,c) | c(c^-,\vec{w})) \mbox{\quad $x \notin \{v\vec{w}\}$}\\
+(VII)&\mathsf{for}^*(x \leftarrow a)\mathsf{m}(v,x)&=& \mathsf{fw}(a,v) \mbox{\quad $x \neq v$}\\
+(VIII)&\mathsf{for}^*(x \leftarrow a)\mathsf{fw}(x,v)&=& \mathsf{b}_{\mathsf{l}}(a,v) \mbox{\quad $x \neq v$}\\
+(IX)&\mathsf{for}^*(x \leftarrow a)\mathsf{fw}(v,x)&=& \mathsf{b}_{\mathsf{r}}(a,v) \mbox{\quad $x \neq v$}\\
+(X)&\mathsf{for}^*(x \leftarrow a)c(\vec{v}_1x^+\vec{v}_2)&=&(\mathsf{new}\; c)\mathsf{for}^*(x \leftarrow a)(\mathsf{fw}(c,x) | c(\vec{v}_1c\vec{v}_2)) \mbox{\quad $x \notin \vec{v}_1$}\\
+(XI)&\mathsf{for}^*(x \leftarrow a)c(x^-\vec{v})&=& (\mathsf{new}\; c)\mathsf{for}^*(x \leftarrow a)(\mathsf{fw}(x,c) | c(c\vec{v}))\\
+(XII)&\mathsf{for}^*(x \leftarrow a)\mathsf{b}_{\mathsf{r}}(v,x^-)&=& (\mathsf{new}\; c_1c_2c_3)\mathsf{for}^*(x \leftarrow a)(\mathsf{d}(v,c_1,c_2)|\mathsf{s}(c_1,x,c_3)|\mathsf{b}_{\mathsf{r}}(c_2,c_3)) \mbox{\quad $x \notin \{v \}$}\\
+(XIII)&\mathsf{for}^*(x \leftarrow a)\mathsf{s}(v,x^-,w) &=& (\mathsf{new}\; c_1c_2)\mathsf{for}^*(x \leftarrow a)(\mathsf{s}(v,c_1,c_2) | \mathsf{m}(c_1,x) | \mathsf{b}_{\mathsf{l}}(c_2,w)) \mbox{\quad $x \notin \{v \}$}
+\end{array}\]
 
 \end{document}
 
