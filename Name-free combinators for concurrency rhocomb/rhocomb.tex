@@ -201,22 +201,23 @@ Michael Stay
 
 Our purpose in reporting these results is singular. We have developed
 an algorithm, the logic as a distributive law algorithm (aka LADL),
-that calculates a type system for a given model of computation. We
-want to test the limits of our algorithm. In particular, we would like
-to apply the algorithm to a model of computation that enjoys the most
-advanced features of computation today. For us, this means mobile
-concurrency, as evinced in models of computation like the {\pic} or
-the {\rhoc}
+that for a given model of computation calculates a spatial-behavioral
+type system, capable of detecting important structural and behavioral
+properties of computations, including race conditions, and security
+leaks. We want to test the limits of our algorithm. In particular, we
+would like to apply the algorithm to a model of computation that
+enjoys the most advanced features of computation today. For us, this
+means mobile concurrency, as evinced in models of computation like the
+{\pic} or the {\rhoc}
 \cite{DBLP:conf/concur/Milner92,DBLP:journals/entcs/MeredithR05}.
 However, all such models currently proposed make heavy use of nominal
 phenomena. Even Honda and Yoshida's combinatory model
-\cite{DBLP:conf/popl/HondaY94,DBLP:journals/tcs/Yoshida02}
-makes heavy use of nominal phenomena. While our algorithm can handle
-nominal phenomena, it seriously complicates the presentation of the
-core features of the algorithm, which we hope to illustrate in a
-series of upcoming papers. So, we would like to test our algorithm on
-a version of mobile concurrency that makes no use of nominal
-phenomena.
+\cite{DBLP:conf/popl/HondaY94,DBLP:journals/tcs/Yoshida02} makes heavy
+use of nominal phenomena. While our algorithm can handle nominal
+phenomena, it seriously complicates the presentation of the core
+features of the algorithm, which we hope to illustrate in a series of
+upcoming papers. So, we would like to test our algorithm on a version
+of mobile concurrency that makes no use of nominal phenomena.
 
 It turns out that developing an entirely name-free account of mobile
 concurrency has long been a goal of the concurrency semantics
