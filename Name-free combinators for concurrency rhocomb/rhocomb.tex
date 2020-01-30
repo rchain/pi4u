@@ -203,12 +203,14 @@ Our purpose in reporting these results is singular. We have developed
 an algorithm, the logic as a distributive law algorithm (aka LADL),
 that for a given model of computation calculates a spatial-behavioral
 type system, capable of detecting important structural and behavioral
-properties of computations, including race conditions, and security
-leaks. We want to test the limits of our algorithm. In particular, we
-would like to apply the algorithm to a model of computation that
-enjoys the most advanced features of computation today. For us, this
-means mobile concurrency, as evinced in models of computation like the
-{\pic} or the {\rhoc}
+properties of computations, including race conditions (when the model
+includes concurrency), and security leaks (when the model includes
+reconfiguration of the communication between components, as it does in
+mobile systems). We want to test the limits of our algorithm. In
+particular, we would like to apply the algorithm to a model of
+computation that enjoys the most advanced features of computation
+today. For us, this means mobile concurrency, as evinced in models of
+computation like the {\pic} or the {\rhoc}
 \cite{DBLP:conf/concur/Milner92,DBLP:journals/entcs/MeredithR05}.
 However, all such models currently proposed make heavy use of nominal
 phenomena. Even Honda and Yoshida's combinatory model
