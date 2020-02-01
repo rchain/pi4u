@@ -139,8 +139,8 @@ It turns out that denying the evaluation context is not the only way
 to suspend computation. We can also form contexts. In this case, we
 only admit 1-holed contexts, ranged over by $\chi$. With contexts we can
 define a notion of rely-guarantee, two notions actually (indicated by
-the operations $(- \rhd -)$, and $(- \lhd -)$), as a redex term constructor
-might not be commutative. .
+the operations $(- \rhd -)$ and $(- \lhd -)$), as a redex term constructor
+might not be commutative.
 
 \begin{eqnarray*}
 \tau \rhd_{\mathsf{K}} \tau' & \triangleq & \{ u \quad | \quad \exists t. u = \mathsf{!}\mathsf{K}_{\boxempty}^{r}(t, \boxempty),\forall u' : \tau. (\exists \rho : u@u' \rightarrow v) \Rightarrow v:\tau' \} \\
