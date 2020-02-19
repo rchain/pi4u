@@ -471,6 +471,13 @@ Below we identify the formation of each kind of context: tensor-parallel, tensor
   \inferrule* [lab=$\rho_{\boxempty \perp \rhd}$] {\Gamma \vdash !\mathsf{K}(t,\boxempty) : \tau \rhd \tau'\quad  \Delta \vdash u : \tau} {\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau'}\\
   \inferrule* [lab=$\rho_{\sqcup \perp \sqcap}$]{\Gamma \vdash \sqcup_{\rho} (t_{1}, t_{2}) : \rho_{\sqcup}(\tau_{2} \rhd \tau_{1}^{\perp}, \tau_{2})  \quad \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\sqcap}(\tau_{3} \rhd \tau_{1}, \tau_{3})}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{K}(t_{1}, t_{2}), \mathsf{K}(t_{3}, t_{4}))) : \mathsf{R}(\mathsf{r}_{\mathsf{K}})}
 \end{mathpar}
+
+%% --------axiom   ------------------------------- axiom
+%% |- 0 : 0        |- m( x, a ) : hat( m )( x, T )
+%% ----------------------------------------------- rho->l    ------------------------------- axiom
+%% |- !K( k( x ), [] ) : hat( m )( x, T ) |> 0               |- m( x, a ) : hat( m )( x, T )
+%% -----------------------------------------------------------------------------------------
+%%                       |- R( K( k( x ), m( x, a ) ) ) : R( 0 ) 
   
 \subsection{Classical Term assignment}
 In the classical setting we transform double-sided sequents
