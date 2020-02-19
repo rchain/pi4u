@@ -440,7 +440,7 @@ which allows the hole to be buried, rather than at the top level,
 
 \inferrule* [lab=$\rho_{\sqcup}$]{\Gamma \vdash t : \tau, u : \tau'}{\Gamma \vdash \sqcup_{\rho}(t,u) : \rho_{\sqcup}(\tau,\tau')} \\
 
-\inferrule* [lab=$\rho_{\bindnasrepma \perp \otimes}$]{\Gamma \vdash \bindnasrepma_{\rho} (t_{1}, t_{2}) : \rho_{\bindnasrepma}(\tau_{1}^{\perp}, \tau_{2}^{\perp}) \quad \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\otimes}(\tau_{1}, \tau_{2}) }{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{K}(t_{1}, t_{3}), \mathsf{K}(t_{2}, t_{4}))) : \mathsf{R}(\mathsf{r}_{\mathsf{K}})}
+\inferrule* [lab=$\rho_{\bindnasrepma \perp \otimes}$]{\Gamma \vdash \bindnasrepma_{\rho} (t_{1}, t_{2}) : \rho_{\bindnasrepma}(\tau_{1} \rhd \tau_{i}^{\perp}, \tau_{2} \rhd \tau_{i}) \quad \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\otimes}(\tau_{1}, \tau_{2}) }{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{K}(t_{1}, t_{3}), \mathsf{K}(t_{2}, t_{4}))) : \mathsf{R}(\mathsf{r}_{\mathsf{K}})}
   
 %% \tau \rhd \tau' = { u | \exists t,\chi. u = !\mathsf{K}_{\boxempty}^{r}(t, \chi),\forall u':\tau. (\exists \rho: u@u' \rightarrow v) \Rightarrow v:\tau' }
 %% \tau\perp = \tau \rhd \mathsf{r}_{\mathsf{K}} = { u | \exists t,\chi. u = !\mathsf{K}_{\boxvoid}^{r}(t, \chi),\forall u':\tau. (\exists \rho: u@u' \rightarrow v) \Rightarrow v:\mathsf{r}_{\mathsf{K}} }
@@ -454,7 +454,9 @@ Below we identify the formation of each kind of context: tensor-parallel, tensor
 \subsubsection{Axiom}
 
 \begin{mathpar}
-  \inferrule* [lab=axiom] {} {\boxempty : \tau \vdash \boxempty : \tau}
+  \inferrule* [lab=axiom] {} {\boxempty : \tau \vdash \boxempty : \tau} \\
+  \inferrule* [lab=$\rho^{l}_{\rightarrow}$]{\Gamma \vdash \mathsf{t}( \rho( t, u ) ) : \tau' \quad \Delta \vdash u : \tau }{\Gamma,\Delta \vdash !\mathsf{K}( t, \boxempty ) : \tau \rhd \tau'} \\
+  \inferrule* [lab=$\rho^{r}_{\rightarrow}$]{\Gamma \vdash \mathsf{t}( \rho( t, u ) ) : \tau' \quad \Delta \vdash t : \tau }{\Gamma,\Delta \vdash \mathsf{K}( \boxempty, u )! : \tau \lhd \tau'}
 \end{mathpar}
 
 \subsubsection{Left and right context formation and cut}
@@ -509,6 +511,12 @@ We add new sorts, $X^{\circ}$, and $X^{\bullet}$, $X^{\circ\bullet}$, and the fo
   \item $!(-) : X^{\circ}  \rightarrow T$
   \item $(-)! : X^{\bullet}  \rightarrow T$
   \item $@ : T^{2} \rightarrow T$
+  \item $@_{\boxempty}^{l} : X^{\circ} \times T \rightarrow T$
+  \item $@_{\blacksquare}^{l} : X^{\bullet} \times T \rightarrow T$
+  \item $@_{\boxempty}^{r} : T \times X^{\circ} \rightarrow X^{\circ}$
+  \item $@_{\blacksquare}^{r} : T \times X^{\bullet} \rightarrow X^{\bullet}$
+  \item $@_{\boxempty\boxempty} : (X^{\circ})^{2} \rightarrow X^{\circ}$
+  \item $@_{\blacksquare\blacksquare} : (X^{\bullet})^{2} \rightarrow X^{\bullet}$
   \item $\mathsf{R} : T \rightarrow T$
   \item $\bindnasrepma_{\rho} : T^{2} \rightarrow T$
   \item $\sqcup_{\rho} : T^{2} \rightarrow T$
