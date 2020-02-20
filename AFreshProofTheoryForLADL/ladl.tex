@@ -440,12 +440,12 @@ which allows the hole to be buried, rather than at the top level,
 
 \inferrule* [lab=$\rho_{\sqcup}$]{\Gamma \vdash t : \tau, u : \tau'}{\Gamma \vdash \sqcup_{\rho}(t,u) : \rho_{\sqcup}(\tau,\tau')} \\
 
-\inferrule* [lab=$\rho_{\bindnasrepma \perp \otimes}$]{\Gamma \vdash \bindnasrepma_{\rho} (t_{1}, t_{2}) : \rho_{\bindnasrepma}(\tau_{1} \rhd \tau_{i}^{\perp}, \tau_{2} \rhd \tau_{i}) \quad \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\otimes}(\tau_{1}, \tau_{2}) }{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{K}(t_{1}, t_{3}), \mathsf{K}(t_{2}, t_{4}))) : \mathsf{R}(\mathsf{r}_{\mathsf{K}})}
+\inferrule* [lab=$\rho_{\bindnasrepma \perp \otimes}$]{\Gamma \vdash \bindnasrepma_{\rho} (t_{1}, t_{2}) : \rho_{\bindnasrepma}(\tau_{1} \rhd \tau_{i}^{\perp}, \tau_{2} \rhd \tau_{i}) \quad \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\otimes}(\tau_{1}, \tau_{2}) }{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{R}(\mathsf{K}(t_{1}, t_{3})), \mathsf{R}(\mathsf{K}(t_{2}, t_{4})))) : \mathsf{r}_{\mathsf{K}}}
   
 %% \tau \rhd \tau' = { u | \exists t,\chi. u = !\mathsf{K}_{\boxempty}^{r}(t, \chi),\forall u':\tau. (\exists \rho: u@u' \rightarrow v) \Rightarrow v:\tau' }
 %% \tau\perp = \tau \rhd \mathsf{r}_{\mathsf{K}} = { u | \exists t,\chi. u = !\mathsf{K}_{\boxvoid}^{r}(t, \chi),\forall u':\tau. (\exists \rho: u@u' \rightarrow v) \Rightarrow v:\mathsf{r}_{\mathsf{K}} }
 
-\inferrule* [lab=$\rho_{\perp}$]{\Gamma \vdash t' : \tau^{\perp}\quad \Delta \vdash t : \tau }{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t',t)) : \mathsf{R}(\mathsf{r}_{\mathsf{K}})}
+\inferrule* [lab=$\rho_{\perp}$]{\Gamma \vdash t' : \tau^{\perp}\quad \Delta \vdash t : \tau }{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t',t)) : \mathsf{r}_{\mathsf{K}}}
 
 \end{mathpar}
 \subsection{Contexts, their types and cuts}
@@ -466,10 +466,10 @@ Below we identify the formation of each kind of context: tensor-parallel, tensor
 
   \inferrule* [lab=$\rhd$] {\Gamma, \boxempty : \tau  \vdash \chi : \tau'} {\Gamma \vdash !\chi : \tau \rhd \tau'} \\
 
-  \inferrule* [lab=$\rho_{\boxempty \perp \lhd}$] {\Gamma \vdash \mathsf{K}(\boxempty,u)! : \tau' \lhd \tau \quad  \Delta \vdash t : \tau}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau'}
+  \inferrule* [lab=$\rho_{\boxempty \perp \lhd}$] {\Gamma \vdash \mathsf{K}(\boxempty,u)! : \tau' \lhd \tau \quad  \Delta \vdash t : \tau}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \tau'}
 
-  \inferrule* [lab=$\rho_{\boxempty \perp \rhd}$] {\Gamma \vdash !\mathsf{K}(t,\boxempty) : \tau \rhd \tau'\quad  \Delta \vdash u : \tau} {\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau'}\\
-  \inferrule* [lab=$\rho_{\sqcup \perp \sqcap}$]{\Gamma \vdash \sqcup_{\rho} (t_{1}, t_{2}) : \rho_{\sqcup}(\tau_{2} \rhd \tau_{1}^{\perp}, \tau_{2})  \quad \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\sqcap}(\tau_{3} \rhd \tau_{1}, \tau_{3})}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{K}(t_{1}, t_{2}), \mathsf{K}(t_{3}, t_{4}))) : \mathsf{R}(\mathsf{r}_{\mathsf{K}})}
+  \inferrule* [lab=$\rho_{\boxempty \perp \rhd}$] {\Gamma \vdash !\mathsf{K}(t,\boxempty) : \tau \rhd \tau'\quad  \Delta \vdash u : \tau} {\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \tau'}\\
+  \inferrule* [lab=$\rho_{\sqcup \perp \sqcap}$]{\Gamma \vdash \sqcup_{\rho} (t_{1}, t_{2}) : \rho_{\sqcup}(\tau_{2} \rhd \tau_{1}^{\perp}, \tau_{2})  \quad \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\sqcap}(\tau_{3} \rhd \tau_{1}, \tau_{3})}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{R}(\mathsf{K}(t_{1}, t_{2})), \mathsf{R}(\mathsf{K}(t_{3}, t_{4})))) : \mathsf{r}_{\mathsf{K}}}
 \end{mathpar}
 
 %% --------axiom   ------------------------------- axiom
@@ -570,13 +570,13 @@ We introduce additional arrow types to mirror the introduction of $?$.
 
   \inferrule* [lab=$\rho_{\bindnasrepma}$] {\vdash \Gamma, t : \tau, u : \tau'} {\vdash \Gamma, \bindnasrepma_{\rho}(t, u) : \rho_{\bindnasrepma}(\tau, \tau')}
 
-  \inferrule* [lab=$\rho_{\bindnasrepma\perp\otimes}$] {\vdash \Gamma, \bindnasrepma_{\rho} (t', u') : \rho_{\bindnasrepma}(\tau^{\perp}, \tau'^{\perp})  \vdash \mathsf{K}(t, u) : \rho_{\otimes}(\tau, \tau'), \Delta}{\vdash \Gamma, \mathsf{R}(\mathsf{K}(\mathsf{K}(t', t), \mathsf{K}(u', u))) : \mathsf{R}(\mathsf{r}_{\mathsf{K}}), \Delta}
+  \inferrule* [lab=$\rho_{\bindnasrepma\perp\otimes}$] {\vdash \Gamma, \bindnasrepma_{\rho} (t', u') : \rho_{\bindnasrepma}(\tau^{\perp}, \tau'^{\perp})  \vdash \mathsf{K}(t, u) : \rho_{\otimes}(\tau, \tau'), \Delta}{\vdash \Gamma, \mathsf{R}(\mathsf{K}(\mathsf{R}(\mathsf{K}(t', t)), \mathsf{R}(\mathsf{K}(u', u)))) : \mathsf{r}_{\mathsf{K}}, \Delta}
 
   \inferrule* [lab=$\rho_{\sqcap}$] {\vdash \Gamma, t : \tau, u : \tau'}{\vdash \Gamma, \mathsf{K}(t,u) : \rho_{\sqcap}(\tau,\tau')}
 
   \inferrule* [lab=$\rho_{\sqcup}$] {\vdash \Gamma, t : \tau, u : \tau'} {\vdash \Gamma, \sqcup(t,u) : \rho_{\sqcup}(\tau,\tau')}
 
-  \inferrule* [lab=$\rho_{\perp}$] {\vdash\Gamma,  t' : \tau^{\perp}  \vdash t : \tau, \Delta }{\vdash \Gamma, \mathsf{R}(\mathsf{K}(t',t)) : \mathsf{R}(\mathsf{r}_{\mathsf{K}}), \Delta}
+  \inferrule* [lab=$\rho_{\perp}$] {\vdash\Gamma,  t' : \tau^{\perp}  \vdash t : \tau, \Delta }{\vdash \Gamma, \mathsf{R}(\mathsf{K}(t',t)) : \mathsf{r}_{\mathsf{K}}, \Delta}
 \end{mathpar}
 
 \subsection{Contexts, their types and cuts}
@@ -596,11 +596,11 @@ We introduce additional arrow types to mirror the introduction of $?$.
 
   \inferrule* [lab=ofcourseright] {\vdash \Gamma^{\bullet}, \boxempty : \tau_{1} , \chi^{\bullet} : \tau_{2}, \Delta^{\circ}}{\vdash \Gamma^{\bullet}, \chi! : \tau_{1} \rhd \tau_{2}, \Delta^{\circ}} \\
 
-  \inferrule* [lab=$\rho_{\otimes}\perp\lhd$] {\vdash \Gamma, \mathsf{K}(\boxempty,u)! : \tau' \lhd \tau,  \vdash t : \tau, \Delta } {\vdash \Gamma, \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau', \Delta}
+  \inferrule* [lab=$\rho_{\otimes}\perp\lhd$] {\vdash \Gamma, \mathsf{K}(\boxempty,u)! : \tau' \lhd \tau,  \vdash t : \tau, \Delta } {\vdash \Gamma, \mathsf{R}(\mathsf{K}(t,u)) : \tau', \Delta}
 
-  \inferrule* [lab=$\rho_{\otimes}\perp\rhd$] {\vdash \Gamma, !\mathsf{K}(t,\boxempty) : \tau \rhd \tau',  \Delta \vdash u : \tau}{\vdash \Gamma, \mathsf{R}(\mathsf{K}(t,u)) : \mathsf{R}\tau', \Delta} \\
+  \inferrule* [lab=$\rho_{\otimes}\perp\rhd$] {\vdash \Gamma, !\mathsf{K}(t,\boxempty) : \tau \rhd \tau',  \Delta \vdash u : \tau}{\vdash \Gamma, \mathsf{R}(\mathsf{K}(t,u)) : \tau', \Delta} \\
 
-  \inferrule* [lab=$\rho_{\sqcap\perp\sqcup}$] {\vdash \Gamma, \sqcup\rho (t, u) : \rho_{\sqcup}(\tau_{3} \rhd \tau_{1}^{\perp}, u:\tau_{3})  \vdash \mathsf{K}(t', u') : \rho_{\sqcap}(\tau_{2} \rhd \tau_{1}, \tau_{2}), \Delta } {\vdash \Gamma, \mathsf{R}(\mathsf{K}(\mathsf{K}( t, u), \mathsf{K}(t', u')) : \mathsf{R}(\mathsf{r}_{\mathsf{K}}), \Delta}
+  \inferrule* [lab=$\rho_{\sqcap\perp\sqcup}$] {\vdash \Gamma, \sqcup\rho (t, u) : \rho_{\sqcup}(\tau_{3} \rhd \tau_{1}^{\perp}, u:\tau_{3})  \vdash \mathsf{K}(t', u') : \rho_{\sqcap}(\tau_{2} \rhd \tau_{1}, \tau_{2}), \Delta } {\vdash \Gamma, \mathsf{R}(\mathsf{K}(\mathsf{R}(\mathsf{K}( t, u)), \mathsf{R}(\mathsf{K}(t', u'))) : \mathsf{r}_{\mathsf{K}}, \Delta}
 \end{mathpar}
 
 \section{Examples}
