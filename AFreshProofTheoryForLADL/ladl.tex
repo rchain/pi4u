@@ -371,6 +371,8 @@ We add a new sort, $X$, and the following maps
   \item $\rho : T^{2} \rightarrow T$             %%//( \x -> M N) -> M{N/x}     for( y <- x )P | x!(Q) -> P{@Q/y}
   \item $\mathsf{s}(\rho(t,u)) = \mathsf{R}\mathsf{K}(t, u)$ 
   \item $\mathsf{t}(\rho(t,u)) = \hat{f}(t,u)$          %%// deleting Rs from fhat gives f
+  \item $\hat{\rho}_{l} : T \times X \rightarrow T$             %%//( \x -> M N) -> M{N/x}     for( y <- x )P | x!(Q) -> P{@Q/y}
+  \item $\hat{\rho}_{r} : X \times T \rightarrow T$             %%//( \x -> M N) -> M{N/x}     for( y <- x )P | x!(Q) -> P{@Q/y}
   \item $\mathsf{K}(\mathsf{l}_{\mathsf{K}}, u) = u$
   \item $\mathsf{K}(t, \mathsf{r}_{\mathsf{K}}) = t$
   \item $@(\boxempty !,t) = t$
@@ -455,8 +457,14 @@ Below we identify the formation of each kind of context: tensor-parallel, tensor
 
 \begin{mathpar}
   \inferrule* [lab=axiom] {} {\boxempty : \tau \vdash \boxempty : \tau} \\
-  \inferrule* [lab=$\rho^{l}_{\rightarrow}$]{\Gamma \vdash \mathsf{t}( \rho( t, u ) ) : \tau' \quad \Delta \vdash u : \tau }{\Gamma,\Delta \vdash !\mathsf{K}( t, \boxempty ) : \tau \rhd \tau'} \\
-  \inferrule* [lab=$\rho^{r}_{\rightarrow}$]{\Gamma \vdash \mathsf{t}( \rho( t, u ) ) : \tau' \quad \Delta \vdash t : \tau }{\Gamma,\Delta \vdash \mathsf{K}( \boxempty, u )! : \tau \lhd \tau'}
+  \inferrule* [lab=$\rho^{l}_{\rightarrow}$]{\Gamma, \boxempty : \tau \vdash \mathsf{t}( \rho( t, \boxempty ) ) : \tau' }{\Gamma \vdash !\mathsf{K}( t, \boxempty ) : \tau \rhd \tau'} \\
+  \inferrule* [lab=$\rho^{r}_{\rightarrow}$]{\Gamma, \boxempty : \tau \vdash \mathsf{t}( \rho( \boxempty, u ) ) : \tau' }{\Gamma \vdash \mathsf{K}( \boxempty, u )! : \tau \lhd \tau'}
+\end{mathpar}
+
+\subsubsection{Weakening}
+
+\begin{mathpar}
+  \inferrule* [lab=weakening] {\Gamma \vdash \chi : \tau}{\boxempty : \tau', \Gamma \vdash \chi : \tau}
 \end{mathpar}
 
 \subsubsection{Left and right context formation and cut}
