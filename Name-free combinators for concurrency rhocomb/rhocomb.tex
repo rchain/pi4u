@@ -601,32 +601,35 @@ elimination.
 The interpretation function $\meaningof{-}_2(n, p)$ is straightforward
 for all but replication and $\mathsf{new}$.
 \[\begin{array}{ccc}
-\meaningof{\pzero}_2 (n,p) = \pzero & \meaningof{\emph{c}(\vect{a})}_2 (n,p) = \emph{c}(\vect{a}) & \meaningof{P \juxtap Q}_2 (n,p)  =  \meaningof{P}_2 (n^l, p^l) \juxtap \meaningof{Q}_2 (n^r, p^r)  
+& \meaningof{\pzero}_2 (n,p) = \pzero \quad\quad \meaningof{\emph{c}(\vect{a})}_2 (n,p) = \emph{c}(\vect{a}) \quad\quad \meaningof{\binpar{P}{Q}}_2 (n,p)  =  \binpar{\meaningof{P}_2 (n^l, p^l)}{\meaningof{Q}_2 (n^r, p^r)} & \\
+& \meaningof{(\new \; x ) P}_2 (n, p) = \binpar{\meaningof{\prefix{p}{x}{{\meaningof{P}_2 ( n^l, p^l )}}}_4(n, p)}{\mathsf{m}(p, n)} &
 \end{array}\]
 These latter two forms require extra care. We define them in terms of
 a prefix form and then use a version of Honda and Yoshida's prefix elimination
 to remove the prefix.
-\begin{eqnarray*}
+%%\begin{eqnarray*}
+\[\begin{array}{lcl}
     \meaningof{\mathsf{*} P}_2 (n,p)
-          & = & \binpar{\mathsf{m}(x, \quotep{\meaningof{P}_3(n^r,p^r,x,v,w)})}
-                  {\binpar{D(x,v,w)}
-                    {\binpar{\mathsf{m}(n^r, n^l)}{\mathsf{m}(p^r, p^l)}}} \\
+    %          & = & \binpar{\mathsf{m}(x, \quotep{\meaningof{P}_3(n^r,p^r,x,v,w)})}
+    % \meaningof{\prefix{n}{n'}{\prefix{p}{p'}{(\binpar{\meaningof{P}_2(n',p')}{D(x,v,w)})}}}_4
+    & = & \mathsf{m}(x, \quotep{\meaningof{\prefix{n}{n'}{\prefix{p}{p'}{(\binpar{\meaningof{P}_2(n',p')}{D(x,v,w)})}}}_4})
+          | \binpar{D(x,v,w)}{\binpar{\mathsf{m}(n, n^l)}{\mathsf{m}(p, p^l)}} \\
                   & & \mbox{where } 
                       x = @(\meaningof{P}_2(n,p))^{ll}, 
                       v = @(\meaningof{P}_2(n,p))^{lr}, \mbox{ and }
-                      w = @(\meaningof{P}_2(n,p))^{rr} \\
-    \meaningof{(\new \; x ) P}_2 (n, p) 
-          & = & 
-         \binpar{\meaningof{\prefix{p}{x}{{\meaningof{P}_2 ( n^l, p^l )}}}_4(n, p)}{\mathsf{m}(p, n)}
-\end{eqnarray*}
+                      w = @(\meaningof{P}_2(n,p))^{rr}
+\end{array}\]
+
 As expected, the interpretation of replication makes use of the $D$
 operator defined above. Note that name allocation is intertwined with
 prefix and new elimination.
-\begin{eqnarray*}
-  \meaningof{P}_3(n,p,x,v,w) 
-    & := & 
-      \meaningof{\prefix{n}{n'}{\prefix{p}{p'}{(\binpar{\meaningof{P}_2(n',p')}
-        {(\binpar{D(x,v,w)}{\binpar{\outputp{n}{n'^l}}{\outputp{p}{p'^l}}})})}}}_4. \end{eqnarray*}
+
+%% \begin{eqnarray*}
+%%   \meaningof{P}_3(n,p,x,v,w) 
+%%     & := & 
+%%       \meaningof{\prefix{n}{n'}{\prefix{p}{p'}{(\binpar{\meaningof{P}_2(n',p')}{D(x,v,w)})}}}_4. 
+%% \end{eqnarray*}
+
 To handle prefix elimination we import most of Honda and Yoshida's
 algorithm. The key difference is that we must allocate names that
 guarantee freshness relative to the free names of the processes being
