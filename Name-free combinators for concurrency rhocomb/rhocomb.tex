@@ -599,7 +599,7 @@ make heavy use of this fact in our interpretation of prefix
 elimination.
 
 The interpretation function $\meaningof{-}_2(n, p)$ is straightforward
-for all but replication and $\mathsf{new}$.
+for all but $\mathsf{new}$ and replication.
 \[\begin{array}{ccc}
 & \meaningof{\pzero}_2 (n,p) = \pzero \quad\quad \meaningof{\emph{c}(\vect{a})}_2 (n,p) = \emph{c}(\vect{a}) \quad\quad \meaningof{\binpar{P}{Q}}_2 (n,p)  =  \binpar{\meaningof{P}_2 (n^l, p^l)}{\meaningof{Q}_2 (n^r, p^r)} & \\
 & \meaningof{(\new \; x ) P}_2 (n, p) = \binpar{\meaningof{\prefix{p}{x}{{\meaningof{P}_2 ( n^l, p^l )}}}_4(n, p)}{\mathsf{m}(p, n)} &
@@ -612,8 +612,8 @@ to remove the prefix.
     \meaningof{\mathsf{*} P}_2 (n,p)
     %          & = & \binpar{\mathsf{m}(x, \quotep{\meaningof{P}_3(n^r,p^r,x,v,w)})}
     % \meaningof{\prefix{n}{n'}{\prefix{p}{p'}{(\binpar{\meaningof{P}_2(n',p')}{D(x,v,w)})}}}_4
-    & = & \mathsf{m}(x, \quotep{\meaningof{\prefix{n}{n'}{\prefix{p}{p'}{(\binpar{\meaningof{P}_2(n',p')}{D(x,v,w)})}}}_4})
-          | \binpar{D(x,v,w)}{\binpar{\mathsf{m}(n, n^l)}{\mathsf{m}(p, p^l)}} \\
+    & = & \mathsf{m}(x, \quotep{\binpar{\meaningof{\prefix{n}{n'}{\prefix{p}{p'}{\meaningof{P}_2(n',p')}}}_4}{\binpar{D(x,v,w)}{\binpar{\mathsf{m}(n^l, n^l)}{\mathsf{m}(p^l, p^l)}}}}) \\
+    &   &  |\; \binpar{D(x,v,w)}{\binpar{\mathsf{m}(n, n^l)}{\mathsf{m}(p, p^l)}} \\
                   & & \mbox{where } 
                       x = @(\meaningof{P}_2(n,p))^{ll}, 
                       v = @(\meaningof{P}_2(n,p))^{lr}, \mbox{ and }
