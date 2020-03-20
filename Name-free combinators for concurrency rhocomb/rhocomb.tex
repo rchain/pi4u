@@ -666,10 +666,10 @@ constructions, such as $\mathsf{for}(y_1 \leftarrow x_1; \ldots; y_n
 (I)&  \meaningof{\prefix{p}{x}{\binpar{P}{Q}}}_4(n, q) 
     & := & 
     (\mathsf{d}(p,v,w)|\binpar{\meaningof{\prefix{v}{x}{P}}_{4}(n_{1}, q_{1})}{\meaningof{\prefix{w}{x}{Q}}_{4}(n_{2}, q_{2}) } \\
-& & & \mbox{where $v = \quotep{(\mathsf{m}(q,\quotep{\binpar{\mathsf{b}_{\mathsf{l}}(q,n)}{\binpar{P}{Q}}}))}$,} \\
-& & & \mbox{     $w = \quotep{(\mathsf{m}(q,\quotep{\binpar{\mathsf{b}_{\mathsf{r}}(q,n)}{\binpar{P}{Q}}}))}$,} \\
-& & &\mbox{     $n_{1} = \quotep{(\binpar{\mathsf{b}_{\mathsf{l}}(v,w)}{\mathsf{m}(q,\quotep{\mathsf{m}(v,w)})})}$,} \\
-& & &\mbox{     $n_{2} = \quotep{(\binpar{\mathsf{b}_{\mathsf{r}}(v,w)}{\mathsf{m}(q,\quotep{\mathsf{m}(v,w)})})}$,} \\
+& & & \mbox{where $v = \quotep{(\mathsf{m}(q,\quotep{\binpar{\mathsf{b}_{\mathsf{l}}(q,n)}{\binpar{\meaningof{P}}{\meaningof{Q}}}}))}$,} \\
+& & & \mbox{     $w = \quotep{(\mathsf{m}(q,\quotep{\binpar{\mathsf{b}_{\mathsf{r}}(q,n)}{\binpar{\meaningof{P}}{\meaningof{Q}}}}))}$,} \\
+& & &\mbox{     $n_{1} = \quotep{(\binpar{\mathsf{b}_{\mathsf{l}}(v,w)}{\mathsf{m}(n,\quotep{\mathsf{m}(v,w)})})}$,} \\
+& & &\mbox{     $n_{2} = \quotep{(\binpar{\mathsf{b}_{\mathsf{r}}(v,w)}{\mathsf{m}(n,\quotep{\mathsf{m}(v,w)})})}$,} \\
 & & &\mbox{     $q_{1} = \quotep{(\binpar{\mathsf{b}_{\mathsf{l}}(n_{1},n_{2})}{\mathsf{m}(q,\quotep{\mathsf{m}(v,w)})})}$,} \\
 & & & \mbox{     $q_{2} = \quotep{(\binpar{\mathsf{b}_{\mathsf{r}}(n_{1},n_{2})}{\mathsf{m}(q,\quotep{\mathsf{m}(v,w)})})}$ }\\
 (V)&  \meaningof{\prefix{p}{x}{\emph{c}(v^{+},w)}}_4(n, q) 
