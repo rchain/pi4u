@@ -672,7 +672,13 @@ constructions, such as $\mathsf{for}(y_1 \leftarrow x_1; \ldots; y_n
 & & &\mbox{     $n_{2} = \quotep{(\binpar{\mathsf{b}_{\mathsf{r}}(v,w)}{\mathsf{m}(n,\quotep{\mathsf{m}(v,w)})})}$,} \\
 & & &\mbox{     $q_{1} = \quotep{(\binpar{\mathsf{b}_{\mathsf{l}}(n_{1},n_{2})}{\mathsf{m}(q,\quotep{\mathsf{m}(v,w)})})}$,} \\
 & & & \mbox{     $q_{2} = \quotep{(\binpar{\mathsf{b}_{\mathsf{r}}(n_{1},n_{2})}{\mathsf{m}(q,\quotep{\mathsf{m}(v,w)})})}$ }\\
-(V)&  \meaningof{\prefix{p}{x}{\emph{c}(v^{+},w)}}_4(n, q) 
+  (IV)&\meaningof{\mathsf{for}(x \leftarrow a)\mathsf{*}P}_{4}(n, q) &:=& \binpar{\meaningof{\prefix{p}{c}{(\mathsf{fw}(a,p) | R)}}_4(n,p)}{\mathsf{m}(a,n)}\\
+  &&& \mbox{where $R = \mathsf{m}(x, \quotep{\binpar{\meaningof{\prefix{n}{n'}{\prefix{p}{p'}{Q}}}_4}{\binpar{D(x,v,w)}{\binpar{\mathsf{m}(n^r, n^r)}{\mathsf{m}(p^r, p^r)}}}})$} \\
+  &&& \mbox{      $Q = \meaningof{\mathsf{for}(x \leftarrow c)(P | \mathsf{m}(c,x))}_{4}(n^{r},p^{r})$} \\
+  &&& \mbox{      $x = @(\meaningof{P}_2(n,p))^{ll},$} \\ 
+  &&& \mbox{      $v = @(\meaningof{P}_2(n,p))^{lr},$ and } \\
+  &&& \mbox{      $w = @(\meaningof{P}_2(n,p))^{rr}$} \\
+  (V)&  \meaningof{\prefix{p}{x}{\emph{c}(v^{+},w)}}_4(n, q) 
     & := & 
     \mathsf{s}(p,a,v)|\emph{c}(a^{+},\vect{w})
     \mbox{, where $a = @(\binpar{\mathsf{m}(q,n)}{\emph{c}(v^{+},\vect{w})})$ and $x \not\in v : \vect{w}$}\\
