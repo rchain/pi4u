@@ -612,7 +612,7 @@ to remove the prefix.
     \meaningof{\mathsf{*} P}_2 (n,p)
     %          & = & \binpar{\mathsf{m}(x, \quotep{\meaningof{P}_3(n^r,p^r,x,v,w)})}
     % \meaningof{\prefix{n}{n'}{\prefix{p}{p'}{(\binpar{\meaningof{P}_2(n',p')}{D(x,v,w)})}}}_4
-    & = & \mathsf{m}(x, \quotep{\binpar{\meaningof{\prefix{n}{n'}{\prefix{p}{p'}{\meaningof{P}_2(n',p')}}}_4}{\binpar{D(x,v,w)}{\binpar{\mathsf{m}(n^l, n^l)}{\mathsf{m}(p^l, p^l)}}}}) \\
+    & = & \mathsf{m}(x, \quotep{\binpar{\meaningof{\prefix{n}{n'}{\prefix{p}{p'}{\meaningof{P}_2(n',p')}}}_4}{\binpar{D(x,v,w)}{\binpar{\mathsf{m}(n, n^l)}{\mathsf{m}(p, p^l)}}}}) \\
     &   &  |\; \binpar{D(x,v,w)}{\binpar{\mathsf{m}(n, n^l)}{\mathsf{m}(p, p^l)}} \\
                   & & \mbox{where } 
                       x = @(\meaningof{P}_2(n,p))^{ll}, 
@@ -673,7 +673,7 @@ constructions, such as $\mathsf{for}(y_1 \leftarrow x_1; \ldots; y_n
 & & &\mbox{     $q_{1} = \quotep{(\binpar{\mathsf{b}_{\mathsf{l}}(n_{1},n_{2})}{\mathsf{m}(q,\quotep{\mathsf{m}(v,w)})})}$,} \\
 & & & \mbox{     $q_{2} = \quotep{(\binpar{\mathsf{b}_{\mathsf{r}}(n_{1},n_{2})}{\mathsf{m}(q,\quotep{\mathsf{m}(v,w)})})}$ }\\
   (IV)&\meaningof{\mathsf{for}(x \leftarrow a)\mathsf{*}P}_{4}(n, q) &:=& \binpar{\meaningof{\prefix{p}{c}{(\mathsf{fw}(a,p) | R)}}_4(n,p)}{\mathsf{m}(a,n)}\\
-  &&& \mbox{where $R = \mathsf{m}(x, \quotep{\binpar{\meaningof{\prefix{n}{n'}{\prefix{p}{p'}{Q}}}_4}{\binpar{D(x,v,w)}{\binpar{\mathsf{m}(n^r, n^r)}{\mathsf{m}(p^r, p^r)}}}})$} \\
+  &&& \mbox{where $R = \mathsf{m}(x, \quotep{\binpar{\meaningof{\prefix{n}{n'}{\prefix{p}{p'}{Q}}}_4}{\binpar{D(x,v,w)}{\binpar{\mathsf{m}(n, n^r)}{\mathsf{m}(p, p^r)}}}})$} \\
   &&& \mbox{      $Q = \meaningof{\mathsf{for}(x \leftarrow c)(P | \mathsf{m}(c,x))}_{4}(n^{r},p^{r})$} \\
   &&& \mbox{      $x = @(\meaningof{P}_2(n,p))^{ll},$} \\ 
   &&& \mbox{      $v = @(\meaningof{P}_2(n,p))^{lr},$ and } \\

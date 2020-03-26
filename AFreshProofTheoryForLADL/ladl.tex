@@ -195,6 +195,23 @@ operators and so-called nominal phenomena. This is not to say that we
 can't handle nominal phenomena, just that the content is already
 complex enough and we want to focus on the core ideas.
 
+\subsubsection{Rewrites, reductions, and composition of theories}
+The proof theory we develop is only sound for the free models. If the
+model comes equipped with a ``edge'' of its own, this may result in
+reductions invisible to the rely-guarantee construction. Likewise, we
+require theories that have no ``second-order'' contentions in the
+rewrites. That is, the left-hand side of each rule must be
+unique. Notice that this does not say that the theory is free of
+races.
+
+This restriction has implications for composition of theories. So, for
+example, imagine that we are composing two copies of the
+$\rho$-combinator theory, say a red one and a black one, but that we
+wish to identify the message combinator of both, call it yellow. Then
+the red duplicator par yellow message rule is distinct from the black
+duplicator par yellow message rule, and as such this composition of
+theories satisfies the restriction.
+
 
 \subsection{Related work}
 In many ways this work is inspired by and derives from domain theory
@@ -457,8 +474,8 @@ Below we identify the formation of each kind of context: tensor-parallel, tensor
 
 \begin{mathpar}
   \inferrule* [lab=axiom] {} {\boxempty : \tau \vdash \boxempty : \tau} \\
-  \inferrule* [lab=$\rho^{l}_{\rightarrow}$]{\Gamma, \boxempty : \tau \vdash \mathsf{t}( \rho( t, \boxempty ) ) : \tau' }{\Gamma \vdash !\mathsf{K}( t, \boxempty ) : \tau \rhd \tau'} \\
-  \inferrule* [lab=$\rho^{r}_{\rightarrow}$]{\Gamma, \boxempty : \tau \vdash \mathsf{t}( \rho( \boxempty, u ) ) : \tau' }{\Gamma \vdash \mathsf{K}( \boxempty, u )! : \tau \lhd \tau'}
+  \inferrule* [lab=${\rightarrow}^{l}$]{\Gamma, \boxempty : \tau \vdash \mathsf{t}( \rho( t, \boxempty ) ) : \tau' }{\Gamma \vdash !\mathsf{K}( t, \boxempty ) : \tau \rhd \tau'} \\
+  \inferrule* [lab=${\rightarrow}^{r}$]{\Gamma, \boxempty : \tau \vdash \mathsf{t}( \rho( \boxempty, u ) ) : \tau' }{\Gamma \vdash \mathsf{K}( \boxempty, u )! : \tau \lhd \tau'}
 \end{mathpar}
 
 \subsubsection{Weakening}
