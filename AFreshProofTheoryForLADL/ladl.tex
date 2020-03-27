@@ -722,7 +722,7 @@ Structural congruence is encoded as equations:
 %% |- !K( k( x ), [] ) : hat( m )( x, T ) |> hat( 0 )           |- m( x, a ) : hat( m )( x, T )
 %% --------------------------------------------------------------------------------------------
 %% |- R( K( k( x ), m( x, a ) ) ) : hat( 0 )
-\inferrule* [lab=cut] {\inferrule* [lab=$\rho^{l}$]{\inferrule* [lab=weakening] {\inferrule* [lab=axiom] {} {\vdash 0 : \hat{0}}} {\boxempty : \hat{m}( x, T ) \vdash 0 : \hat{0}}}{\vdash !\mathsf{K}(\mathsf{k}( x ), \boxempty ) : \hat{m}( x, T ) \rhd \hat{0}} \quad \inferrule* [lab=axiom] {} {\vdash \mathsf{m}( x, a ) : \hat{m}( x, T )}} {\vdash \mathsf{R}( \mathsf{K}( \mathsf{k}( x ), \mathsf{m}( x, a ) ) ) : \hat{0}}
+\inferrule* [right=cut] {\inferrule* [right=$\rho^{l}$]{\inferrule* [right=weakening] {\inferrule* [right=axiom] {} {\vdash 0 : \hat{\mathsf{0}}}} {\boxempty : \hat{\mathsf{m}}( x, T ) \vdash 0 : \hat{\mathsf{0}}}}{\vdash !\mathsf{K}(\mathsf{k}( x ), \boxempty ) : \hat{\mathsf{m}}( x, T ) \rhd \hat{\mathsf{0}}} \quad \inferrule* [right=axiom] {} {\vdash \mathsf{m}( x, a ) : \hat{\mathsf{m}}( x, T )}} {\vdash \mathsf{R}( \mathsf{K}( \mathsf{k}( x ), \mathsf{m}( x, a ) ) ) : \hat{\mathsf{0}}}
 \end{mathpar}
 
 %% Given that congruence is equality, the final inference rule is an identity.
