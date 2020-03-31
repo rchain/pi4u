@@ -676,8 +676,9 @@ constructions, such as $\mathsf{for}(y_1 \leftarrow x_1; \ldots; y_n
   &&& \mbox{where $R = \mathsf{m}(x, \quotep{\binpar{\meaningof{\prefix{n}{n'}{\prefix{p}{p'}{Q}}}_4}{\binpar{D(x,v,w)}{\binpar{\mathsf{m}(n, n^r)}{\mathsf{m}(p, p^r)}}}})$} \\
   &&& \mbox{      $Q = \meaningof{\mathsf{for}(x \leftarrow c)(P | \mathsf{m}(c,x))}_{4}(n^{r},p^{r})$} \\
   &&& \mbox{      $x = @(\meaningof{P}_2(n,p))^{ll},$} \\ 
-  &&& \mbox{      $v = @(\meaningof{P}_2(n,p))^{lr},$ and } \\
-  &&& \mbox{      $w = @(\meaningof{P}_2(n,p))^{rr}$} \\
+  &&& \mbox{      $v = @(\meaningof{P}_2(n,p))^{lr},$} \\
+  &&& \mbox{      $w = @(\meaningof{P}_2(n,p))^{rl},$ and } \\
+  &&& \mbox{      $c = @(\meaningof{P}_2(n,p))^{rr}$} \\
   (V)&  \meaningof{\prefix{p}{x}{\emph{c}(v^{+},w)}}_4(n, q) 
     & := & 
     \mathsf{s}(p,a,v)|\emph{c}(a^{+},\vect{w})

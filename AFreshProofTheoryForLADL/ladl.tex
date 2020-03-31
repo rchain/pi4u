@@ -795,7 +795,32 @@ Below, we give an explicit example of the construction applied to the $\mathsf{S
 %% ----------------------------------------------------- \sigma cut is the special case of \sigma\otimes with \bindnasrepma\sigma (I, I, I)
 %% \Gamma, \Delta, \Xi \vdash (((RS x) y) z): RC
 
-%% Some useful properties and their proofs
+\begin{mathpar}
+%% (((S x) y) z) => ((x z)(y z))
+
+%% [] : A |> B |> C |- [] : A |> B |> C    [] : A |- [] : A         [] : A |> B |- [] : A |> B    [] : A |- [] : A
+%% ------------------------------------------------------ cut     -------------------------------------------- cut
+%%     [] : A |> B |> C, [] : A |- R([] []) : B |> C                      [] : A |> B, [] : A |- R([] []) : B
+%% ------------------------------------------------------------------------------------------------------ cut
+%% [] : A |> B |> C, []: A, [] : A |> B, [] : A |- R(R([] []) R([] [])) : C
+%% ------------------------------------------------------------------------ rho->l
+%% [] : A |> B |> C, [] : A |> B, [] : A |- !R(R(R(S []) []) []) : A |> C
+%% ---------------------------------------------------------------------- extensionality
+%% [] : A |> B |> C, [] : A |> B |- R(R(S []) []) : A |> C
+%% ------------------------------------------------------- currying
+%% [] : A |> B |> C |- !R(R(S []) []) : (A |> B) |> A |> C
+%% ------------------------------------------------------- extensionality
+%% [] : A |> B |> C |- R(S []) : (A |> B) |> A |> C
+%% ------------------------------------------------ currying
+%% |- !R(S []) : (A |> B |> C) |> (A |> B) |> A |> C
+%% ------------------------------------------------- extensionality
+  %% |- S : (A |> B |> C) |> (A |> B) |> A |> C
+
+%  
+\inferrule* [right=extensionality] {\inferrule* [right=currying] {\inferrule* [right=extensionality] {\inferrule* [right=currying] {\inferrule* [right=extensionality] {\inferrule* [right=$\rightarrow^{l}$] {\inferrule* [right=cut] {\inferrule* [right=cut] {\inferrule* [right=axiom] {} {\boxempty : A \rhd B \rhd C \vdash \boxempty A \rhd B \rhd C} \quad\quad \inferrule* [right=axiom] {} {\boxempty : A \vdash \boxempty : A}} {\boxempty : A \rhd B \rhd C, \boxempty : A \vdash \mathsf{R}(\boxempty \boxempty) : B \rhd C} \quad\quad \inferrule* [right=cut] {\inferrule* [right=axiom] {} {\boxempty : A \rhd B \vdash \boxempty A \rhd B} \quad\quad \inferrule* [right=axiom] {} {\boxempty : A \vdash \boxempty : A}} {\boxempty : A \rhd B, \boxempty : A \vdash \mathsf{R}(\boxempty \boxempty) : B}} {\boxempty : A \rhd B \rhd C, \boxempty : A, \boxempty : A \rhd B, \boxempty : A \vdash \mathsf{R}(\mathsf{R}(\boxempty \boxempty) R(\boxempty \boxempty)) : C}} {\boxempty : A \rhd B \rhd C, \boxempty : A \rhd B, \boxempty : A \vdash !\mathsf{R}(\mathsf{R}(\mathsf{R}(\mathsf{S} \boxempty) \boxempty) \boxempty) : \rhd A \rhd C}} {\boxempty : A \rhd B \rhd C, \boxempty : A \rhd B, \boxempty : A \vdash \mathsf{R}(\mathsf{R}(\mathsf{S} \boxempty) \boxempty) : \rhd A \rhd C}} {\vdash !\mathsf{R}(\mathsf{R}(\mathsf{S} \boxempty) \boxempty) : (A \rhd B \rhd C) \rhd (A \rhd B) \rhd A \rhd C}} {\boxempty : A \rhd B \rhd C \vdash \mathsf{R}(\mathsf{S} \boxempty) : (A \rhd B \rhd C) \rhd (A \rhd B) \rhd A \rhd C}} {\vdash !\mathsf{R}(\mathsf{S} \boxempty) : (A \rhd B \rhd C) \rhd (A \rhd B) \rhd A \rhd C}} {\vdash \mathsf{S} : (A \rhd B \rhd C) \rhd (A \rhd B) \rhd A \rhd C}
+\end{mathpar}
+
+\section{Some useful properties and their proofs}
 %% TBD
 
 \section{Main theorems}
