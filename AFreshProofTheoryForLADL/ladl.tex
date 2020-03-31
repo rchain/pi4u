@@ -297,7 +297,41 @@ theory and produces a new Lawvere theory that is resource constrained
 and enjoys a type system that guarantees a range of security and
 liveness properties.
 
-We encode term calculi as Lawvere theories by starting with the theory
+\subsection{Input to the algorithm}
+For this algorithm to work we must encode a model of computation as an
+\emph{input to the algorithm}. To this end we keep in mind that
+structured operational semantics (aka SOS) format has been the tool of
+choice for the theoretical computer science community for several
+decades. Further, Milner's elaboration of this format is pivotal as it
+aligns theoretical computer science with classical mathematics. To
+wit, in Milner's format an operational semantics consists of three
+data:
+
+\begin{itemize}
+  \item grammar for an abstract syntax
+  \item a structural equivalence
+  \item a set of rewrite rules
+\end{itemize}
+
+This presentation format corresponds to an elaboration of modern
+presentations of algebraic theories in terms of \emph{generators} and
+\emph{relations}. Specifically, the grammar for the abstract syntax
+corresponds to the generator, and the structural equivalence
+corresponds to the relations. What is new and different about
+computational models and makes them distinct from classical
+presentations of algebraic theories is the existence of the rewrite
+rules. While the relations may be seen as bi-directional rewrite
+rules, the rules describing the operational semantics, or how terms in
+the grammar evolve and thus realize a computation, are uni-directional
+and typically represent some aspect of computation that has
+thermodynamic consequences (such as forgetting state).
+
+This format is extremely rich and describes a wide range of theories
+that we hope to cover with the LADL algorithm. However, we begin with
+a more modest presentation of models of computational theories that
+can be mapped to the Milner format for SOS.
+
+Specifically, we encode term calculi as Lawvere theories by starting with the theory
 of reflexive directed multigraphs:
 
 \begin{itemize}
