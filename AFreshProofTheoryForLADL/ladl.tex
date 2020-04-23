@@ -8,6 +8,8 @@
 \usepackage{stmaryrd}
 \usepackage{wasysym}
 \usepackage{mathpartir}
+\usepackage{rotating}
+\usepackage{tcolorbox}
 \newcommand{\interp}[1]{\llbracket #1 \rrbracket}
 \newcommand{\maps}{\colon}
 \renewcommand{\:}{\colon}
@@ -329,10 +331,14 @@ thermodynamic consequences (such as forgetting state).
 This format is extremely rich and describes a wide range of theories
 that we hope to cover with the LADL algorithm. However, we begin with
 a more modest presentation of models of computational theories that
-can be mapped to the Milner format for SOS.
+can be mapped to the Milner format for SOS. 
 
-Specifically, we encode term calculi as Lawvere theories by starting with the theory
-of reflexive directed multigraphs:
+Specifically, we encode term calculi as second order algebraic
+theories. This allows us to express syntax that includes binding
+operators, such as is found in {\lamc} or {\pic} or {\rhoc} and get
+notions of $\alpha$-equivalence and capture-avoiding substitution all
+``for free.'' To build a theory that also includes rewrite rules, we
+begin with a theory of reflexive directed multigraphs:
 
 \begin{itemize}
   \item one sort $T$
@@ -364,7 +370,7 @@ with at least one binary term constructor and one rewrite rule that
 uses the term constructor as its source.
 
 \begin{itemize}
-  \item $\mathsf{c}, \mathsf{l}_{\mathsf{K}}, \mathsf{r}_{\mathsf{K}} : 1 -> T$
+  \item $\mathsf{c}, \mathsf{l}_{\mathsf{K}}, \mathsf{r}_{\mathsf{K}} : 1 \rightarrow T$
   \item $\mathsf{K} : T^{2} \rightarrow T$
   \item $\rho : T^{2} \rightarrow T$             %%//( \x -> M N) → M{N/x}     for( y <- x )P | x!(Q) → P{@Q/y}$
   \item $\mathsf{K}(l_{\mathsf{K}}, u) = u$
@@ -399,7 +405,11 @@ then producing a contextualized version of the theory.
 \end{itemize}
 
 \subsubsection{Contextualized Resourced theory}
-We add a new sort, $X$, and the following maps
+%We add a new sort, $X$, and the following maps
+We transition to a contextualized version of the resourced theory by
+assuming that $T$ is exponentiable and availing ourselves of the
+mechanics of second order algebraic theories. This gives us access to
+variables, meta-variables, and a capture-avoiding substitution. 
 
 %% TODO a version of @ where we can apply a term to a context and get a context
 %% Check equations involving @_box
@@ -407,7 +417,7 @@ We add a new sort, $X$, and the following maps
 \begin{itemize}
   \item $\mathsf{c}, \mathsf{l}_{\mathsf{K}}, \mathsf{r}_{\mathsf{K}} : 1 \rightarrow T$
   \item $\mathsf{K} : T^{2} \rightarrow T$
-  \item $\boxempty : 1 \rightarrow X$
+  \item $\boxempty : \NN \rightarrow X$
   \item $\mathsf{K}_{\boxempty}^{l} : X \times T \rightarrow X$
   \item $\mathsf{K}_{\boxempty}^{r} : T \times X \rightarrow X$
   \item $!(-) : X  \rightarrow T$
@@ -483,22 +493,22 @@ which allows the hole to be buried, rather than at the top level,
 
 \subsection{Terms, their types and cuts}
 \begin{mathpar}
-  \inferrule* [lab=constants] {} {\vdash \mathsf{c} : \mathsf{C}} \\
+  \inferrule* [lab=constants] {} { \Vdash  \vdash \mathsf{c} : \mathsf{C}} \\
 
-  \inferrule* [lab=$\rho_{\otimes}$]{\Gamma \vdash t : \tau  \quad \Delta \vdash u : \tau'}{\Gamma, \Delta \vdash \mathsf{K}(t, u) : \rho_{\otimes}(\tau, \tau')}
+  \inferrule* [lab=$\rho_{\otimes}$]{ \Vdash \Gamma \vdash t : \tau  \quad  \Vdash \Delta \vdash u : \tau'}{ \Vdash \Gamma, \Delta \vdash \mathsf{K}(t, u) : \rho_{\otimes}(\tau, \tau')}
 
-  \inferrule* [lab=$\rho_{\bindnasrepma}$]{\Gamma \vdash t : \tau, u : \tau'}{\Gamma \vdash \bindnasrepma_{\rho} (t, u) : \rho_{\bindnasrepma}(\tau, \tau')} \\
+  \inferrule* [lab=$\rho_{\bindnasrepma}$]{ \Vdash \Gamma \vdash t : \tau, u : \tau'}{ \Vdash  \Gamma \vdash \bindnasrepma_{\rho} (t, u) : \rho_{\bindnasrepma}(\tau, \tau')} \\
 
-\inferrule* [lab=$\rho_{\sqcap}$]{\Gamma \vdash t : \tau, u : \tau'}{\Gamma \vdash \mathsf{K}(t,u) : \rho_{\sqcap}(\tau,\tau')}
+\inferrule* [lab=$\rho_{\sqcap}$]{ \Vdash \Gamma \vdash t : \tau, u : \tau'}{ \Vdash \Gamma \vdash \mathsf{K}(t,u) : \rho_{\sqcap}(\tau,\tau')}
 
-\inferrule* [lab=$\rho_{\sqcup}$]{\Gamma \vdash t : \tau, u : \tau'}{\Gamma \vdash \sqcup_{\rho}(t,u) : \rho_{\sqcup}(\tau,\tau')} \\
+\inferrule* [lab=$\rho_{\sqcup}$]{ \Vdash \Gamma \vdash t : \tau, u : \tau'}{ \Vdash \Gamma \vdash \sqcup_{\rho}(t,u) : \rho_{\sqcup}(\tau,\tau')} \\
 
-\inferrule* [lab=$\rho_{\bindnasrepma \perp \otimes}$]{\Gamma \vdash \bindnasrepma_{\rho} (t_{1}, t_{2}) : \rho_{\bindnasrepma}(\tau_{1} \rhd \tau_{i}^{\perp}, \tau_{2} \rhd \tau_{i}) \quad \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\otimes}(\tau_{1}, \tau_{2}) }{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{R}(\mathsf{K}(t_{1}, t_{3})), \mathsf{R}(\mathsf{K}(t_{2}, t_{4})))) : \mathsf{r}_{\mathsf{K}}}
+\inferrule* [lab=$\rho_{\bindnasrepma \perp \otimes}$]{ \Vdash \Gamma \vdash \bindnasrepma_{\rho} (t_{1}, t_{2}) : \rho_{\bindnasrepma}(\tau_{1} \rhd \tau_{i}^{\perp}, \tau_{2} \rhd \tau_{i}) \quad  \Vdash \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\otimes}(\tau_{1}, \tau_{2}) }{ \Vdash \Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{R}(\mathsf{K}(t_{1}, t_{3})), \mathsf{R}(\mathsf{K}(t_{2}, t_{4})))) : \mathsf{r}_{\mathsf{K}}}
   
 %% \tau \rhd \tau' = { u | \exists t,\chi. u = !\mathsf{K}_{\boxempty}^{r}(t, \chi),\forall u':\tau. (\exists \rho: u@u' \rightarrow v) \Rightarrow v:\tau' }
 %% \tau\perp = \tau \rhd \mathsf{r}_{\mathsf{K}} = { u | \exists t,\chi. u = !\mathsf{K}_{\boxvoid}^{r}(t, \chi),\forall u':\tau. (\exists \rho: u@u' \rightarrow v) \Rightarrow v:\mathsf{r}_{\mathsf{K}} }
 
-\inferrule* [lab=$\rho_{\perp}$]{\Gamma \vdash t' : \tau^{\perp}\quad \Delta \vdash t : \tau }{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t',t)) : \mathsf{r}_{\mathsf{K}}}
+\inferrule* [lab=$\rho_{\perp}$]{ \Vdash \Gamma \vdash t' : \tau^{\perp}\quad  \Vdash \Delta \vdash t : \tau }{ \Vdash \Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t',t)) : \mathsf{r}_{\mathsf{K}}}
 
 \end{mathpar}
 \subsection{Contexts, their types and cuts}
@@ -507,28 +517,28 @@ Below we identify the formation of each kind of context: tensor-parallel, tensor
 \subsubsection{Axiom}
 
 \begin{mathpar}
-  \inferrule* [lab=axiom] {} {\boxempty : \tau \vdash \boxempty : \tau} \\
-  \inferrule* [lab=${\rightarrow}^{l}$]{\Gamma, \boxempty : \tau \vdash \mathsf{t}( \rho( t, \boxempty ) ) : \tau' }{\Gamma \vdash !\mathsf{K}( t, \boxempty ) : \tau \rhd \tau'} \\
-  \inferrule* [lab=${\rightarrow}^{r}$]{\Gamma, \boxempty : \tau \vdash \mathsf{t}( \rho( \boxempty, u ) ) : \tau' }{\Gamma \vdash \mathsf{K}( \boxempty, u )! : \tau \lhd \tau'}
+  \inferrule* [lab=axiom] {} { \Vdash x : \tau \vdash x : \tau} \\
+  \inferrule* [lab=${\rightarrow}^{l}$]{\Vdash \Gamma, x : \tau \vdash \mathsf{t}( \rho( t, \boxempty ) ) : \tau' }{\Vdash \Gamma \vdash !\mathsf{K}( t, x ) : \tau \rhd \tau'} \\
+  \inferrule* [lab=${\rightarrow}^{r}$]{\Vdash \Gamma, x : \tau \vdash \mathsf{t}( \rho( \boxempty, u ) ) : \tau' }{\Vdash \Gamma \vdash \mathsf{K}( x, u )! : \tau \lhd \tau'}
 \end{mathpar}
 
 \subsubsection{Weakening}
 
 \begin{mathpar}
-  \inferrule* [lab=weakening] {\Gamma \vdash \chi : \tau}{\boxempty : \tau', \Gamma \vdash \chi : \tau}
+  \inferrule* [lab=weakening] {\Vdash \Gamma \vdash \chi : \tau}{\Vdash x : \tau', \Gamma \vdash \chi : \tau}
 \end{mathpar}
 
 \subsubsection{Left and right context formation and cut}
 
 \begin{mathpar}
-  \inferrule* [lab=$\lhd$] {\Gamma, \boxempty : \tau  \vdash \chi : \tau'} {\Gamma \vdash \chi ! : \tau' \lhd \tau}
+  \inferrule* [lab=$\lhd$] {\Vdash \Gamma, x : \tau  \vdash \chi : \tau'} {\Vdash \Gamma \vdash \chi ! : \tau' \lhd \tau}
 
-  \inferrule* [lab=$\rhd$] {\Gamma, \boxempty : \tau  \vdash \chi : \tau'} {\Gamma \vdash !\chi : \tau \rhd \tau'} \\
+  \inferrule* [lab=$\rhd$] {\Vdash \Gamma, x : \tau  \vdash \chi : \tau'} {\Vdash \Gamma \vdash !\chi : \tau \rhd \tau'} \\
 
-  \inferrule* [lab=$\rho_{\boxempty \perp \lhd}$] {\Gamma \vdash \mathsf{K}(\boxempty,u)! : \tau' \lhd \tau \quad  \Delta \vdash t : \tau}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \tau'}
+  \inferrule* [lab=$\rho_{\boxempty \perp \lhd}$] {\Vdash \Gamma \vdash \mathsf{K}(x,u)! : \tau' \lhd \tau \quad  \Vdash \Delta \vdash t : \tau}{\Vdash \Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \tau'}
 
-  \inferrule* [lab=$\rho_{\boxempty \perp \rhd}$] {\Gamma \vdash !\mathsf{K}(t,\boxempty) : \tau \rhd \tau'\quad  \Delta \vdash u : \tau} {\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \tau'}\\
-  \inferrule* [lab=$\rho_{\sqcup \perp \sqcap}$]{\Gamma \vdash \sqcup_{\rho} (t_{1}, t_{2}) : \rho_{\sqcup}(\tau_{2} \rhd \tau_{1}^{\perp}, \tau_{2})  \quad \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\sqcap}(\tau_{3} \rhd \tau_{1}, \tau_{3})}{\Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{R}(\mathsf{K}(t_{1}, t_{2})), \mathsf{R}(\mathsf{K}(t_{3}, t_{4})))) : \mathsf{r}_{\mathsf{K}}}
+  \inferrule* [lab=$\rho_{\boxempty \perp \rhd}$] {\Vdash \Gamma \vdash !\mathsf{K}(t,x) : \tau \rhd \tau'\quad  \Vdash \Delta \vdash u : \tau} {\Vdash \Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(t,u)) : \tau'}\\
+  \inferrule* [lab=$\rho_{\sqcup \perp \sqcap}$]{\Vdash \Gamma \vdash \sqcup_{\rho} (t_{1}, t_{2}) : \rho_{\sqcup}(\tau_{2} \rhd \tau_{1}^{\perp}, \tau_{2})  \quad \Vdash \Delta \vdash \mathsf{K}(t_{3}, t_{4}) : \rho_{\sqcap}(\tau_{3} \rhd \tau_{1}, \tau_{3})}{\Vdash \Gamma, \Delta \vdash \mathsf{R}(\mathsf{K}(\mathsf{R}(\mathsf{K}(t_{1}, t_{2})), \mathsf{R}(\mathsf{K}(t_{3}, t_{4})))) : \mathsf{r}_{\mathsf{K}}}
 \end{mathpar}
 
 %%               --------------- axiom
@@ -829,7 +839,10 @@ Below, we give an explicit example of the construction applied to the $\mathsf{S
 %% ----------------------------------------------------- \sigma cut is the special case of \sigma\otimes with \bindnasrepma\sigma (I, I, I)
 %% \Gamma, \Delta, \Xi \vdash (((RS x) y) z): RC
 
-\begin{mathpar}
+\pagebreak
+\rotatebox{90}{
+  \begin{tcolorbox}
+    \begin{mathpar}
 %% (((S x) y) z) => ((x z)(y z))
 
 %% [] : A |> B |> C |- [] : A |> B |> C    [] : A |- [] : A         [] : A |> B |- [] : A |> B    [] : A |- [] : A
@@ -852,8 +865,11 @@ Below, we give an explicit example of the construction applied to the $\mathsf{S
 
 %  
 \inferrule* [right=extensionality] {\inferrule* [right=currying] {\inferrule* [right=extensionality] {\inferrule* [right=currying] {\inferrule* [right=extensionality] {\inferrule* [right=$\rightarrow^{l}$] {\inferrule* [right=cut] {\inferrule* [right=cut] {\inferrule* [right=axiom] {} {\boxempty : A \rhd B \rhd C \vdash \boxempty A \rhd B \rhd C} \quad\quad \inferrule* [right=axiom] {} {\boxempty : A \vdash \boxempty : A}} {\boxempty : A \rhd B \rhd C, \boxempty : A \vdash \mathsf{R}(\boxempty \boxempty) : B \rhd C} \quad\quad \inferrule* [right=cut] {\inferrule* [right=axiom] {} {\boxempty : A \rhd B \vdash \boxempty A \rhd B} \quad\quad \inferrule* [right=axiom] {} {\boxempty : A \vdash \boxempty : A}} {\boxempty : A \rhd B, \boxempty : A \vdash \mathsf{R}(\boxempty \boxempty) : B}} {\boxempty : A \rhd B \rhd C, \boxempty : A, \boxempty : A \rhd B, \boxempty : A \vdash \mathsf{R}(\mathsf{R}(\boxempty \boxempty) R(\boxempty \boxempty)) : C}} {\boxempty : A \rhd B \rhd C, \boxempty : A \rhd B, \boxempty : A \vdash !\mathsf{R}(\mathsf{R}(\mathsf{R}(\mathsf{S} \boxempty) \boxempty) \boxempty) : \rhd A \rhd C}} {\boxempty : A \rhd B \rhd C, \boxempty : A \rhd B, \boxempty : A \vdash \mathsf{R}(\mathsf{R}(\mathsf{S} \boxempty) \boxempty) : \rhd A \rhd C}} {\vdash !\mathsf{R}(\mathsf{R}(\mathsf{S} \boxempty) \boxempty) : (A \rhd B \rhd C) \rhd (A \rhd B) \rhd A \rhd C}} {\boxempty : A \rhd B \rhd C \vdash \mathsf{R}(\mathsf{S} \boxempty) : (A \rhd B \rhd C) \rhd (A \rhd B) \rhd A \rhd C}} {\vdash !\mathsf{R}(\mathsf{S} \boxempty) : (A \rhd B \rhd C) \rhd (A \rhd B) \rhd A \rhd C}} {\vdash \mathsf{S} : (A \rhd B \rhd C) \rhd (A \rhd B) \rhd A \rhd C}
-\end{mathpar}
+    \end{mathpar}
+  \end{tcolorbox}
+}
 
+\pagebreak
 \section{Some useful properties and their proofs}
 %% TBD
 
