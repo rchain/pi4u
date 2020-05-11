@@ -164,8 +164,8 @@ the operations $(- \rhd -)$ and $(- \lhd -)$), as a redex term constructor
 might not be commutative.
 
 \begin{eqnarray*}
-\tau \rhd_{\mathsf{K}} \tau' & \triangleq & \{ u \; | \; \exists t. u = \mathsf{!}\mathsf{K}_{\boxempty}^{r}(t, \boxempty),\forall u' : \tau. (\exists \rho : u@u' \rightarrow v) \Rightarrow v:\tau' \} \\
-\tau' \lhd_{\mathsf{K}} \tau & \triangleq & \{ t \; | \; \exists u. t = \mathsf{K}_{\boxempty}^{l}(\boxempty, u)\mathsf{!},\forall t' : \tau. (\exists \rho: t@t' \rightarrow v) \Rightarrow v : \tau' \}
+\tau \rhd_{\mathsf{K}} \tau' & \triangleq & \{ u \; | \; \exists t. u = \mathsf{!}\mathsf{K}^{r}(t, \boxempty),\forall u' : \tau. (\exists \rho : u@u' \rightarrow v) \Rightarrow v:\tau' \} \\
+\tau' \lhd_{\mathsf{K}} \tau & \triangleq & \{ t \; | \; \exists u. t = \mathsf{K}^{l}(\boxempty, u)\mathsf{!},\forall t' : \tau. (\exists \rho: t@t' \rightarrow v) \Rightarrow v : \tau' \}
 \end{eqnarray*}
 
 In the sequel we drop the subscript on the triangles if it's understood from
@@ -380,8 +380,8 @@ uses the term constructor as its source.
   \item $\rho : T^{2} \rightarrow T$             %%//( \x -> M N) → M{N/x}     for( y <- x )P | x!(Q) → P{@Q/y}$
   \item $\mathsf{K}(l_{\mathsf{K}}, u) = u$
   \item $\mathsf{K}(t, \mathsf{r}_{\mathsf{K}}) = t$
-  \item $\mathsf{s}(\rho(t,u)) = \mathsf{K}(t, u)$
-  \item $\mathsf{t}(\rho(t,u)) = f(t,u)$
+  \item $ t : [?], u : [?]\Vdash \cdot \vdash \mathsf{s}(\rho(t,u)) = \mathsf{K}(t, u)$
+  \item $t : [?], u : [?]\Vdash \cdot \vdash \mathsf{t}(\rho(t,u)) = f(t,u)$
 \end{itemize}
 
 Note that $\mathsf{K}$ may not be commutative, so we ask for either a left
@@ -425,43 +425,43 @@ variables, meta-variables, and a capture-avoiding substitution.
 %  \item $\boxempty : \NN \rightarrow X$
 %  \item $\mathsf{K}_{\boxempty}^{l} : X \times T \rightarrow X$
 %  \item $\mathsf{K}_{\boxempty}^{r} : T \times X \rightarrow X$
-  \item $!(-) : X  \rightarrow T$
-  \item $(-)! : X  \rightarrow T$
+  \item $!(-) : T^{T}  \rightarrow T$
+  \item $(-)! : T^{T}  \rightarrow T$
   \item $@ : T^{2} \rightarrow T$
-  \item $@_{\boxempty}^{l} : X \times T \rightarrow T$
-  \item $@_{\boxempty}^{r} : T \times X \rightarrow X$
-  \item $@_{\boxempty\boxempty} : X^{2} \rightarrow X$
+  \item $@_{\boxempty}^{l} : T^{T} \times T \rightarrow T$
+  \item $@_{\boxempty}^{r} : T \times T^{T} \rightarrow T^{T}$
+  \item $@_{\boxempty\boxempty} : (T^{T})^{2} \rightarrow T^{T}$
   \item $\mathsf{R} : T \rightarrow T$
   \item $\bindnasrepma_{\rho} : T^{2} \rightarrow T$
   \item $\sqcup_{\rho} : T^{2} \rightarrow T$
   \item $\rho : T^{2} \rightarrow T$             %%//( \x -> M N) -> M{N/x}     for( y <- x )P | x!(Q) -> P{@Q/y}
   \item $\mathsf{s}(\rho(t,u)) = \mathsf{R}\mathsf{K}(t, u)$ 
   \item $\mathsf{t}(\rho(t,u)) = \hat{f}(t,u)$          %%// deleting Rs from fhat gives f
-  \item $\hat{\rho}_{l} : T \times X \rightarrow T$             %%//( \x -> M N) -> M{N/x}     for( y <- x )P | x!(Q) -> P{@Q/y}
-  \item $\hat{\rho}_{r} : X \times T \rightarrow T$             %%//( \x -> M N) -> M{N/x}     for( y <- x )P | x!(Q) -> P{@Q/y}
+  %% \item $\hat{\rho}_{l} : T \times T^{T} \rightarrow T$             %%//( \x -> M N) -> M{N/x}     for( y <- x )P | x!(Q) -> P{@Q/y}
+  %% \item $\hat{\rho}_{r} : T^{T} \times T \rightarrow T$             %%//( \x -> M N) -> M{N/x}     for( y <- x )P | x!(Q) -> P{@Q/y}
   \item $\mathsf{K}(\mathsf{l}_{\mathsf{K}}, u) = u$
   \item $\mathsf{K}(t, \mathsf{r}_{\mathsf{K}}) = t$
-  \item $@(\boxempty !,t) = t$
-  \item $@(!\boxempty,t) = t$
-  \item $@_{\boxempty}^{l}(\boxempty ,t) = t$
-  \item $@_{\boxempty\boxempty}(\boxempty,\chi) = \chi$
-  \item $@(\mathsf{K}_{\boxempty}^{l} (\chi, t)!, u) = \mathsf{K}(@_{\boxempty}(\chi, u), t)$
-  \item $@(!\mathsf{K}_{\boxempty}^{r} (t, \chi), u) = \mathsf{K}(t, @_{\boxempty}(\chi, u))$
-  \item $@(\mathsf{K}_{\boxempty}^{l} (\chi, t)!, \chi')! = \mathsf{K}(@_{\boxempty\boxempty}(\chi, \chi'), t)$
+  %% \item $@(\boxempty !,t) = t$
+  %% \item $@(!\boxempty,t) = t$
+  %% \item $@_{\boxempty}^{l}(\boxempty ,t) = t$
+  %% \item $@_{\boxempty\boxempty}(\boxempty,\chi) = \chi$
+  %% \item $@(\mathsf{K}_{\boxempty}^{l} (\chi, t)!, u) = \mathsf{K}(@_{\boxempty}(\chi, u), t)$
+  %% \item $@(!\mathsf{K}_{\boxempty}^{r} (t, \chi), u) = \mathsf{K}(t, @_{\boxempty}(\chi, u))$
+  %% \item $@(\mathsf{K}_{\boxempty}^{l} (\chi, t)!, \chi')! = \mathsf{K}(@_{\boxempty\boxempty}(\chi, \chi'), t)$
 \end{itemize}
 
 As mentioned before, the basic notion of arrow is given by
 
 \begin{eqnarray*}
-  \tau \rhd_{\mathsf{K}} \tau' & \triangleq  & \{ u \; | \; \exists t. u = !\mathsf{K}_{\boxempty}^{r}(t, \boxempty),\forall u':\tau. (\exists \rho : u@u'\rightarrow v) \Rightarrow v:\tau' \} \\
-  \tau'\lhd_{\mathsf{K}} \tau & \triangleq  & \{ t \; | \; \exists u. t = \mathsf{K}_{\boxempty}^{l}(\boxempty, u)!,\forall t':\tau. (\exists \rho : t@t'\rightarrow v) \Rightarrow v:\tau'\}
+  \tau \rhd_{\mathsf{K}} \tau' & \triangleq  & \{ u \; | \; \exists t. u = !\mathsf{K}^{r}(t, \boxempty),\forall u':\tau. (\exists \rho : u@u'\rightarrow v) \Rightarrow v:\tau' \} \\
+  \tau'\lhd_{\mathsf{K}} \tau & \triangleq  & \{ t \; | \; \exists u. t = \mathsf{K}^{l}(\boxempty, u)!,\forall t':\tau. (\exists \rho : t@t'\rightarrow v) \Rightarrow v:\tau'\}
 \end{eqnarray*}
 
 However, they can be generalized to
 
 \begin{eqnarray*}
-  \tau \rhd_{\mathsf{K}} \tau' & \triangleq  & \{ u \; | \; \exists t, \chi. u = !\mathsf{K}_{\boxempty}^{r}(t, \chi),\forall u':\tau. (\exists \rho : u@u'\rightarrow v) \Rightarrow v:\tau' \} \\
-  \tau'\lhd_{\mathsf{K}} \tau & \triangleq  & \{ t \; | \; \exists u, \chi. t = \mathsf{K}_{\boxempty}^{l}(\chi, u)!,\forall t':\tau. (\exists \rho : t@t'\rightarrow v) \Rightarrow v:\tau'\}
+  \tau \rhd_{\mathsf{K}} \tau' & \triangleq  & \{ u \; | \; \exists t, \chi. u = !\mathsf{K}^{r}(t, \chi),\forall u':\tau. (\exists \rho : u@u'\rightarrow v) \Rightarrow v:\tau' \} \\
+  \tau'\lhd_{\mathsf{K}} \tau & \triangleq  & \{ t \; | \; \exists u, \chi. t = \mathsf{K}^{l}(\chi, u)!,\forall t':\tau. (\exists \rho : t@t'\rightarrow v) \Rightarrow v:\tau'\}
 \end{eqnarray*}
 
 which allows the hole to be buried, rather than at the top level,
@@ -618,8 +618,8 @@ We add new sorts, $X^{\circ}$, and $X^{\bullet}$, $X^{\circ\bullet}$, and the fo
 \end{itemize}
 
 \begin{eqnarray*}
-  \tau \RHD_{\mathsf{K}} \tau' & \triangleq  & \{ u \; |\; \exists t, \chi. u = ?\mathsf{K}_{\boxempty}^{r}(t, \chi),\forall u':\tau. (\exists \rho : u@u'\rightarrow v) \Rightarrow v:\tau' \} \\
-  \tau'\LHD_{\mathsf{K}} \tau & \triangleq  & \{ t \; |\; \exists u, \chi. t = \mathsf{K}_{\boxempty}^{l}(\chi, u)?,\forall t':\tau. (\exists \rho : t@t'\rightarrow v) \Rightarrow v:\tau'\}
+  \tau \RHD_{\mathsf{K}} \tau' & \triangleq  & \{ u \; |\; \exists t, \chi. u = ?\mathsf{K}^{r}(t, \chi),\forall u':\tau. (\exists \rho : u@u'\rightarrow v) \Rightarrow v:\tau' \} \\
+  \tau'\LHD_{\mathsf{K}} \tau & \triangleq  & \{ t \; |\; \exists u, \chi. t = \mathsf{K}^{l}(\chi, u)?,\forall t':\tau. (\exists \rho : t@t'\rightarrow v) \Rightarrow v:\tau'\}
 \end{eqnarray*}
 
 In the sequel we will use the notation $\Gamma^{\circ}$ (respectively,
